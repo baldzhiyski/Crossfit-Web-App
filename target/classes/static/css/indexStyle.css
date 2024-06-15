@@ -9,7 +9,7 @@
 body {
     margin: 0;
     padding: 0;
-    background: url("/static/images/mian.jpg") no-repeat center center fixed;
+    background: url('/images/mian.jpg') no-repeat center center fixed;
     background-size: cover;
     background-color: #222;
 
@@ -99,7 +99,7 @@ footer .container {
     grid-area: showcase;
     height: 400px;
     width: 400px;
-    background: url("/static/images/hero_bg_3.jpg");
+    background: url('/images/hero_bg_3.jpg');
     background-size: cover;
     background-position: center;
     padding: 1rem;
