@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head  xmlns:th="http://www.thymeleaf.org">>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CrossFit Web App</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/css/indexStyle.css}">
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<head  th:replace="~{fragments/head}">
 
 </head>
 <body class="d-flex flex-column" >
@@ -17,7 +8,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
-            <img src="/static/images/logoPic.jpg" alt="CrossFit Logo" width="60" height="60">
+            <img src="/images/logoPic.jpg" alt="CrossFit Logo" width="60" height="60">
         </a>
         <h2 class="title">Welcome to CrossFit Stuttgart</h2>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -36,7 +27,16 @@
                     <a class="nav-link" href="#">Workouts</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Programs</a>
+                    <a class="nav-link" href="#">Events</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Add Event</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">My Trainings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Profile</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Contact</a>
@@ -95,56 +95,8 @@
     </div>
 </section>
 <!-- Footer -->
-<footer class="text-white text-center text-lg-start mt-auto">
-    <div class="container p-4">
-        <div class="row mt-4">
-            <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
-                <h5 class="text-uppercase mb-4">Stay motivated</h5>
-                <p>Join our CrossFit community and transform together</p>
-                <p>Pushing limits, breaking barriers, together.</p>
-                <div class="mt-4">
-                    <a type="button" class="btn btn-floating btn-light btn-lg"><i class="fab fa-facebook-f"></i></a>
-                    <a type="button" class="btn btn-floating btn-light btn-lg"><i class="fab fa-twitter"></i></a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
-                <ul class="fa-ul" style="margin-top: 2rem;">
-                    <li class="mb-3">
-                        <span class="fa-li"><i class="fas fa-home"></i></span><span
-                            class="ms-2">Stuttgart, Germany</span>
-                    </li>
-                    <li class="mb-3">
-                        <span class="fa-li"><i class="fas fa-envelope"></i></span><span class="ms-2">hristo.bld032@gmail.com</span>
-                    </li>
-                    <li class="mb-3">
-                        <span class="fa-li"><i class="fas fa-phone"></i></span><span class="ms-2">+ 49 234 567 88</span>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
-                <h5 class="text-uppercase mb-4" style="margin-top: 1rem;">Opening hours</h5>
-                <table class="table text-center text-white">
-                    <tbody class="fw-normal">
-                    <tr>
-                        <td>Mon - Thu:</td>
-                        <td>8am - 9pm</td>
-                    </tr>
-                    <tr>
-                        <td>Fri - Sat:</td>
-                        <td>8am - 1am</td>
-                    </tr>
-                    <tr>
-                        <td>Sunday:</td>
-                        <td>9am - 10pm</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-        © 2024 Copyright: Hristo Baldzhiyski
-    </div>
+<footer th:replace="~{fragments/footer::footer}">
+
 </footer>
 </body>
 </html>
