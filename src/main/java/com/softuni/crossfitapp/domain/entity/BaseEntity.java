@@ -1,4 +1,4 @@
-package com.softuni.crossfitapp.model.entity;
+package com.softuni.crossfitapp.domain.entity;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;

@@ -1,4 +1,4 @@
-package com.softuni.crossfitapp.model.entity;
+package com.softuni.crossfitapp.domain.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

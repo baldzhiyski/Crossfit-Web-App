@@ -1,6 +1,6 @@
 package com.softuni.crossfitapp.repository;
 
-import com.softuni.crossfitapp.model.entity.Coach;
+import com.softuni.crossfitapp.domain.entity.Coach;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

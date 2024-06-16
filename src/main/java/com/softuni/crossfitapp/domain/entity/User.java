@@ -1,6 +1,6 @@
-package com.softuni.crossfitapp.model.entity;
+package com.softuni.crossfitapp.domain.entity;
 
-import com.softuni.crossfitapp.model.entity.enums.Role;
+import com.softuni.crossfitapp.domain.entity.enums.Role;
 import com.softuni.crossfitapp.vallidation.annotations.ValidEmail;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

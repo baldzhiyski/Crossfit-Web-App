@@ -1,7 +1,7 @@
-package com.softuni.crossfitapp.model.entity;
+package com.softuni.crossfitapp.domain.entity;
 
-import com.softuni.crossfitapp.model.entity.enums.Level;
-import com.softuni.crossfitapp.model.entity.enums.TrainingType;
+import com.softuni.crossfitapp.domain.entity.enums.Level;
+import com.softuni.crossfitapp.domain.entity.enums.TrainingType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

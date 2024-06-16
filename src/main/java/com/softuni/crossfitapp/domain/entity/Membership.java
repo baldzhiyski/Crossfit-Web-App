@@ -1,6 +1,6 @@
-package com.softuni.crossfitapp.model.entity;
+package com.softuni.crossfitapp.domain.entity;
 
-import com.softuni.crossfitapp.model.entity.enums.MembershipType;
+import com.softuni.crossfitapp.domain.entity.enums.MembershipType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

@@ -1,27 +1,29 @@
-package com.softuni.crossfitapp.model.entity;
+package com.softuni.crossfitapp.domain.entity;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "comments")
+@Table(name = "events")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Comment extends BaseEntity{
-    @ManyToOne
-    private User author;
-
-    @Column
+@AllArgsConstructor
+public class Event extends BaseEntity{
+    @Lob
     @NotBlank
-    private String text;
+    private String description;
+
+    @NotBlank
+    private String address;
 
     @ManyToOne
-    private Training training;
+    private User creator;
 }
