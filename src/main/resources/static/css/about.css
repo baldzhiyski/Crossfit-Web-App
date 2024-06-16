@@ -1,0 +1,181 @@
+/* GLOBAL STYLES
+-------------------------------------------------- */
+/* Padding below the footer and lighter body text */
+
+body {
+    color: white;
+    background: #1a1e21;
+}
+
+.title {
+    color: #fff;
+    margin-left: 1rem;
+    font-size: 1.5rem;
+
+}
+
+.btn {
+    margin: 1rem;
+}
+
+.navbar {
+    background-color: #343a40;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.navbar-brand img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+.navbar-toggler {
+    border-color: #fff; /* Color of the toggler icon */
+}
+
+.navbar-nav .nav-link {
+    color: #fff;
+    margin-right: 1rem; / Space between navigation links */
+}
+
+.navbar-nav .nav-link {
+    color: #ccc; /* Hover color of navigation links */
+}
+
+.navbar-nav .nav-link.active {
+    font-weight: bold; /* Style for active link */
+}
+
+.navbar-dark {
+    background-color: #343a40; /* Dark grey color */
+}
+
+.navbar-nav .nav-link {
+    font-size: 1.5rem;
+    margin-right: 2rem;
+}
+
+/* Footer */
+
+footer {
+    background-color: #343a40;
+
+}
+
+footer .container {
+    padding: 1rem;
+}
+
+/* CUSTOMIZE THE CAROUSEL
+-------------------------------------------------- */
+
+/* Carousel base class */
+.carousel {
+    margin-bottom: 4rem;
+}
+/* Since positioning the image, we need to help out the caption */
+.carousel-caption {
+    bottom: 3rem;
+    z-index: 10;
+}
+
+/* Declare heights because of positioning of img element */
+.carousel-item {
+    height: 32rem;
+    background-size: cover;
+    background-position: center;
+}
+.carousel-item > img {
+    position: relative;
+    top: 1px;
+    left: 1px;
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+}
+
+
+/* MARKETING CONTENT
+-------------------------------------------------- */
+
+/* Center align the text within the three columns below the carousel */
+.marketing .col-lg-4 {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+.marketing h2 {
+    font-weight: 400;
+}
+/* rtl:begin:ignore */
+.marketing .col-lg-4 p {
+    margin-right: .75rem;
+    margin-left: .75rem;
+}
+/* rtl:end:ignore */
+/* Custom styles for carousel indicators */
+.carousel-indicators {
+    position: absolute;
+    bottom: 0;
+    margin: 10px 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 15; /* Ensure indicators are above carousel items */
+}
+
+.carousel-indicators button {
+    border: none;
+    border-radius: 50%; /* Make round */
+    width: 12px;
+    height: 12px;
+    margin: 0 8px;
+    transition: background-color 0.1s ease;
+    cursor: pointer;
+}
+
+
+/* Featurettes
+------------------------- */
+
+.featurette-divider {
+    margin: 5rem 0; /* Space out the Bootstrap <hr> more */
+}
+
+/* Thin out the marketing headings */
+.featurette-heading {
+    font-weight: 300;
+    line-height: 1;
+    /* rtl:remove */
+    letter-spacing: -.05rem;
+}
+.featurette-image {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    object-fit: cover; /* Ensures the image covers its entire container */
+    border-radius: 50%; /* Adjust as needed based on your design */
+}
+
+
+/* RESPONSIVE CSS
+-------------------------------------------------- */
+
+@media (min-width: 40em) {
+    /* Bump up size of carousel content */
+    .carousel-caption p {
+        margin-bottom: 1.25rem;
+        font-size: 1.25rem;
+        line-height: 1.4;
+    }
+
+    .featurette-heading {
+        font-size: 50px;
+    }
+}
+
+@media (min-width: 62em) {
+    .featurette-heading {
+        margin-top: 7rem;
+    }
+}

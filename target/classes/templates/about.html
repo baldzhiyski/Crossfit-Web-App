@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>About us</title>
+    <!-- Thymeleaf expressions to dynamically generate URLs -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/about.css}" rel="stylesheet"/>
+    <link href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+          integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+          crossorigin="anonymous" rel="stylesheet"/>
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+  </head>
+  <body>
+
+<header>
+  <nav th:replace = "~{fragments/navbar::nav}">
+  </nav>
+</header>
+
+<main>
+
+  <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner" >
+      <div class="carousel-item active ">
+        <img src="/images/hero_bg_2.jpg" alt="First slide">
+        <div class="container" >
+          <div class="carousel-caption text-start" >
+            <h1>Dive into Crossfit with us !</h1>
+            <p>
+              Welcome to CrossFit Stuttgart, your premier destination for high-intensity fitness training in the heart of Germany. Our state-of-the-art facility is designed to push your limits and help you achieve your fitness goals, whether you're a seasoned athlete or a newcomer to CrossFit. Located in the vibrant city of Stuttgart, we offer a variety of programs tailored to all fitness levels, ensuring you receive the personalized attention you deserve. Join us and become a part of our dynamic community that’s passionate about health, wellness, and achieving excellence together.</p>
+            <p><a class="btn btn-lg btn-primary" href="#">Join Now</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="/images/community2.webp" alt="First slide">
+        <div class="container">
+          <div class="carousel-caption" >
+            <h1>Explore our trainings ...</h1>
+            <p>We have different types of trainings for every need ! At CrossFit Stuttgart, we believe in the power of community and the strength that comes from working out together.</p>
+            <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="/images/indexMain.jpg" alt="First slide">
+        <div class="container">
+          <div class="carousel-caption text-end">
+            <h1>Explore our gym and  equipment </h1>
+            <p>Experience fitness like never before at CrossFit Stuttgart, where cutting-edge training meets a passionate community.</p>
+            <p><a class="btn btn-lg btn-primary" href="#">Browse gallery</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active"
+              aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+  </div>
+
+
+ <!--Here will be the most liked events displayed -->
+
+  <div class="container marketing">
+
+    <!-- Three columns of text below the carousel -->
+    <div class="row">
+      <div class="col-lg-4">
+        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+
+        <h2>Event 1</h2>
+        <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+
+        <h2>Event 2</h2>
+        <p>Another exciting bit of representative placeholder content. This time, we've moved on to the second column.</p>
+        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+
+        <h2>Event 3</h2>
+        <p>And lastly this, the third column of representative placeholder content.</p>
+        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+
+
+    <!-- Some Quotes, Maybe we can display when each user add a quotes and display random three -->
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7">
+        <h2 class="featurette-heading">Greg Glassman</h2>
+        <p class="lead">"The magic is in the movement, the art is in the programming, the science is in the explanation, and the fun is in the community."
+        </p>
+      </div>
+      <div class="col-md-5">
+        <img src="/images/greg.webp" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" alt="Greg Glassman">
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7 order-md-2">
+        <h2 class="featurette-heading">Keep trying !</h2>
+        <p class="lead">"Pain is temporary. Quitting lasts forever." </p>
+      </div>
+      <div class="col-md-5">
+        <img src="/images/quote.webp" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" alt="Greg Glassman">
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7">
+        <h2 class="featurette-heading">And lastly, this one.</h2>
+        <p class="lead"> "CrossFit isn’t just about building a better body; it’s about building a better life. It’s about pushing through the pain, embracing the challenge, and transforming yourself inside and out."</p>
+      </div>
+      <div class="col-md-5">
+        <img src="/images/cross.jpg" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" alt="Greg Glassman">
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+  </div><!-- /.container -->
+
+
+
+  <footer th:replace = "~{fragments/footer::footer}">
+  </footer>
+</main>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+  </body>
+</html>
