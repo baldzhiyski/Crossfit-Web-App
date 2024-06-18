@@ -1,0 +1,38 @@
+
+.navbar {
+    background-color: #343a40;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.navbar-brand img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+.navbar-toggler {
+    border-color: #fff; /* Color of the toggler icon */
+}
+
+.navbar-nav .nav-link {
+    color: #fff;
+    margin-right: 1rem; / Space between navigation links */
+}
+
+.navbar-nav .nav-link {
+    color: #ccc; /* Hover color of navigation links */
+}
+
+.navbar-nav .nav-link.active {
+    font-weight: bold; /* Style for active link */
+}
+
+.navbar-dark {
+    background-color: #343a40; /* Dark grey color */
+}
+
+.navbar-nav .nav-link {
+    font-size: 1.5rem;
+    margin-right: 2rem;
+}

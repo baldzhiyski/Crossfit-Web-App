@@ -1,5 +1,6 @@
 package com.softuni.crossfitapp.domain.entity;
 
+import com.softuni.crossfitapp.domain.entity.enums.MembershipType;
 import com.softuni.crossfitapp.domain.entity.enums.Role;
 import com.softuni.crossfitapp.vallidation.annotations.ValidEmail;
 import jakarta.persistence.*;
@@ -9,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -61,5 +63,33 @@ public class User extends BaseEntity{
 
     @ManyToOne
     private Membership membership;
+
+    @Column
+    private LocalDate membershipStartDate;
+
+    @Column
+    private LocalDate membershipEndDate;
+
+    // Add a method to set membership duration based on selected membership type
+    public void setMembershipDuration(MembershipType membershipType) {
+        LocalDate currentDate = LocalDate.now();
+        this.membershipStartDate = currentDate;
+
+        // Calculate membership end date based on the selected membership type
+        switch (membershipType) {
+            case BASIC:
+                this.membershipEndDate = currentDate.plusMonths(1);
+                break;
+            case PREMIUM:
+                this.membershipEndDate = currentDate.plusMonths(3);
+                break;
+            case ELITE:
+                this.membershipEndDate = currentDate.plusMonths(6);
+                break;
+            default:
+                // Handle unknown membership type
+                break;
+        }
+    }
 
 }
