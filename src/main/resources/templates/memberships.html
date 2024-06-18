@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Membership[s</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/memberships.css}" rel="stylesheet"/>
+    <link th:href="@{/css/navbar.css}" rel="stylesheet"/>
+    <link th:href="@{/css/footer.css}" rel="stylesheet"/>
+    <link href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+          integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+          crossorigin="anonymous" rel="stylesheet"/>
+    <link href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+          crossorigin="" rel="stylesheet"/>
+
+</head>
+<body  style="background: url('/images/memberhsipBack.jpeg') no-repeat center center fixed; background-size: cover;">
+
+<nav th:replace = "~{fragments/navbar::nav}">
+
+</nav>
+<div class="container py-3">
+
+        <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+            <h1 class="display-4 fw-normal" style="color: honeydew">Memberships</h1>
+            <p class="fs-5 text-white">Welcome to the Memberships page of our CrossFit community! Here, we offer a range of membership plans designed to fit every fitness level and lifestyle. Whether you are just starting your fitness journey or are an experienced athlete, we have the right plan for you.</p>
+        </div>
+    <main>
+        <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+            <div class="col">
+                <div class="card mb-4 rounded-3 shadow-sm">
+                    <div class="card-header py-3 bg-secondary">
+                        <h4 class="my-0 fw-normal">Basic Plan</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title pricing-card-title">$50<small class="text-muted fw-light">/month</small></h1>
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>10 users included</li>
+                            <li>2 GB of storage</li>
+                            <li>Email support</li>
+                            <li>Help center access</li>
+                        </ul>
+                        <button type="button" class="w-100 btn btn-lg btn-secondary">Buy now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card mb-4 rounded-3 shadow-sm">
+                    <div class="card-header py-3 bg-dark">
+                        <h4 class="my-0 fw-normal" style="color:white;">Plus Plan</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title pricing-card-title">$75<small class="text-muted fw-light">/month</small></h1>
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>20 users included</li>
+                            <li>10 GB of storage</li>
+                            <li>Priority email support</li>
+                            <li>Help center access</li>
+                        </ul>
+                        <button type="button" class="w-100 btn btn-lg btn-dark">Buy now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card mb-4 rounded-3 shadow-sm border-primary">
+                    <div class="card-header py-3 text-white bg-primary border-primary">
+                        <h4 class="my-0 fw-normal">Elite Plan</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title pricing-card-title">$99<small class="text-muted fw-light">/month</small></h1>
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>30 users included</li>
+                            <li>15 GB of storage</li>
+                            <li>Phone and email support</li>
+                            <li>Help center access</li>
+                        </ul>
+                        <button type="button" class="w-100 btn btn-lg btn-primary">Buy now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="display-6 text-center mb-4" style="color: whitesmoke">Compare plans</h2>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover text-center text-light" style="background-color: #5c636a">
+                <thead class="text-white">
+                <tr>
+                    <th style="width: 34%;"></th>
+                    <th style="width: 22%;">Basic Plan</th>
+                    <th style="width: 22%;">Plus Plan</th>
+                    <th style="width: 22%;">Elite Plan</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row" class="text-start font-weight-bold">Class access</th>
+                    <td class="text-light">3 classes/week</td>
+                    <td class="text-light">5 classes/week</td>
+                    <td class="text-light">Unlimited</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-start font-weight-bold">Specialized Workshops</th>
+                    <td class="text-light">1 workshop/quarter</td>
+                    <td class="text-light">2 workshops/month</td>
+                    <td class="text-light">Unlimited workshops</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-start font-weight-bold">Gym Access</th>
+                    <td class="text-light">Only with signing!</td>
+                    <td class="text-light">Only with signing!</td>
+                    <td class="text-light">Only with signing!</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-start font-weight-bold">Exclusive Classes/Events</th>
+                    <td class="text-light">No</td>
+                    <td class="text-light">Yes</td>
+                    <td class="text-light">Yes</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-start font-weight-bold">Nutrition Consultation</th>
+                    <td class="text-light">None</td>
+                    <td class="text-light">Annual</td>
+                    <td class="text-light">Quarterly</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-start font-weight-bold">Merchandise Kit</th>
+                    <td class="text-light">No</td>
+                    <td class="text-light">No</td>
+                    <td class="text-light">Yes (shirt, bottle)</td>
+                </tr>
+                </tbody>
+            </table>
+            <p class="text-center text-dark mt-3">Explore our membership plans and choose the one that best suits your fitness goals and lifestyle. Start your journey to a healthier you today!</p>
+        </div>
+
+    </main>
+</div>
+
+<footer th:replace="~{fragments/footer::footer}">
+
+</footer>
+
+</body>
+</html>
