@@ -33,6 +33,18 @@ public class User extends BaseEntity{
 
     @Column
     @NotNull
+    private String address;
+
+    @Column
+    @NotBlank
+    private String nationality;
+
+    @Column
+    @NotBlank
+    private String town;
+
+    @Column
+    @NotNull
     private Date bornOn;
 
     @Column(nullable = false)

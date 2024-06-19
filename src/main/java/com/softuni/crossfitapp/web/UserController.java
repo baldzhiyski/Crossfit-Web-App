@@ -14,4 +14,9 @@ public class UserController {
         return "auth-login";
     }
 
+    @GetMapping("/register")
+    public String getRegisterPage(){
+        return "auth-register";
+    }
+
 }

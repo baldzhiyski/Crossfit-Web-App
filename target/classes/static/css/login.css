@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Muli:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+body{
+    color: white;
+    font-family: 'Muli', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Full viewport height */
+    overflow: hidden;
+    margin: 0;
+}
+
+.container {
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 20px 40px ;
+    border-radius: 5px;
+}
+
+.container h1{
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.container a{
+    text-decoration: none;
+    color: gray;
+}
+
+.btn{
+    cursor: pointer;
+    display: inline-block;
+    width: 100%;
+    background: gray;
+    padding: 15px;
+    font-family: inherit;
+    font-size: 16px;
+    border: 0;
+    border-radius: 5px;
+}
+
+.btn:focus{
+    outline: 0;
+
+}
+
+.text{
+    margin-top: 30px;
+}
+
+.btn:active{
+    transform: scale(0.98);
+}
+.form-control{
+    position: relative;
+    margin: 20px 0 40px;
+    width: 300px;
+}
+.form-control input{
+    background-color: transparent;
+    border: 0;
+    border-bottom: 2px white solid;
+    display: block;
+    width: 100%;
+    padding: 15px 0;
+    font-size: 18px;
+    color: white;
+}
+
+.form-control input:focus, .form-control input:valid{
+    outline: 0;
+    border-bottom-color: #00c4ff;
+}
+
+.form-control label{
+    position: absolute;
+    top: 15px;
+    left: 0;
+}
+
+.form-control label span{
+    display: inline-block;
+    font-size: 18px;
+    min-width: 5px;
+    transition: 0.3s cubic-bezier(0.68,-0.55,0.265,1.55);
+}
+
+.form-control input:focus + label span,
+.form-control input:valid + label span{
+    color: lightblue;
+    transform: translateY(-30px);
+
+}
+/*
+ Remember me button
+ */
+.toggle {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.toggle-container{
+    margin-bottom: 1rem;
+}
+
+.slider {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    background-color: #ccc;
+    border-radius: 34px;
+    cursor: pointer;
+    transition: background-color 0.4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.4s;
+}
+
+
+.toggle:checked + .slider {
+    background-color: #2196F3;
+}
+
+.toggle:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+
+
+.btn {
+    cursor: pointer;
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.btn:focus {
+    outline: none;
+}
+
+.text {
+    margin-top: 15px;
+}
+
+.text a {
+    color: #3498db;
+    text-decoration: none;
+}
