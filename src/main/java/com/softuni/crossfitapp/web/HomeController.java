@@ -21,4 +21,5 @@ public class HomeController {
     public String memberships(Model model){
         return "memberships";
     }
+
 }

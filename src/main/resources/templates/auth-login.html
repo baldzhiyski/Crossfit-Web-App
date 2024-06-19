@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head >
+    <title>Login 10</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+    <link th:href="@{/css/login.css}" rel="stylesheet"/>
+
+</head>
+<body style="background: url('/images/login.jpg') no-repeat center center fixed; background-size: cover;">
+<div class="container">
+    <h1>Please Log In</h1>
+    <form>
+        <div class="form-control">
+            <input type="text" required>
+            <label >Email</label>
+        </div>
+        <div class="form-control">
+            <input type="password" required>
+            <label >Password</label>
+        </div>
+
+        <div class="toggle-container">
+            <input type="checkbox" id="rememberme" class="toggle" name="rememberme">
+            <label for="rememberme" class="slider round"></label>
+            <span class="mytext">Remember me</span> <!-- Added class mytext for styling -->
+        </div>
+
+        <button class="btn">
+            LogIn
+        </button>
+        <p class="text"> Don't have an account ?
+            <a href="#">Register</a></p>
+    </form>
+</div>
+<script th:src="@{/js/login.js}" ></script>
+</body>
+</html>
+

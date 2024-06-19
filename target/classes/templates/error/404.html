@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Error Page</title>
+    <link th:href="@{/css/errors/404.css}" rel="stylesheet">
+</head>
+<body>
+<div class="content">
+    <svg viewBox="0 0 960 300">
+        <symbol id="s-text">
+            <text text-anchor="middle" x="50%" y="50%">404</text>
+        </symbol>
+
+        <g class="g-ants">
+            <use xlink:href="#s-text" class="text"></use>
+            <use xlink:href="#s-text" class="text"></use>
+            <use xlink:href="#s-text" class="text"></use>
+            <use xlink:href="#s-text" class="text"></use>
+            <use xlink:href="#s-text" class="text"></use>
+        </g>
+    </svg>
+
+    <h1 style="color:white;">Page Not Found</h1>
+    <a th:href="@{/}">Back to Home</a>
+</div>
+</body>
+</html>
