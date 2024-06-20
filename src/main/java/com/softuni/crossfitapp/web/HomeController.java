@@ -22,4 +22,8 @@ public class HomeController {
         return "memberships";
     }
 
+    @GetMapping("/coaches")
+    public String meetTheTeam(){
+        return "coaches-page";
+    }
 }

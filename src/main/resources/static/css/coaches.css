@@ -1,0 +1,39 @@
+.card {
+    background-color: lightslategrey; /* White background for each card */
+    border: 1px solid #e0e0e0; /* Light gray border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px; /* Padding inside the card */
+    margin-bottom: 20px; /* Space between cards */
+    text-align: center; /* Center align contents */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Light shadow */
+}
+.card img {
+    width: 100%; /* Ensure the image takes full width inside the card */
+    height: auto; /* Maintain aspect ratio */
+    border-top-left-radius: 8px; /* Rounded corners for the image */
+    border-top-right-radius: 8px;
+}
+
+.card-title {
+    font-size: 24px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+.card-content {
+    font-size: 16px;
+    color: #666666; /* Gray text color */
+    margin-top: 10px;
+}
+.button {
+    background-color: #ae3c33; /* Button background color */
+    color: #ffffff; /* Button text color */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none; /* Remove underline */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+.button:hover {
+    background-color: #f11a09; /* Darker background color on hover */
+}
