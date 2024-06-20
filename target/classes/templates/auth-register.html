@@ -15,39 +15,53 @@
     <div class="inner" style=" background: url('/images/register.jpg') no-repeat; background-size: cover;" >
         <form action="">
             <h3 style="color: white">Register Now !</h3>
-            <div class="form-row">
-                <div class="form-group col-md-6">
+            <div class="row">
+                <div class="form-group col-md-6 mb-2 mr-2">
                     <label for="firstName">First Name</label>
-                    <input type="text" name="firstName" id="firstName" class="form-control" placeholder="Enter username">
+                    <input type="text" name="firstName" id="firstName" class="form-control" placeholder="Enter first name">
                 </div>
-                <div class="form-group col-md-6">
+
+                <div class="form-group col-md-6 mb-2 mr-2">
                     <label for="lastName">Last Name</label>
-                    <input type="text" name="lastName" id="lastName" class="form-control" placeholder="Enter username">
+                    <input type="text" name="lastName" id="lastName" class="form-control" placeholder="Enter last name">
                 </div>
-                <div class="form-group col-md-6">
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-6 mb-2 mr-2">
                     <label for="username">Username</label>
                     <input type="text" name="username" id="username" class="form-control" placeholder="Enter username">
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-6 mb-2 mr-2">
                     <label for="email">Email</label>
-                    <input type="text" id="email" name="email" class="form-control" placeholder="Enter valid email">
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Enter valid email">
                 </div>
-                <div class="form-group col-md-6">
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-6  mb-2 mr-2">
                     <label for="password">Password</label>
                     <input type="password" name="password" id="password" class="form-control" placeholder="Enter password">
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-6 mb-2 mr-2">
                     <label for="confirmPass">Confirm Password</label>
                     <input type="password"  id="confirmPass" name="confirmPass" class="form-control" placeholder="Confirm password">
                 </div>
-                <div class="form-group col-md-6">
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-6 mr-2 mb-2">
                     <label for="dob">Date of Birth</label>
                     <input type="date"  id="dob" name="dob" class="form-control">
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-6 mb-2">
                     <label for="address">Address</label>
                     <input type="text" id="address" name="address" class="form-control" placeholder="Enter current address">
                 </div>
+
+            </div>
+
+            <div class="row">
                 <div class="form-group col-md-6">
                     <label for="city">Nationality</label>
                     <select id="city" name="city" class="form-control">
@@ -58,15 +72,21 @@
                         <!-- Add more options as needed -->
                     </select>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox"> I accept the Terms of Use & Privacy Policy.
-                        <span class="checkmark"></span>
-                    </label>
+
+                <div class="form-group">
+                    <label class="text-center text-white font-weight-bold" for="photo">Photo</label>
+                    <input id="photo" name="photo" type="file" class="form-control"  />
                 </div>
+
             </div>
+                <div class="form-group col-md-6">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> I accept the Terms of Use & Privacy Policy.
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
             <div class="button-container">
                 <button href="/">Sign in</button>
                 <button class="btn-dark" id="homeButton" href="/">Go to home page</button>

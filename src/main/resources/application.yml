@@ -1,7 +1,9 @@
 spring:
+  mode: DEVELOPMENT
   devtools:
     restart:
       enabled: true
+
   jpa:
     properties:
       hibernate:
