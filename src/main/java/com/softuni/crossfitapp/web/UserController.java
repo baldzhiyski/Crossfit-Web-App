@@ -17,6 +17,13 @@ public class UserController {
     @GetMapping("/register")
     public String getRegisterPage(){
         return "auth-register";
+
+    }
+
+    //TODO: With some path-variable
+    @GetMapping("/updateAcc")
+    public String getUpdateAccountPage(){
+        return "updateProfilePage";
     }
 
 }
