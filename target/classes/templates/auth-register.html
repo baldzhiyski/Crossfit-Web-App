@@ -13,87 +13,139 @@
 
 <div class="wrapper" style="background-image: url('/images/inner-register.jpg');">
     <div class="inner" style=" background: url('/images/register.jpg') no-repeat; background-size: cover;" >
-        <form action="">
+        <form th:action="@{/users/register}" th:method="POST" th:object="${registerDto}">
             <h3 style="color: white">Register Now !</h3>
             <div class="row">
-                <div class="form-group col-md-6 mb-2 mr-2">
+                <div class="form-group col-md-6 mb-2 mr-2" th:classappend="${#fields.hasErrors('firstName')} ? 'has-error'">
                     <label for="firstName">First Name</label>
-                    <input type="text" name="firstName" id="firstName" class="form-control" placeholder="Enter first name">
+                    <input type="text" name="firstName" id="firstName" class="form-control" th:classappend="${#fields.hasErrors('firstName')} ? 'is-invalid' : 'is-valid'" placeholder="Enter first name" th:field="*{firstName}">
+                    <div class="valid-feedback" th:if="${#fields.hasNoErrors('firstName')}">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">
+                    </div>
                 </div>
 
-                <div class="form-group col-md-6 mb-2 mr-2">
+                <div class="form-group col-md-6 mb-2 mr-2" th:classappend="${#fields.hasErrors('lastName')} ? 'has-error'">
                     <label for="lastName">Last Name</label>
-                    <input type="text" name="lastName" id="lastName" class="form-control" placeholder="Enter last name">
+                    <input type="text" name="lastName" id="lastName" class="form-control" th:classappend="${#fields.hasErrors('lastName')} ? 'is-invalid' : 'is-valid'" placeholder="Enter last name" th:field="*{lastName}">
+                    <div class="valid-feedback" th:if="${#fields.hasNoErrors('lastName')}">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">
+                    </div>
                 </div>
             </div>
 
             <div class="row">
-                <div class="form-group col-md-6 mb-2 mr-2">
+                <div class="form-group col-md-6 mb-2 mr-2" th:classappend="${#fields.hasErrors('username')} ? 'has-error'">
                     <label for="username">Username</label>
-                    <input type="text" name="username" id="username" class="form-control" placeholder="Enter username">
+                    <input type="text" name="username" id="username" class="form-control" th:classappend="${#fields.hasErrors('username')} ? 'is-invalid' : 'is-valid'" placeholder="Enter username" th:field="*{username}">
+                    <div class="valid-feedback" th:if="${#fields.hasNoErrors('username')}">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">
+                    </div>
                 </div>
-                <div class="form-group col-md-6 mb-2 mr-2">
+
+                <div class="form-group col-md-6 mb-2 mr-2" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" class="form-control" placeholder="Enter valid email">
+                    <input type="email" id="email" name="email" class="form-control" th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : 'is-valid'" placeholder="Enter valid email" th:field="*{email}">
+                    <div class="valid-feedback" th:if="${#fields.hasNoErrors('email')}">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+                    </div>
                 </div>
             </div>
 
             <div class="row">
-                <div class="form-group col-md-6  mb-2 mr-2">
+                <div class="form-group col-md-6 mb-2 mr-2" th:classappend="${#fields.hasErrors('password')} ? 'has-error'">
                     <label for="password">Password</label>
-                    <input type="password" name="password" id="password" class="form-control" placeholder="Enter password">
+                    <input type="password" name="password" id="password" class="form-control" th:classappend="${#fields.hasErrors('password')} ? 'is-invalid' : 'is-valid'" placeholder="Enter password" th:field="*{password}">
+                    <div class="valid-feedback" th:if="${#fields.hasNoErrors('password')}">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+                    </div>
                 </div>
-                <div class="form-group col-md-6 mb-2 mr-2">
+
+                <div class="form-group col-md-6 mb-2 mr-2" th:classappend="${#fields.hasErrors('confirmPass')} ? 'has-error'">
                     <label for="confirmPass">Confirm Password</label>
-                    <input type="password"  id="confirmPass" name="confirmPass" class="form-control" placeholder="Confirm password">
+                    <input type="password" id="confirmPass" name="confirmPass" class="form-control" th:classappend="${#fields.hasErrors('confirmPass')} ? 'is-invalid' : 'is-valid'" placeholder="Confirm password" th:field="*{confirmPass}">
+                    <div class="valid-feedback" th:if="${#fields.hasNoErrors('confirmPass')}">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('confirmPass')}" th:errors="*{confirmPass}">
+                    </div>
                 </div>
             </div>
 
             <div class="row">
-                <div class="form-group col-md-6 mr-2 mb-2">
+                <div class="form-group col-md-6 mb-2 mr-2" th:classappend="${#fields.hasErrors('dob')} ? 'has-error'">
                     <label for="dob">Date of Birth</label>
-                    <input type="date"  id="dob" name="dob" class="form-control">
-                </div>
-                <div class="form-group col-md-6 mb-2">
-                    <label for="address">Address</label>
-                    <input type="text" id="address" name="address" class="form-control" placeholder="Enter current address">
+                    <input type="date" id="dob" name="dob" class="form-control" th:classappend="${#fields.hasErrors('dob')} ? 'is-invalid' : 'is-valid'" th:field="*{dob}">
+                    <div class="valid-feedback" th:if="${#fields.hasNoErrors('dob')}">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('dob')}" th:errors="*{dob}">
+                    </div>
                 </div>
 
+                <div class="form-group col-md-6 mb-2" th:classappend="${#fields.hasErrors('address')} ? 'has-error'">
+                    <label for="address">Address</label>
+                    <input type="text" id="address" name="address" class="form-control" th:classappend="${#fields.hasErrors('address')} ? 'is-invalid' : 'is-valid'" placeholder="Enter current address" th:field="*{address}">
+                    <div class="valid-feedback" th:if="${#fields.hasNoErrors('address')}">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">
+                    </div>
+                </div>
             </div>
 
             <div class="row">
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-6" th:classappend="${#fields.hasErrors('city')} ? 'has-error'">
                     <label for="city">Nationality</label>
-                    <select id="city" name="city" class="form-control">
+                    <select id="city" name="city" class="form-control" th:classappend="${#fields.hasErrors('city')} ? 'is-invalid' : 'is-valid'" th:field="*{city}">
                         <option value="">Choose... DO IT WITH API</option>
                         <option value="city1">City 1</option>
                         <option value="city2">City 2</option>
                         <option value="city3">City 3</option>
                         <!-- Add more options as needed -->
                     </select>
-                </div>
-
-                <div class="form-group">
-                    <label class="text-center text-white font-weight-bold" for="photo">Photo</label>
-                    <input id="photo" name="photo" type="file" class="form-control"  />
-                </div>
-
-            </div>
-                <div class="form-group col-md-6">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox"> I accept the Terms of Use & Privacy Policy.
-                            <span class="checkmark"></span>
-                        </label>
+                    <div class="valid-feedback" th:if="${#fields.hasNoErrors('city')}">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('city')}" th:errors="*{city}">
                     </div>
                 </div>
+
+                <div class="form-group" th:classappend="${#fields.hasErrors('photo')} ? 'has-error'">
+                    <label class="text-center text-white font-weight-bold" for="photo">Photo</label>
+                    <input id="photo" name="photo" type="file" class="form-control" th:classappend="${#fields.hasErrors('photo')} ? 'is-invalid' : 'is-valid'" th:field="*{photo}">
+                    <div class="valid-feedback" th:if="${#fields.hasNoErrors('photo')}">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('photo')}" th:errors="*{photo}">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-md-6" th:classappend="${#fields.hasErrors('termsAccepted')} ? 'has-error'">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" th:field="*{termsAccepted}"> Accept Terms of Use & Privacy Policy
+                    </label>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('termsAccepted')}">
+                        You must accept the terms and conditions.
+                    </div>
+                </div>
+            </div>
             <div class="button-container">
-                <button href="/">Sign in</button>
-                <button class="btn-dark" id="homeButton" href="/">Go to home page</button>
+                <button type="submit" th:href="@{/}">Sign in</button>
+                <button class="btn-dark" id="homeButton" th:href="@{/}">Go to home page</button>
             </div>
         </form>
     </div>
 </div>
-
 </body>
 </html>
