@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Meet the Team Page</title>
+  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+  <link th:href="@{/css/coaches.css}" rel="stylesheet"/>
+  <link th:href="@{/css/navbar.css}" rel="stylesheet"/>
+  <link th:href="@{/css/footer.css}" rel="stylesheet"/>
+</head>
+<body style="background-color: #495057">
+<nav th:replace = "~{fragments/navbar::nav}">
+
+</nav>
+<div class="container">
+  <h1 class="text-center mt-4" style="margin-bottom: 5rem;color: #d7d8da">Meet the Team</h1>
+  <div class="row justify-content-center">
+    <div class="col-md-4">
+      <div class="card">
+        <img src="/static/images/community2.webp" alt="Jane">
+        <div class="container">
+          <h2 class="card-title">Jane Doe</h2>
+          <p class="card-content">CEO & Founder</p>
+          <p class="card-content">Some text that describes Jane Doe lorem ipsum.</p>
+          <p><a href="#" class="button">Contact</a></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card" >
+        <img src="img2.jpg" alt="Mike">
+        <div class="container" >
+          <h2 class="card-title">Mike Ross</h2>
+          <p class="card-content">Art Director</p>
+          <p class="card-content">Some text that describes Mike Ross lorem ipsum.</p>
+          <p><a href="#" class="button">Contact</a></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <img src="img3.jpg" alt="John">
+        <div class="container">
+          <h2 class="card-title">John Doe</h2>
+          <p class="card-content">Designer</p>
+          <p class="card-content">Some text that describes John Doe lorem ipsum.</p>
+          <p><a href="#" class="button">Contact</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <img src="img3.jpg" alt="John">
+        <div class="container">
+          <h2 class="card-title">John Doe</h2>
+          <p class="card-content">Designer</p>
+          <p class="card-content">Some text that describes John Doe lorem ipsum.</p>
+          <p><a href="#" class="button">Contact</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <img src="img3.jpg" alt="John">
+        <div class="container">
+          <h2 class="card-title">John Doe</h2>
+          <p class="card-content">Designer</p>
+          <p class="card-content">Some text that describes John Doe lorem ipsum.</p>
+          <p><a href="#" class="button">Contact</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <img src="img3.jpg" alt="John">
+        <div class="container">
+          <h2 class="card-title">John Doe</h2>
+          <p class="card-content">Designer</p>
+          <p class="card-content">Some text that describes John Doe lorem ipsum.</p>
+          <p><a href="#" class="button">Contact</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Footer -->
+<footer th:replace="~{fragments/footer::footer}"></footer>
+</body>
+</html>
