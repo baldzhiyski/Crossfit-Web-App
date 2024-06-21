@@ -26,4 +26,9 @@ public class HomeController {
     public String meetTheTeam(){
         return "coaches-page";
     }
+
+    @GetMapping("/workouts")
+    public  String getWorkouts(){
+        return "workouts";
+    }
 }

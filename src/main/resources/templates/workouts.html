@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Workouts</title>
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/workout.css}" rel="stylesheet"/>
+    <link th:href="@{/css/navbar.css}" rel="stylesheet"/>
+    <link th:href="@{/css/footer.css}" rel="stylesheet"/>
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+</head>
+<body style="background-color: #546e7a">
+<nav th:replace = "~{fragments/navbar::nav}"></nav>
+<main>
+    <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+        <div class="col-md-5 p-lg-5 mx-auto my-5">
+            <h1 class="display-4 fw-normal">Workouts by Crossfit Stuttgart </h1>
+            <p class="lead fw-normal">Welcome to our workouts page !</p>
+        </div>
+        <div class="product-device shadow-sm d-none d-md-block" style="background: url('images/weights.jpg') no-repeat center center fixed; background-size: cover;"></div>
+        <div class="product-device product-device-2 shadow-sm d-none d-md-block" style="background: url('images/weights2.jpg') no-repeat center center fixed; background-size: cover;"></div>
+    </div>
+
+    <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+        <div class="bg-dark me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+            <div class="my-3 py-3">
+                <h2 class="display-5">HYROX</h2>
+                <p class="lead">High-intensity fitness race designed to push your limits.</p>
+                <a class="btn btn-outline-secondary" href="#">Explore</a>
+            </div>
+            <div class="product-image bg-light shadow-sm mx-auto">
+                <img src="images/hyrox.webp" alt="Product Image">
+            </div>
+        </div>
+        <div class="me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden" style="background-color: #304c59">
+            <div class="my-3 p-3" style="color: white">
+                <h2 class="display-5">WOD</h2>
+                <p class="lead">Workout of the Day: Diverse, dynamic, and demanding.</p>
+                <a class="btn btn-outline-secondary" href="#">Explore</a>
+            </div>
+            <div class="product-image bg-light shadow-sm mx-auto">
+                <img src="images/community2.webp" alt="Product Image">
+            </div>
+        </div>
+    </div>
+
+    <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+        <div class=" me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden" style="background-color: #86b7fe">
+            <div class="my-3 p-3">
+                <h2 class="display-5">CARDIO</h2>
+                <p class="lead">Heart-pumping routines to boost your endurance.</p>
+                <a class="btn btn-outline-secondary" href="#">Explore</a>
+            </div>
+            <div class="product-image bg-light shadow-sm mx-auto">
+                <img src="images/cardio.webp" alt="Product Image">
+            </div>
+        </div>
+        <div class=" me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden" style="background-color:#607d8b">
+            <div class="my-3 py-3">
+                <h2 class="display-5">MUMFIT</h2>
+                <p class="lead">Tailored fitness programs for busy moms.</p>
+                <a class="btn btn-outline-dark" href="#">Explore</a>
+            </div>
+            <div class="product-image bg-light shadow-sm mx-auto">
+                <img src="images/mumfit.jpg" alt="Product Image">
+            </div>
+        </div>
+    </div>
+
+    <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+        <div class="bg-dark me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden" style="color: white">
+            <div class="my-3 p-3">
+                <h2 class="display-5">GYMNASTICS</h2>
+                <p class="lead">Experience dynamic workouts that focus on strength, flexibility, and precision.</p>
+                <a class="btn btn-outline-secondary" href="#">Explore</a>
+            </div>
+            <div class="product-image bg-light shadow-sm mx-auto">
+                <img src="images/gymnastics.webp" alt="Product Image">
+            </div>
+        </div>
+        <div class="bg-secondary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+            <div class="my-3 py-3">
+                <h2 class="display-5">WEIGHTLIFTING</h2>
+                <p class="lead">Lifting weights and improve your style !</p>
+                <a class="btn btn-outline-dark" href="#">Explore</a>
+            </div>
+            <div class="product-image bg-light shadow-sm mx-auto">
+                <img src="images/weightlifting.jpg" alt="Product Image">
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer::footer}"></footer>
+</body>
+</html>
