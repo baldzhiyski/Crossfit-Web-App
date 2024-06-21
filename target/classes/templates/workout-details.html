@@ -1,10 +1,138 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Workout-Details-Page</title>
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/workout-details.css}" rel="stylesheet"/>
+    <link th:href="@{/css/navbar.css}" rel="stylesheet"/>
+    <link th:href="@{/css/footer.css}" rel="stylesheet"/>
+    <link href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+          integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+          crossorigin="anonymous" rel="stylesheet"/>
 </head>
 <body>
+<nav th:replace = "~{fragments/navbar::nav}"></nav>
+<div class="container">
+    <div class="row">
+        <!-- Left Side: Training Description Card -->
+        <div class="col-md-12 mt-2">
+            <div class="card mb-7">
+                <img src="/images/hyrox.webp" class="card-img-top" alt="Training Image">
+                <div class="card-body bg-dark" style="color:white;">
+                    <h5 class="card-title">Cardio</h5>
+                    <p class="card-text">Heart-pumping routines to boost your endurance.
+                        Heart-pumping routines to boost your endurance.
+                        Heart-pumping routines to boost your endurance.</p>
+                    <p class="card-text"><small class="text-muted">Advanced</small></p>
+                </div>
+            </div>
+        </div>
 
+
+        <!-- Right Side: Comments Section -->
+        <div class="col-md-12">
+            <div class="be-comment-block">
+                <h1 class="comments-title">Comments (3)</h1>
+
+                <!-- Comment 1 -->
+                <div class="d-flex flex-start mb-4">
+                    <img class="rounded-circle shadow-1-strong me-3"
+                         src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(32).webp" alt="avatar" width="65"
+                         height="65" />
+                    <div class="card w-100">
+                        <div class="card-body p-4">
+                            <div class="">
+                                <h5>Johny Cash</h5>
+                                <p class="small">3 hours ago</p>
+                                <p>
+                                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
+                                    ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus
+                                    viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla.
+                                    Donec lacinia congue felis in faucibus ras purus odio, vestibulum in
+                                    vulputate at, tempus viverra turpis.
+                                </p>
+
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <a href="#!" class="link-muted me-2"><i class="fas fa-thumbs-up me-1"></i>132</a>
+                                        <a href="#!" class="link-muted"><i class="fas fa-thumbs-down me-1"></i>15</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comment 2 -->
+                <div class="d-flex flex-start mb-4">
+                    <img class="rounded-circle shadow-1-strong me-3"
+                         src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(32).webp" alt="avatar" width="65"
+                         height="65" />
+                    <div class="card w-100">
+                        <div class="card-body p-4">
+                            <div class="">
+                                <h5>Johny Cash</h5>
+                                <p class="small">3 hours ago</p>
+                                <p>
+                                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
+                                </p>
+
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <a href="#!" class="link-muted me-2"><i class="fas fa-thumbs-up me-1"></i>132</a>
+                                        <a href="#!" class="link-muted"><i class="fas fa-thumbs-down me-1"></i>15</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex flex-start mb-4">
+                    <img class="rounded-circle shadow-1-strong me-3"
+                         src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(32).webp" alt="avatar" width="65"
+                         height="65" />
+                    <div class="card w-100">
+                        <div class="card-body p-4">
+                            <div class="">
+                                <h5>Johny Cash</h5>
+                                <p class="small">3 hours ago</p>
+                                <p>
+                                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
+                                    ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus
+                                    viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla.
+                                    Donec lacinia congue felis in faucibus ras purus odio, vestibulum in
+                                    vulputate at, tempus viverra turpis.
+                                </p>
+
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <a href="#!" class="link-muted me-2"><i class="fas fa-thumbs-up me-1"></i>132</a>
+                                        <a href="#!" class="link-muted"><i class="fas fa-thumbs-down me-1"></i>15</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Comment Form -->
+                <form class="form-block" th:method="POST" th:action="@{/workouts/details}">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <textarea class="form-input" required="" placeholder="Your text"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <button class="btn btn-primary pull-right" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="~{fragments/footer::footer}"></footer>
 </body>
 </html>

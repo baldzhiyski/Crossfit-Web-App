@@ -27,8 +27,4 @@ public class HomeController {
         return "coaches-page";
     }
 
-    @GetMapping("/workouts")
-    public  String getWorkouts(){
-        return "workouts";
-    }
 }
