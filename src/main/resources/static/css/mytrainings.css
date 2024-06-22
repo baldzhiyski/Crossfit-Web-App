@@ -1,0 +1,49 @@
+body {
+    background: url('/images/myworkouts.jpg') no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+}
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity to make it darker or lighter */
+    z-index: -1; /* Ensure the pseudo-element is behind other content */
+}
+.card {
+    margin-bottom: 5rem;
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+    transition: transform 0.15s ease-in-out;
+    background-color: #1e2a21; /* White background for cards */
+}
+.card:hover {
+    transform: translateY(-5px); /* Lift the card slightly on hover */
+}
+.card-img-top {
+    height: 225px;
+    object-fit: cover;
+}
+.card-body {
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+.btn-delete {
+    margin-top: auto;
+    background-color: darkred; /* Red background for delete button */
+    border-color: #dc3545; /* Red border color for delete button */
+    color: #fff; /* White text color */
+    transition: background-color 0.3s ease;
+}
+.btn-delete:hover {
+    background-color: #c82333; /* Darker red on hover */
+    border-color: #bd2130; /* Darker red border on hover */
+}
+
+
+.title{
+    color: ghostwhite;
+}

@@ -26,10 +26,18 @@ public class UserController {
         return "updateProfilePage";
     }
 
+
     //TODO: With some path-variable
     @GetMapping("/profile")
     public String getProfile(){
         return "profile-page";
+    }
+
+
+    //TODO: With some path-variable
+    @GetMapping("/my-trainings")
+    public String myTrainings(){
+        return "my-trainings";
     }
 
 }

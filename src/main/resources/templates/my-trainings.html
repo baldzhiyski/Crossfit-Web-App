@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Workouts for the Week</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/mytrainings.css}" rel="stylesheet"/>
+    <link th:href="@{/css/navbar.css}" rel="stylesheet"/>
+    <link th:href="@{/css/footer.css}" rel="stylesheet"/>
+</head>
+<body>
+<nav th:replace="~{fragments/navbar::nav}"></nav>
+<main role="main">
+    <section class="py-5 text-center">
+        <div class="container">
+            <h1 class="title">My workouts for the week</h1>
+            <h4  style="color:ghostwhite;">Browse your scheduled workouts below. Click 'Delete' to remove a workout session.</h4>
+        </div>
+    </section>
+
+        <div class="container">
+
+            <div class="row justify-content-center">
+                <!-- Workout Session Card -->
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm">
+                        <img src="https://via.placeholder.com/800x600" class="card-img-top" alt="Placeholder Image">
+                        <div class="card-body">
+                            <h5 class="card-title">Training Name</h5>
+                            <p class="card-text">Date: 2024-06-24</p>
+                            <p class="card-text">Time: 10:00 AM</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary btn-delete">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Repeat this block for each card -->
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm">
+                        <img src="https://via.placeholder.com/800x600" class="card-img-top" alt="Placeholder Image">
+                        <div class="card-body">
+                            <h5 class="card-title">Training Name</h5>
+                            <p class="card-text">Date: 2024-06-25</p>
+                            <p class="card-text">Time: 2:00 PM</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary btn-delete">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm">
+                        <img src="https://via.placeholder.com/800x600" class="card-img-top" alt="Placeholder Image">
+                        <div class="card-body">
+                            <h5 class="card-title">Training Name</h5>
+                            <p class="card-text">Date: 2024-06-25</p>
+                            <p class="card-text">Time: 2:00 PM</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary btn-delete">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End of card blocks -->
+            </div>
+
+        </div>
+</main>
+<footer th:replace="~{fragments/footer::footer}"></footer>
+</body>
+</html>
