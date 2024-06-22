@@ -27,4 +27,9 @@ public class HomeController {
         return "coaches-page";
     }
 
+    @GetMapping("/schedule")
+    public String schedule(){
+        return "schedule";
+    }
+
 }

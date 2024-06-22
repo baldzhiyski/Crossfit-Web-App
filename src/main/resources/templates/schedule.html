@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrossFit App Schedule</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/schedule.css}" rel="stylesheet"/>
+    <link th:href="@{/css/navbar.css}" rel="stylesheet"/>
+    <link th:href="@{/css/footer.css}" rel="stylesheet"/>
+</head>
+<body>
+<nav th:replace = "~{fragments/navbar::nav}"></nav>
+<div class="container">
+    <h1 class="my-4 text-center">Weekly Training Schedule</h1>
+    <div class="row">
+        <!-- Monday -->
+        <div class="col-md-4">
+            <h3 class="day-heading">Monday</h3>
+            <div class="card">
+                <div class="card-body unavailable">
+                    <span class="card-title">HYROX</span>
+                    <div class="details">
+                        <span class="date">Date: 2024-06-24</span>
+                        <span class="time">Time: 10:00 AM</span>
+                        <span class="free-spots">Free Spots: 20/20</span>
+                    </div>
+                    <button class="btn btn-dark btn-join">Full</button>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <span class="card-title">WOD</span>
+                    <div class="details">
+                        <span class="date">Date: 2024-06-24</span>
+                        <span class="time">Time: 1:00 PM</span>
+                        <span class="free-spots">Free Spots: 5/20</span>
+                    </div>
+                    <button class="btn btn-primary btn-join">Join</button>
+                </div>
+            </div>
+        </div>
+        <!-- Tuesday -->
+        <div class="col-md-4">
+            <h3 class="day-heading">Tuesday</h3>
+            <div class="card">
+                <div class="card-body">
+                    <span class="card-title">CARDIO</span>
+                    <div class="details">
+                        <span class="date">Date: 2024-06-25</span>
+                        <span class="time">Time: 9:00 AM</span>
+                        <span class="free-spots">Free Spots: 2/20</span>
+                    </div>
+                    <button class="btn btn-primary btn-join">Join</button>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <span class="card-title">WEIGHTLIFTING</span>
+                    <div class="details">
+                        <span class="date">Date: 2024-06-25</span>
+                        <span class="time">Time: 4:00 PM</span>
+                        <span class="free-spots">Free Spots: 0/20</span>
+                    </div>
+                    <button class="btn btn-secondary btn-join" disabled>Full</button>
+                </div>
+            </div>
+        </div>
+        <!-- Wednesday -->
+        <div class="col-md-4">
+            <h3 class="day-heading">Wednesday</h3>
+            <div class="card">
+                <div class="card-body">
+                    <span class="card-title">HYROX</span>
+                    <div class="details">
+                        <span class="date">Date: 2024-06-26</span>
+                        <span class="time">Time: 10:00 AM</span>
+                        <span class="free-spots">Free Spots: 8/20</span>
+                    </div>
+                    <button class="btn btn-primary btn-join">Join</button>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <span class="card-title">WOD</span>
+                    <div class="details">
+                        <span class="date">Date: 2024-06-26</span>
+                        <span class="time">Time: 1:00 PM</span>
+                        <span class="free-spots">Free Spots: 6/20</span>
+                    </div>
+                    <button class="btn btn-primary btn-join">Join</button>
+                </div>
+            </div>
+        </div>
+        <!-- Thursday -->
+        <div class="col-md-4">
+            <h3 class="day-heading">Thursday</h3>
+            <div class="card">
+                <div class="card-body">
+                    <span class="card-title">CARDIO</span>
+                    <div class="details">
+                        <span class="date">Date: 2024-06-27</span>
+                        <span class="time">Time: 9:00 AM</span>
+                        <span class="free-spots">Free Spots: 15/20</span>
+                    </div>
+                    <button class="btn btn-primary btn-join">Join</button>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <span class="card-title">WEIGHTLIFTING</span>
+                    <div class="details">
+                        <span class="date">Date: 2024-06-27</span>
+                        <span class="time">Time: 4:00 PM</span>
+                        <span class="free-spots">Free Spots: 12/20</span>
+                    </div>
+                    <button class="btn btn-primary btn-join">Join</button>
+                </div>
+            </div>
+        </div>
+        <!-- Friday -->
+        <div class="col-md-4">
+            <h3 class="day-heading">Friday</h3>
+            <div class="card">
+                <div class="card-body">
+                    <span class="card-title">HYROX</span>
+                    <div class="details">
+                        <span class="date">Date: 2024-06-28</span>
+                        <span class="time">Time: 10:00 AM</span>
+                        <span class="free-spots">Free Spots: 4/20</span>
+                    </div>
+                    <button class="btn btn-primary btn-join">Join</button>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <span class="card-title">WOD</span>
+                    <div class="details">
+                        <span class="date">Date: 2024-06-28</span>
+                        <span class="time">Time: 1:00 PM</span>
+                        <span class="free-spots">Free Spots: 0/20</span>
+                    </div>
+                    <button class="btn btn-secondary btn-join" disabled>Full</button>
+                </div>
+            </div>
+        </div>
+        <!-- Saturday -->
+        <div class="col-md-4">
+            <h3 class="day-heading">Saturday</h3>
+            <div class="card">
+                <div class="card-body">
+                    <span class="card-title">CARDIO</span>
+                    <div class="details">
+                        <span class="date">Date: 2024-06-29</span>
+                        <span class="time">Time: 9:00 AM</span>
+                        <span class="free-spots">Free Spots: 9/20</span>
+                    </div>
+                    <button class="btn btn-primary btn-join">Join</button>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <span class="card-title">WEIGHTLIFTING</span>
+                    <div class="details">
+                        <span class="date">Date: 2024-06-29</span>
+                        <span class="time">Time: 4:00 PM</span>
+                        <span class="free-spots">Free Spots: 3/20</span>
+                    </div>
+                    <button class="btn btn-primary btn-join">Join</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="~{fragments/footer::footer}"></footer>
+</body>
+</html>

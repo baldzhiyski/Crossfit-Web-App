@@ -1,0 +1,66 @@
+body {
+    background: url('/images/schedule.jpg') no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+    color: white;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity to make it darker or lighter */
+    z-index: -1; /* Ensure the pseudo-element is behind other content */
+}
+.container {
+    margin-top: 40px;
+    color: white;
+}
+.card {
+    margin: 15px 0;
+    transition: transform 0.2s;
+}
+.card:hover {
+    transform: scale(1.05);
+}
+.card-body {
+    display: flex;
+    flex-direction: column;
+    background: #408D8E;
+}
+.card .unavailable{
+    background: #6c757d;
+
+
+}
+.details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.card-title {
+    flex: 1;
+    font-weight: bold;
+    color: #1e2125;
+}
+.free-spots, .date, .time {
+    display: flex;
+    font-size: 0.8em;
+    color: snow;
+}
+.day-heading {
+    margin-top: 20px;
+    color: white;
+    text-align: center;
+    border-bottom: 2px solid white;
+    padding-bottom: 10px;
+}
+.btn-join {
+    width: 100px;
+    align-self: flex-end;
+    margin-top: 10px;
+}
