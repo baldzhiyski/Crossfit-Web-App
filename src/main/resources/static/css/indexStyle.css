@@ -5,6 +5,16 @@
     --shadow: 0 1px 5px rgba(104, 104, 104, 0.8);
     --lightGray: rgba(241, 241, 241, 0.8);
 }
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0.3, 0.1, 0.2, 0.6); /* Adjust opacity to make it darker or lighter */
+    z-index: -1; /* Ensure the pseudo-element is behind other content */
+}
 
 body {
     margin: 0;
@@ -49,6 +59,12 @@ font-size: 1.5rem;
 }
 
 
+.top-container {
+    position: relative;
+    margin-top: -100px; /* Adjust the negative margin to move the top-container up */
+    z-index: 1; /* Ensure the top-container is above the background */
+}
+
 .showcase {
     grid-area: showcase;
     height: 400px;
@@ -65,14 +81,7 @@ font-size: 1.5rem;
     border-radius: 50%;
     overflow: hidden;
     text-align: center;
-}
-
-.top-container {
-    display: grid;
-    grid-gap: 20px;
-    grid-template-areas:
-    'showcase showcase top-box-a'
-    'showcase showcase top-box-b';
+    margin-bottom: -100px; /* Adjust to move the showcase closer to the content above */
 }
 
 

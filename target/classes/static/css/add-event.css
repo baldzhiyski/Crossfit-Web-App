@@ -1,0 +1,71 @@
+body {
+    background: url('/images/games2.jpg') no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+    color: #fff; /* Set default text color to white */
+}
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0.3, 0.1, 0.2, 0.6); /* Adjust opacity to make it darker or lighter */
+    z-index: -1; /* Ensure the pseudo-element is behind other content */
+}
+.container2 {
+    max-width: 800px;
+    margin: auto;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+.form-group {
+    margin-bottom: 20px;
+}
+label {
+    font-weight: bold;
+    color: #fff; /* Set label text color to white */
+}
+.form-control {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #fff; /* Add bottom border */
+    color: #fff; /* Set text color to white */
+    border-radius: 0; /* Remove any border-radius */
+}
+.form-control:focus {
+    background: transparent;
+    border-color: #fff; /* Change border color on focus */
+    box-shadow: none;
+}
+.form-control::placeholder {
+    color: #fff; /* Set placeholder text color to white */
+    opacity: 0.75; /* Adjust placeholder opacity */
+}
+.form-control:-webkit-autofill {
+    -webkit-text-fill-color: #fff; /* Set autofill text color to white */
+    transition: background-color 5000s ease-in-out 0s; /* Adjust autofill background color transition */
+}
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+.btn-primary:hover {
+    background-color: #0069d9;
+    border-color: #0062cc;
+}
+/* Custom styling for the form */
+#event_form {
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background for the form */
+    padding: 20px;
+    border-radius: 8px;
+}
+#event_form h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #fff; /* Set heading color to white */
+}
