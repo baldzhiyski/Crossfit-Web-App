@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Event Page</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/add-event.css}" rel="stylesheet"/>
+    <link th:href="@{/css/navbar.css}" rel="stylesheet"/>
+    <link th:href="@{/css/footer.css}" rel="stylesheet"/>
+    <link href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+          integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+          crossorigin="anonymous" rel="stylesheet"/>
+</head>
+<body>
+<nav th:replace = "~{fragments/navbar::nav}"></nav>
+<div class="container2 mt-5">
+    <div id="event_form">
+        <h2>Add Event</h2>
+        <form action="submit_event.php" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="event_name">Event Name</label>
+                <input type="text" class="form-control" id="event_name" name="event_name" required>
+            </div>
+            <div class="form-group">
+                <label for="event_date">Event Date</label>
+                <input type="date" class="form-control" id="event_date" name="event_date" required>
+            </div>
+            <div class="form-group">
+                <label for="event_time">Event Time</label>
+                <input type="time" class="form-control" id="event_time" name="event_time" required>
+            </div>
+            <div class="form-group">
+                <label for="event_place">Event Place</label>
+                <input type="text" class="form-control" id="event_place" name="event_place" required>
+            </div>
+            <div class="form-group">
+                <label for="event_description">Event Description</label>
+                <textarea class="form-control" id="event_description" name="event_description" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="event_picture">Event Picture</label>
+            </div>
+            <div class="form-group">
+                <input type="file" class="form-control-file" id="event_picture" name="event_picture" accept="image/*" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        </form>
+    </div>
+</div>
+<footer th:replace="~{fragments/footer::footer}"></footer>
+</body>
+</html>
