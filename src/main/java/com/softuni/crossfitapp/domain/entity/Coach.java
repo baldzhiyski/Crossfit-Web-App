@@ -14,22 +14,20 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class Coach extends BaseEntity{
-    @Column
-    @NotBlank
-    private String fullName;
 
     @Column
     @NotBlank
-    private String description;
+    private String firstName;
 
     @Column
     @NotBlank
-    private String imageUrl;
+    private String lastName;
 
-    @ManyToMany
-    private List<Certificate> certificateList;
 
-    @OneToMany(mappedBy = "coach")
+    @OneToMany(mappedBy = "owner")
+    private List<Certificate> certificates;
+
+    @OneToMany(mappedBy = "coach", cascade = CascadeType.ALL)
     private List<WeeklyTraining> trainingsPerWeek;
 
 }

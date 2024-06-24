@@ -1,14 +1,16 @@
 package com.softuni.crossfitapp.domain.entity;
 
 import com.softuni.crossfitapp.domain.entity.enums.MembershipType;
-import com.softuni.crossfitapp.domain.entity.enums.Role;
+import com.softuni.crossfitapp.domain.entity.enums.RoleType;
 import com.softuni.crossfitapp.vallidation.annotations.ValidEmail;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -18,6 +20,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "users")
 public class User extends BaseEntity{
     @Column(nullable = false,unique = true)
@@ -60,10 +63,11 @@ public class User extends BaseEntity{
     @Column
     private String email;
 
-    @Enumerated(EnumType.STRING)
-    @NotNull
+    @ManyToOne
     private Role role;
 
+    @ManyToOne
+    private Membership membership;
     @ManyToMany
     @JoinTable(
             name = "participants_trainings",
@@ -73,14 +77,18 @@ public class User extends BaseEntity{
     private List<WeeklyTraining> trainingsPerWeekList;
 
 
-    @ManyToOne
-    private Membership membership;
-
     @Column
     private LocalDate membershipStartDate;
 
     @Column
     private LocalDate membershipEndDate;
+    @PrePersist
+    @PreUpdate
+    public void encodePassword() {
+        if (this.password != null) {
+            this.password = new BCryptPasswordEncoder().encode(this.password);
+        }
+    }
 
     // Add a method to set membership duration based on selected membership type
     public void setMembershipDuration(MembershipType membershipType) {

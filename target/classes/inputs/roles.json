@@ -1,0 +1,11 @@
+[
+    {
+      "roleType": "ADMIN"
+    },
+    {
+      "roleType": "USER"
+    },
+    {
+      "roleType": "COACH"
+    }
+]

@@ -1,0 +1,22 @@
+[
+    {
+      "membershipType": "BASIC",
+      "price": 70,
+      "duration": 1
+    },
+    {
+      "membershipType": "PREMIUM",
+      "price": 100,
+      "duration": 1
+    },
+    {
+      "membershipType": "ELITE",
+      "price": 130,
+      "duration": 1
+    },
+    {
+      "membershipType": "UNLIMITED",
+      "price": 400,
+      "duration": 3
+    }
+]

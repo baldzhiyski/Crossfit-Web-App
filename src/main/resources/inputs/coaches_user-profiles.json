@@ -1,0 +1,128 @@
+[
+  {
+    "username": "johndoe",
+    "firstName": "John",
+    "lastName": "Doe",
+    "address": "123 Main St",
+    "nationality": "US",
+    "town": "New York",
+    "bornOn": "1990-05-15",
+    "password": "password123",
+    "imageUrl": "images/john.jpeg",
+    "telephoneNumber": "1234567890",
+    "email": "john.doe@gmail.com",
+    "role": {
+      "roleType": "COACH"
+    },
+    "membership": {
+      "membershipType": "UNLIMITED"
+    },
+    "membershipStartDate": "2023-05-15",
+    "membershipEndDate": "2028-05-15"
+  },
+  {
+    "username": "janesmith",
+    "firstName": "Jane",
+    "lastName": "Smith",
+    "address": "456 Oak Ave",
+    "nationality": "UK",
+    "town": "London",
+    "bornOn": "1985-04-10",
+    "password": "securePwd456",
+    "imageUrl": "images/janes.jpeg",
+    "telephoneNumber": "9876543210",
+    "email": "jane.smith@yahoo.com",
+    "role": {
+      "roleType": "COACH"
+    },
+    "membership": {
+      "membershipType": "UNLIMITED"
+    },
+    "membershipStartDate": "2023-04-10",
+    "membershipEndDate": "2028-04-10"
+  },
+  {
+    "username": "michaelbrown",
+    "firstName": "Michael",
+    "lastName": "Brown",
+    "address": "789 Pine Rd",
+    "nationality": "CA",
+    "town": "Toronto",
+    "bornOn": "1988-08-05",
+    "password": "mike123",
+    "imageUrl": "images/michael.jpeg",
+    "telephoneNumber": "5551234567",
+    "email": "michael.brown@abv.bg",
+    "role": {
+      "roleType": "COACH"
+    },
+    "membership": {
+      "membershipType": "UNLIMITED"
+    },
+    "membershipStartDate": "2023-08-05",
+    "membershipEndDate": "2028-08-05"
+  },
+  {
+    "username": "emilyjohnson",
+    "firstName": "Emily",
+    "lastName": "Johnson",
+    "address": "321 Cedar Blvd",
+    "nationality": "AU",
+    "town": "Sydney",
+    "bornOn": "1992-07-28",
+    "password": "emilyPass",
+    "imageUrl": "images/emily.jpeg",
+    "telephoneNumber": "3339998888",
+    "email": "emily.johnson@gmail.com",
+    "role": {
+      "roleType": "COACH"
+    },
+    "membership": {
+      "membershipType": "UNLIMITED"
+    },
+    "membershipStartDate": "2023-07-28",
+    "membershipEndDate": "2028-07-28"
+  },
+  {
+    "username": "davidlee",
+    "firstName": "David",
+    "lastName": "Lee",
+    "address": "567 Maple Lane",
+    "nationality": "NZ",
+    "town": "Auckland",
+    "bornOn": "1995-09-10",
+    "password": "davidPwd789",
+    "imageUrl": "images/devid.jpeg",
+    "telephoneNumber": "7774445555",
+    "email": "david.lee@abv.bg",
+    "role": {
+      "roleType": "COACH"
+    },
+    "membership": {
+      "membershipType": "UNLIMITED"
+    },
+    "membershipStartDate": "2023-09-10",
+    "membershipEndDate": "2028-09-10"
+  },
+  {
+    "username": "sarahclark",
+    "firstName": "Sarah",
+    "lastName": "Clark",
+    "address": "876 Elm Street",
+    "nationality": "DE",
+    "town": "Berlin",
+    "bornOn": "1993-06-30",
+    "password": "sarahPass567",
+    "imageUrl": "images/sarah.jpeg",
+    "telephoneNumber": "9993336666",
+    "email": "sarah.clark@gmail.com",
+    "role": {
+      "roleType": "COACH"
+    },
+    "membership": {
+      "membershipType": "UNLIMITED"
+    },
+    "membershipStartDate": "2023-06-30",
+    "membershipEndDate": "2028-06-30"
+  }
+]
