@@ -2,6 +2,9 @@
 
 Welcome to the CrossFit Web App repository! This project is designed to provide a comprehensive platform for managing CrossFit training schedules, events, user profiles, and more. Whether you're a CrossFit enthusiast, coach, or gym owner, this application aims to enhance your experience with intuitive features and seamless functionality. With this custom app I am trying to enhance my developer skills.
 
+## Functionality
+- The coaches and the admins are added with static data , using json files . Each coach and admin has an active account with the corresponding role. Each coach can also participate in a training session with the others , having unlimited membership until leaving the work.
+
 ## Features
 
 - **User Management**: Register, login, and manage user profiles with roles (participant, coach, admin).
