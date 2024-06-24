@@ -6,6 +6,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MembershipDto {
+public class SeedMembershipTypeDto {
     private MembershipType membershipType;
 }

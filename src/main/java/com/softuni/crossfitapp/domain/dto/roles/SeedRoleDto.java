@@ -6,6 +6,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RolesDto {
+public class SeedRoleDto {
     private RoleType roleType;
 }

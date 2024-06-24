@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class CertificateDto {
+public class SeedCertificateDto {
 
     private String name;
     private Date obtainedOn;

@@ -1,6 +1,5 @@
 package com.softuni.crossfitapp.domain.dto.users;
 
-import com.softuni.crossfitapp.domain.dto.memberships.MembershipDto;
 import com.softuni.crossfitapp.domain.entity.Role;
 import lombok.Getter;
 import lombok.Setter;

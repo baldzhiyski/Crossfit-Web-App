@@ -3,7 +3,7 @@ package com.softuni.crossfitapp.service.impl;
 import com.google.gson.Gson;
 import com.softuni.crossfitapp.domain.dto.coaches.SeedCoachDto;
 import com.softuni.crossfitapp.domain.dto.memberships.SeedMembershipDto;
-import com.softuni.crossfitapp.domain.dto.roles.RolesDto;
+import com.softuni.crossfitapp.domain.dto.roles.SeedRoleDto;
 import com.softuni.crossfitapp.domain.dto.users.SeedAdminDto;
 import com.softuni.crossfitapp.domain.dto.users.SeedCoachesUserProfileDto;
 import com.softuni.crossfitapp.domain.entity.*;
@@ -50,7 +50,7 @@ public class SeedServiceImpl implements SeedService {
         if(this.roleRepository.count()==0){
             FileReader fileReader = new FileReader(PATH_TO_ROLES);
 
-            Set<Role> roles = Arrays.stream(this.converter.fromJson(fileReader, RolesDto[].class))
+            Set<Role> roles = Arrays.stream(this.converter.fromJson(fileReader, SeedRoleDto[].class))
                     .map(rolesDto -> {
                         Role role = new Role();
                         role.setRoleType(rolesDto.getRoleType());

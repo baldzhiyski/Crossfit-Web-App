@@ -1,6 +1,6 @@
 package com.softuni.crossfitapp.domain.dto.coaches;
 
-import com.softuni.crossfitapp.domain.dto.certificates.CertificateDto;
+import com.softuni.crossfitapp.domain.dto.certificates.SeedCertificateDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,5 +12,5 @@ public class SeedCoachDto {
     private String firstName;
     private String lastName;
 
-    private List<CertificateDto> certificates;
+    private List<SeedCertificateDto> certificates;
 }
