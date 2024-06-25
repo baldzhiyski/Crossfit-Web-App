@@ -39,7 +39,7 @@ public class UserRegisterDto {
     private String town;
 
     @ValidBornDate
-    private Date bornOn;
+    private String bornOn;
 
     @PasswordAnnotation
     private String password;

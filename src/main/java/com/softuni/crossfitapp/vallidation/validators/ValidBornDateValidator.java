@@ -12,7 +12,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
 
-public class ValidBornDateValidator implements ConstraintValidator<ValidBornDate, Date> {
+import static com.softuni.crossfitapp.util.AnnotationsUtil.setErrorMessage;
+
+public class ValidBornDateValidator implements ConstraintValidator<ValidBornDate, String> {
 
     private String invalidBornDateMessage;
     private String notOldEnoughMessage;
@@ -27,26 +29,32 @@ public class ValidBornDateValidator implements ConstraintValidator<ValidBornDate
     }
 
     @Override
-    public boolean isValid(Date value, ConstraintValidatorContext context) {
-        if (value == null) {
-            AnnotationsUtil.setErrorMessage(context,emptyMessage);
+    public boolean isValid(String value, ConstraintValidatorContext context) {
+        if (value == null || value.trim().isEmpty()) {
+            setErrorMessage(context, emptyMessage);
             return false;
         }
 
-        LocalDate bornDate = value.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate now = LocalDate.now();
+        try {
+            LocalDate bornDate = LocalDate.parse(value);
 
-        if (bornDate.isAfter(now)) {
-            AnnotationsUtil.setErrorMessage(context,invalidBornDateMessage);
+            LocalDate now = LocalDate.now();
+
+            if (bornDate.isAfter(now)) {
+                setErrorMessage(context, invalidBornDateMessage);
+                return false;
+            }
+
+            int age = Period.between(bornDate, now).getYears();
+            if (age < 18) {
+                setErrorMessage(context, notOldEnoughMessage);
+                return false;
+            }
+
+            return true;
+        } catch (Exception e) {
+            setErrorMessage(context, invalidBornDateMessage);
             return false;
         }
-
-        int age = Period.between(bornDate, now).getYears();
-        if (age < 18) {
-            AnnotationsUtil.setErrorMessage(context,notOldEnoughMessage);
-            return false;
-        }
-
-        return true;
     }
 }
