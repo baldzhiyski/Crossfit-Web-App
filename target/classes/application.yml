@@ -21,6 +21,7 @@ spring:
     password: ${my_pass}
     username: ${my_username}
     url: jdbc:mysql://localhost:3306/crossfit_app?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
+remember_me_key: ${remembermekey}
 logging:
   level:
     org:
