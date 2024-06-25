@@ -1,4 +1,8 @@
 spring:
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
   mode: DEVELOPMENT
   devtools:
     restart:
@@ -33,4 +37,6 @@ logging:
     blog: WARN
 server:
   port: 8080
+  upload:
+    directory: src/main/resources/static/images
 

@@ -1,44 +1,60 @@
 package com.softuni.crossfitapp.vallidation.validators;
 
+import com.softuni.crossfitapp.repository.UserRepository;
+import com.softuni.crossfitapp.util.AnnotationsUtil;
 import com.softuni.crossfitapp.util.Constants;
 import com.softuni.crossfitapp.vallidation.annotations.ValidEmail;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.softuni.crossfitapp.util.Constants.emailRegex;
+import static com.softuni.crossfitapp.util.Constants.EMAIL_REGEX;
 
 public class ValidEmailValidator implements ConstraintValidator<ValidEmail, String> {
-    private static final Pattern pattern = Pattern.compile(emailRegex);
+    private static final Pattern pattern = Pattern.compile(EMAIL_REGEX);
 
     private String[] allowedDomains;
     private String emptyMessage;
+
+    private String alreadyInUseMessage;
     private String message;
 
     private String invalidEmailMessage;
+
+    private UserRepository userRepository;
+
+    @Autowired
+    public ValidEmailValidator(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public void initialize(ValidEmail constraintAnnotation) {
         allowedDomains = constraintAnnotation.allowedDomains();
         emptyMessage = constraintAnnotation.emptyMessage();
         message = constraintAnnotation.message();
-        this.invalidEmailMessage = constraintAnnotation.invalidDomainMessage();
+        invalidEmailMessage = constraintAnnotation.invalidDomainMessage();
+        alreadyInUseMessage = constraintAnnotation.alreadyInUseMessage();
     }
 
     @Override
     public boolean isValid(String email, ConstraintValidatorContext context) {
+        if(this.userRepository.findByEmail(email).isPresent()){
+            AnnotationsUtil.setErrorMessage(context,alreadyInUseMessage);
+            return false;
+        }
+
         if (email == null || email.trim().isEmpty()) {
-            context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate(emptyMessage).addConstraintViolation();
+            AnnotationsUtil.setErrorMessage(context,emptyMessage);
             return false;
         }
 
         Matcher matcher = pattern.matcher(email);
         if (!matcher.matches()) {
-            context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate(message).addConstraintViolation();
+            AnnotationsUtil.setErrorMessage(context,message);
             return false;
         }
 
@@ -50,8 +66,7 @@ public class ValidEmailValidator implements ConstraintValidator<ValidEmail, Stri
             }
         }
 
-        context.disableDefaultConstraintViolation();
-        context.buildConstraintViolationWithTemplate(invalidEmailMessage).addConstraintViolation();
+        AnnotationsUtil.setErrorMessage(context,invalidEmailMessage);
         return false;
     }
 }
