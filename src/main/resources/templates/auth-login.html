@@ -12,7 +12,7 @@
 <body style="background: url('/images/login.jpg') no-repeat center center fixed; background-size: cover;">
 <div class="container">
     <h1>Please Log In</h1>
-    <form>
+    <form  th:action="@{/users/login}" th:method="POST">
         <div class="form-control">
             <input type="text" required>
             <label >Email</label>
