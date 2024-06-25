@@ -24,7 +24,7 @@ public class PhoneNumberValidator implements ConstraintValidator<PhoneNumber, St
 
     @Override
     public void initialize(PhoneNumber constraintAnnotation) {
-        errorMessage= constraintAnnotation.defaultMessage();
+        errorMessage= constraintAnnotation.message();
         emptyMessage = constraintAnnotation.emptyMessage();
         alreadyInUse = constraintAnnotation.uniqueMessage();
     }

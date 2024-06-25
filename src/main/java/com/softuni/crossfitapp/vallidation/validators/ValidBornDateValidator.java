@@ -50,4 +50,3 @@ public class ValidBornDateValidator implements ConstraintValidator<ValidBornDate
         return true;
     }
 }
-}

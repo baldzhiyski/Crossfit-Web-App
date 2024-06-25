@@ -1,11 +1,12 @@
 package com.softuni.crossfitapp.util;
-
-import java.util.Arrays;
-import java.util.List;
 import java.util.regex.Pattern;
 
 public enum Constants {
     ;
+
+    // Controllers constants
+    public static final String BINDING_RESULT_PATH = "org.springframework.validation.BindingResult";
+    public static final String DOT = ".";
 
     // Paths
     public static final String PATH_TO_COACHES = "src/main/resources/inputs/coaches.json";
@@ -13,6 +14,10 @@ public enum Constants {
     public static final String PATH_TO_ROLES = "src/main/resources/inputs/roles.json";
     public static final String PATH_TO_COACHES_USERS = "src/main/resources/inputs/coaches_user-profiles.json";
     public static final String PATH_TO_ADMINS = "src/main/resources/inputs/admins.json";
+
+    // Validation messages
+    public static final String FIELD_REQUIRED = "This field is required";
+    public static final String FIELD_ACCEPTED = "You must accept the terms and conditions";
 
     // Email validation messages
     public static final String INVALID_EMAIL_FORMAT = "Invalid email format or domain";
@@ -27,7 +32,6 @@ public enum Constants {
     public static final String EMPTY_BORN_DATE = "Please provide information about your birthday ! ";
 
     // Password validation messages
-
     public static final String INVALID_PASS = "Invalid password ! Try again ...";
     public static final String PASSWORD_CANNOT_BE_NULL = "Password cannot be null";
     public static final String PASSWORD_TOO_SHORT = "Password is too short";

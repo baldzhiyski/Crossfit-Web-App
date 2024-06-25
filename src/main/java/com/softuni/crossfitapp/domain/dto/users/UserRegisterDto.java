@@ -1,34 +1,41 @@
 package com.softuni.crossfitapp.domain.dto.users;
 
 import com.softuni.crossfitapp.vallidation.annotations.*;
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 
-@Builder
+import static com.softuni.crossfitapp.util.Constants.FIELD_ACCEPTED;
+import static com.softuni.crossfitapp.util.Constants.FIELD_REQUIRED;
+
 @Getter
+@NoArgsConstructor
+@Setter
 @PasswordMatch
 public class UserRegisterDto {
-    @NotBlank
+    @NotBlank(message = FIELD_REQUIRED)
     @UniqueUsername
     private String username;
 
-    @NotBlank
+    @NotBlank(message = FIELD_REQUIRED)
     private String firstName;
 
-    @NotBlank
+    @NotBlank(message = FIELD_REQUIRED)
     private String lastName;
 
-   @NotBlank
+    @NotBlank(message = FIELD_REQUIRED)
     private String address;
 
-    @NotBlank
+    @NotBlank(message = FIELD_REQUIRED)
     private String nationality;
 
-   @NotBlank
+    @NotBlank(message = FIELD_REQUIRED)
     private String town;
 
     @ValidBornDate
@@ -41,11 +48,15 @@ public class UserRegisterDto {
     private String confirmPassword;
 
     @ValidFile
-    private MultipartFile imageUrl;
+    private MultipartFile photo;
 
     @PhoneNumber
     private String telephoneNumber;
 
     @ValidEmail
     private String email;
+
+    @AssertTrue(message = FIELD_ACCEPTED)
+    private boolean termsAccepted;
 }
+

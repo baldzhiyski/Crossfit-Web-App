@@ -19,6 +19,7 @@ public @interface ValidBornDate {
     String invalidBornDate() default INVALID_BORN_DATE;
     String notOldEnough() default NOT_OLD_ENOUGH;
     String emptyMessage() default EMPTY_BORN_DATE;
+    String message() default INVALID_BORN_DATE;
 
     Class<?>[] groups() default {};
 
