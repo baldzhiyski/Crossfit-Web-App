@@ -31,11 +31,13 @@
                             <h5 class="card-title">Training Name</h5>
                             <p class="card-text">Date: 2024-06-24</p>
                             <p class="card-text">Time: 10:00 AM</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary btn-delete">Delete</button>
+                            <form th:action="@{/delete/training}" th:method="POST">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="submit" class="btn btn-sm btn-outline-secondary btn-delete">Delete</button>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>

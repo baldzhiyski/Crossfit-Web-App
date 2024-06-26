@@ -18,10 +18,18 @@
             <!-- Page title -->
             <div>
                 <h3>Adjust my profile</h3>
-                <div class="gap-3 d-md-flex justify-content-md-end text-center">
-                    <button type="button" class="btn btn-danger btn-lg">Delete profile</button>
-                    <button type="button" class="btn btn-primary btn-lg">Update profile</button>
-                </div>
+                <form th:action="@{/profile/edit/delete-profile}" th:method="POST">
+                    <div class="gap-3 d-md-flex justify-content-md-end text-center">
+                        <button type="submit" class="btn btn-danger btn-lg">Delete profile</button>
+                    </div>
+                </form>
+
+                <form th:action="@{/profile/edit/update-profile}" method="POST">
+                    <div class="gap-3 d-md-flex justify-content-md-end text-center">
+                        <button type="submit" class="btn btn-primary btn-lg">Update profile</button>
+                    </div>
+                </form>
+
                 <hr>
             </div>
 
