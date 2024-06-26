@@ -59,7 +59,7 @@ public class User extends BaseEntity{
     @Column
     private String email;
 
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     private Set<Role> roles;
 
     @ManyToOne

@@ -11,9 +11,14 @@
     "imageUrl": "images/admin1.jpeg",
     "telephoneNumber": "1112223333",
     "email": "admin1@gmail.com",
-    "role": {
-      "roleType": "ADMIN"
-    },
+    "roles": [
+      {
+        "roleType": "ADMIN"
+      },
+      {
+        "roleType": "USER"
+      }
+    ],
     "membershipStartDate": "2023-01-15",
     "membershipEndDate": "2028-01-15"
   },
@@ -29,9 +34,14 @@
     "imageUrl": "images/admin2.jpeg",
     "telephoneNumber": "2223334444",
     "email": "admin2@gmail.com",
-    "role": {
-      "roleType": "ADMIN"
-    },
+    "roles": [
+      {
+        "roleType": "ADMIN"
+      },
+      {
+        "roleType": "USER"
+      }
+    ],
     "membershipStartDate": "2023-02-20",
     "membershipEndDate": "2028-02-20"
   },
@@ -47,9 +57,14 @@
     "imageUrl": "images/admin3.jpeg",
     "telephoneNumber": "3334445555",
     "email": "admin3@gmail.com",
-    "role": {
-      "roleType": "ADMIN"
-    },
+    "roles": [
+      {
+        "roleType": "ADMIN"
+      },
+      {
+        "roleType": "USER"
+      }
+    ],
     "membershipStartDate": "2023-03-25",
     "membershipEndDate": "2028-03-25"
   }

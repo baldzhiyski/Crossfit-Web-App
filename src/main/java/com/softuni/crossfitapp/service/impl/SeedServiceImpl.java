@@ -7,6 +7,7 @@ import com.softuni.crossfitapp.domain.dto.roles.SeedRoleDto;
 import com.softuni.crossfitapp.domain.dto.users.SeedAdminDto;
 import com.softuni.crossfitapp.domain.dto.users.SeedCoachesUserProfileDto;
 import com.softuni.crossfitapp.domain.entity.*;
+import com.softuni.crossfitapp.domain.entity.enums.RoleType;
 import com.softuni.crossfitapp.repository.*;
 import com.softuni.crossfitapp.service.SeedService;
 import org.modelmapper.ModelMapper;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -118,8 +120,9 @@ public class SeedServiceImpl implements SeedService {
             List<User> coachesProfiles = Arrays.stream(this.converter.fromJson(fileReader, SeedCoachesUserProfileDto[].class))
                     .map(seedCoachesUserProfileDto -> {
                         User user = this.mapper.map(seedCoachesUserProfileDto, User.class);
-                        Role byRoleType = this.roleRepository.findByRoleType(seedCoachesUserProfileDto.getRole().getRoleType());
-                        user.setRoles(Set.of(byRoleType));
+                        Set<Role> roles = getRoles(seedCoachesUserProfileDto.getRoles());
+
+                        user.setRoles(roles);
                         Membership byMembershipType = this.membershipRepository.findByMembershipType(seedCoachesUserProfileDto.getMembership().getMembershipType());
                         user.setMembership(byMembershipType);
                         return user;
@@ -129,18 +132,30 @@ public class SeedServiceImpl implements SeedService {
         }
     }
 
+
     @Override
+    @Transactional
     public void seedAdmins() throws FileNotFoundException {
         FileReader fileReader = new FileReader(PATH_TO_ADMINS);
         List<User> admins = Arrays.stream(this.converter.fromJson(fileReader, SeedAdminDto[].class))
                 .map(seedAdminDto -> {
                     User user = this.mapper.map(seedAdminDto, User.class);
-                    Role byRoleType = this.roleRepository.findByRoleType(seedAdminDto.getRole().getRoleType());
-                    user.setRoles(Set.of(byRoleType));
+                    Set<Role> roles = getRoles(seedAdminDto.getRoles());
+
+                    user.setRoles(roles);
                     return user;
                 }).collect(Collectors.toList());
         this.userRepository.saveAllAndFlush(admins);
 
+    }
+
+    private Set<Role> getRoles(Set<SeedRoleDto> roleTypeSet) {
+        Set<Role> roles = new HashSet<>();
+        roleTypeSet.forEach(roleType1 -> {
+            Role byRoleType = this.roleRepository.findByRoleType(roleType1.getRoleType());
+            roles.add(byRoleType);
+        });
+        return roles;
     }
 
 }

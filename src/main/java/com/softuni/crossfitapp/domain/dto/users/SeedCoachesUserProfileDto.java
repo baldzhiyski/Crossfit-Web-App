@@ -1,11 +1,14 @@
 package com.softuni.crossfitapp.domain.dto.users;
 
 import com.softuni.crossfitapp.domain.dto.memberships.SeedMembershipTypeDto;
+import com.softuni.crossfitapp.domain.dto.roles.SeedRoleDto;
 import com.softuni.crossfitapp.domain.entity.Role;
+import com.softuni.crossfitapp.domain.entity.enums.RoleType;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -32,7 +35,7 @@ public class SeedCoachesUserProfileDto {
 
     private String email;
 
-    private Role role;
+    private Set<SeedRoleDto> roles;
 
     private SeedMembershipTypeDto membership;
 
