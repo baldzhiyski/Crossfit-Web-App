@@ -20,6 +20,19 @@ body{
     padding: 20px 40px ;
     border-radius: 5px;
 }
+.alert {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    font-size: 1.2rem; /* Larger font size */
+    font-weight: bold; /* Bold text */
+}
+.alert-danger{
+    color: red;
+}
+.alert-success{
+    color: limegreen;
+}
 
 .container h1{
     text-align: center;

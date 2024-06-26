@@ -1,5 +1,5 @@
 package com.softuni.crossfitapp.domain.entity.enums;
 
 public enum RoleType {
-    USER,ADMIN,COACH
+    USER,ADMIN,COACH,MEMBER
 }

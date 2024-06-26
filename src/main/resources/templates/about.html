@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -105,10 +105,17 @@
                 <p><span class="ti-location-pin mr-2"></span> Hilton Quebec</p>
               </div>
             </div>
+            <!-- Display number of participants -->
+            <p>Current participants: <span id="currentParticipants">10</span></p> <!-- Replace with actual number using Thymeleaf -->
             <p>
               One make creepeth man for so bearing their firmament won't fowl meat over seas great
             </p>
-            <a href="#" class="btn btn-primary rounded-0 mt-3">View Details</a>
+            <!-- Enroll form button -->
+            <form th:action="@{/about-us/enroll-event}" th:method="POST">
+              <button type="submit" class="btn btn-primary rounded-0 mt-3" sec:authorize="hasRole('MEMBER')">
+                Enroll
+              </button>
+            </form>
           </div>
         </div>
       </div><!-- /.col-lg-4 -->
@@ -128,7 +135,12 @@
             <p>
               One make creepeth man for so bearing their firmament won't fowl meat over seas great
             </p>
-            <a href="#" class="btn btn-primary rounded-0 mt-3">View Details</a>
+            <!-- Enroll form button -->
+            <form th:action="@{/about-us/enroll-event}" th:method="POST">
+              <button type="submit" class="btn btn-primary rounded-0 mt-3" sec:authorize="hasRole('MEMBER')">
+                Enroll
+              </button>
+            </form>
           </div>
         </div>
       </div><!-- /.col-lg-4 -->
@@ -149,7 +161,12 @@
             <p>
               One make creepeth man for so bearing their firmament won't fowl meat over seas great
             </p>
-            <a href="#" class="btn btn-primary rounded-0 mt-3">View Details</a>
+            <!-- Enroll form button -->
+            <form  th:action="@{/about-us/enroll-event}" th:method="POST">
+              <button type="submit" class="btn btn-primary rounded-0 mt-3" sec:authorize="hasRole('MEMBER')">
+                Enroll
+              </button>
+            </form>
           </div>
         </div>
       </div><!-- /.col-lg-4 -->

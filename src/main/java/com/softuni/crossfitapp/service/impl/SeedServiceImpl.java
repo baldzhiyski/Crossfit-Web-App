@@ -119,7 +119,7 @@ public class SeedServiceImpl implements SeedService {
                     .map(seedCoachesUserProfileDto -> {
                         User user = this.mapper.map(seedCoachesUserProfileDto, User.class);
                         Role byRoleType = this.roleRepository.findByRoleType(seedCoachesUserProfileDto.getRole().getRoleType());
-                        user.setRole(byRoleType);
+                        user.setRoles(Set.of(byRoleType));
                         Membership byMembershipType = this.membershipRepository.findByMembershipType(seedCoachesUserProfileDto.getMembership().getMembershipType());
                         user.setMembership(byMembershipType);
                         return user;
@@ -136,7 +136,7 @@ public class SeedServiceImpl implements SeedService {
                 .map(seedAdminDto -> {
                     User user = this.mapper.map(seedAdminDto, User.class);
                     Role byRoleType = this.roleRepository.findByRoleType(seedAdminDto.getRole().getRoleType());
-                    user.setRole(byRoleType);
+                    user.setRoles(Set.of(byRoleType));
                     return user;
                 }).collect(Collectors.toList());
         this.userRepository.saveAllAndFlush(admins);

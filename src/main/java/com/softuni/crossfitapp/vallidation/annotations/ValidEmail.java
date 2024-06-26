@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 import static com.softuni.crossfitapp.util.Constants.*;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
+@Target({ ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.PARAMETER})
 @Constraint(validatedBy = ValidEmailValidator.class)
 public @interface ValidEmail {
     String message() default INVALID_EMAIL_FORMAT;

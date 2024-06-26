@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -43,10 +44,6 @@ public class User extends BaseEntity{
     private String nationality;
 
     @Column
-    @NotBlank
-    private String town;
-
-    @Column
     @NotNull
     private Date bornOn;
 
@@ -56,15 +53,14 @@ public class User extends BaseEntity{
     @Column(nullable = false)
     private String imageUrl;
 
-    @Column(nullable = false,unique = true)
+    @Column
     private String telephoneNumber;
 
-    @ValidEmail
     @Column
     private String email;
 
-    @ManyToOne
-    private Role role;
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private Set<Role> roles;
 
     @ManyToOne
     private Membership membership;

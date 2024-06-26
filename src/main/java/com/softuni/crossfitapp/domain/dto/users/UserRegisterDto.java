@@ -3,6 +3,7 @@ package com.softuni.crossfitapp.domain.dto.users;
 import com.softuni.crossfitapp.vallidation.annotations.*;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,8 +36,6 @@ public class UserRegisterDto {
     @NotBlank(message = FIELD_REQUIRED)
     private String nationality;
 
-    @NotBlank(message = FIELD_REQUIRED)
-    private String town;
 
     @ValidBornDate
     private String bornOn;
@@ -56,7 +55,5 @@ public class UserRegisterDto {
     @ValidEmail
     private String email;
 
-    @AssertTrue(message = FIELD_ACCEPTED)
-    private boolean termsAccepted;
 }
 

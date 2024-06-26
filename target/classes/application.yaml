@@ -37,6 +37,5 @@ logging:
     blog: WARN
 server:
   port: 8080
-  upload:
-    directory: src/main/resources/static/images
+
 

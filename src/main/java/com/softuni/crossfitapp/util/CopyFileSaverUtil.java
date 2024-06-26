@@ -16,8 +16,6 @@ import java.nio.file.StandardOpenOption;
 import java.util.stream.Collectors;
 
 public class CopyFileSaverUtil {
-    @Value("${upload.directory}")
-    private static String uploadDir;
 
     public static String saveFile(MultipartFile file) throws IOException {
         if (file == null || file.isEmpty()) {
@@ -28,7 +26,7 @@ public class CopyFileSaverUtil {
         String filename = file.getOriginalFilename();
 
         // Construct the full path where you want to save the file
-        Path filePath = Paths.get(uploadDir).resolve(filename);
+        Path filePath = Paths.get("src/main/resources/static/images").resolve(filename);
 
         // Open an output stream to the newly created file
         try (OutputStream outputStream = Files.newOutputStream(filePath, StandardOpenOption.CREATE)) {

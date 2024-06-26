@@ -10,6 +10,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 
 public class CrossfitUserDetailsService implements UserDetailsService {
 
@@ -30,13 +34,13 @@ public class CrossfitUserDetailsService implements UserDetailsService {
         return User
                 .withUsername(userEntity.getUsername())
                 .password(userEntity.getPassword())
-                .authorities(map(userEntity.getRole()))
+                .authorities(mapAuthorities(userEntity.getRoles()))
                 .build();
     }
 
-    private static GrantedAuthority map(Role userRoleEntity) {
-        return new SimpleGrantedAuthority(
-                "ROLE_" + userRoleEntity.getRoleType()
-        );
+    private Collection<? extends GrantedAuthority> mapAuthorities(Set<Role> roles) {
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRoleType()))
+                .collect(Collectors.toSet());
     }
 }

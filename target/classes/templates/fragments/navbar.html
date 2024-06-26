@@ -13,7 +13,7 @@
     </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark">
+<nav class="navbar navbar-expand-lg navbar-dark" >
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
             <img src="/images/logoPic.jpg" alt="CrossFit Logo" width="60" height="60">
@@ -24,31 +24,39 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Home</a>
+                    <a class="nav-link" th:href="@{/}"  th:classappend="${activeLink == 'brands'}? 'active'">Home</a>
                 </li>
-                <li class="nav-item" sec:authorize="isAnonymous()">
-                    <a class="nav-link" href="#">About Us</a>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/about-us}">About Us</a>
                 </li>
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a class="nav-link" href="#" >Workouts</a>
-                </li>
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a class="nav-link" href="#">Add Event</a>
+                <li class="nav-item" >
+                    <a class="nav-link" th:href="@{/workouts}" >Workouts</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a class="nav-link" href="#">My Workouts</a>
+                    <a class="nav-link" th:href="@{/events/add-event/}">Add Event</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a class="nav-link" href="#">Profile</a>
+                    <a class="nav-link" th:href="@{/my-workouts}">My Workouts</a>
                 </li>
-                <li class="nav-item" sec:authorize="isAnonymous()">
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" th:href="@{/profile}">Profile</a>
+                </li>
+                <li class="nav-item" >
+                    <a class="nav-link" th:href="@{/memberships}">Memberships</a>
+                </li>
+                <li class="nav-item" >
                     <a class="nav-link" href="#">Contact</a>
                 </li>
                 <li class="nav-item" sec:authorize="hasRole('ADMIN')">
-                    <a class="nav-link" href="#">All User Profiles</a>
+                    <a class="nav-link" th:href="@{/profiles-dashboard}">All User Profiles</a>
                 </li>
                 <li class="nav-item" sec:authorize="hasRole('COACH')">
-                    <a class="nav-link" href="#">Weekly Sessions</a>
+                    <a class="nav-link" th:href="@{/weekly-schedule}">Weekly Sessions</a>
+                </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <form th:action="@{/logout}" th:method="POST">
+                        <button class="btn btn-outline-light logout-button m-lg-2" type="submit">Logout</button>
+                    </form>
                 </li>
             </ul>
         </div>

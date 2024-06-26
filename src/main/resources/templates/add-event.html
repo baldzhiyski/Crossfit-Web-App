@@ -17,7 +17,7 @@
 <div class="container2 mt-5">
     <div id="event_form">
         <h2>Add Event</h2>
-        <form action="submit_event.php" method="POST" enctype="multipart/form-data">
+        <form th:action="@{/event-add}" th:method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="event_name">Event Name</label>
                 <input type="text" class="form-control" id="event_name" name="event_name" required>

@@ -12,7 +12,6 @@ import static com.softuni.crossfitapp.util.Constants.PHONE_NUMBER_PATTERN;
 
 public class PhoneNumberValidator implements ConstraintValidator<PhoneNumber, String> {
     private String emptyMessage;
-    private String errorMessage;
     private String alreadyInUse;
 
     private UserRepository userRepository;
@@ -24,7 +23,6 @@ public class PhoneNumberValidator implements ConstraintValidator<PhoneNumber, St
 
     @Override
     public void initialize(PhoneNumber constraintAnnotation) {
-        errorMessage= constraintAnnotation.message();
         emptyMessage = constraintAnnotation.emptyMessage();
         alreadyInUse = constraintAnnotation.uniqueMessage();
     }
@@ -40,11 +38,6 @@ public class PhoneNumberValidator implements ConstraintValidator<PhoneNumber, St
             AnnotationsUtil.setErrorMessage(context,alreadyInUse);
             return false;
         }
-
-         if(!PHONE_NUMBER_PATTERN.matcher(value).matches()){
-             AnnotationsUtil.setErrorMessage(context,errorMessage);
-             return false;
-         }
 
          return true;
     }

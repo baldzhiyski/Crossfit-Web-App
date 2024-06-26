@@ -30,9 +30,13 @@ public class UserController {
 
 
     @GetMapping("/login")
-    public String getLogInPage(){
+    public String login(Model model) {
+        if(!model.containsAttribute("username")){
+            model.addAttribute("username","");
+        }
         return "auth-login";
     }
+
 
     @GetMapping("/register")
     public String getRegisterPage(Model model){
@@ -58,17 +62,15 @@ public class UserController {
         }
 
         userService.registerNewUser(userRegisterDto);
-//        redirectAttributes.addFlashAttribute("successMessage", "Successfully registered ! Please Log In !");
-        modelAndView.setViewName("redirect:/login");
+        redirectAttributes.addFlashAttribute("successMessage", "Successfully registered ! Please Log In !");
+        modelAndView.setViewName("redirect:/users/login");
         return modelAndView;
     }
 
-    @PostMapping("/users/login-error")
+    @PostMapping("/login-error")
     public String onFailure(
-            @ModelAttribute("username") String username,
             Model model) {
 
-        model.addAttribute("username", username);
         model.addAttribute("badRequest", "Invalid username or password !");
 
         return "auth-login";
