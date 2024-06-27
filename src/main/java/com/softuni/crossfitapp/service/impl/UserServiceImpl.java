@@ -8,7 +8,7 @@ import com.softuni.crossfitapp.domain.entity.enums.RoleType;
 import com.softuni.crossfitapp.repository.RoleRepository;
 import com.softuni.crossfitapp.repository.UserRepository;
 import com.softuni.crossfitapp.service.UserService;
-import com.softuni.crossfitapp.util.CopyFileSaverUtil;
+import com.softuni.crossfitapp.util.CopyImageFileSaverUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void registerNewUser(UserRegisterDto userRegisterDto) throws IOException {
         User toBeRegisteredUser = this.mapper.map(userRegisterDto, User.class);
-        String imageUrl = CopyFileSaverUtil.saveFile(userRegisterDto.getPhoto());
+        String imageUrl = CopyImageFileSaverUtil.saveFile(userRegisterDto.getPhoto());
         toBeRegisteredUser.setImageUrl(imageUrl);
         Set<Role> roles = new HashSet<>();
         roles.add(roleRepository.findByRoleType(RoleType.USER));

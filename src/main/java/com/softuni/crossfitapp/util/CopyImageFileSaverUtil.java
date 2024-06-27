@@ -1,7 +1,7 @@
 package com.softuni.crossfitapp.util;
 
+import com.softuni.crossfitapp.exceptions.FileStorageException;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;
@@ -13,9 +13,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class CopyFileSaverUtil {
+public class CopyImageFileSaverUtil {
 
     public static String saveFile(MultipartFile file) throws IOException {
         if (file == null || file.isEmpty()) {
@@ -23,19 +24,25 @@ public class CopyFileSaverUtil {
         }
 
         // Generate a unique filename to avoid conflicts
-        String filename = file.getOriginalFilename();
+        String originalFilename = file.getOriginalFilename();
+        String uniqueFilename = UUID.randomUUID().toString() + "." + originalFilename;
 
         // Construct the full path where you want to save the file
-        Path filePath = Paths.get("src/main/resources/static/images").resolve(filename);
+        Path filePath = Paths.get("src/main/resources/static/images").resolve(uniqueFilename);
+
+        // Ensure the parent directory exists
+        Files.createDirectories(filePath.getParent());
 
         // Open an output stream to the newly created file
-        try (OutputStream outputStream = Files.newOutputStream(filePath, StandardOpenOption.CREATE)) {
+        try (OutputStream outputStream = Files.newOutputStream(filePath, StandardOpenOption.CREATE_NEW)) {
             // Copy the contents of the uploaded file to the output stream
             IOUtils.copy(file.getInputStream(), outputStream);
+        }catch (IOException e){
+            throw new FileStorageException("Failed to save file: " + originalFilename, e);
         }
 
         // Return the URL of the saved photo (relative to the application context)
-        return "/images/" + filename;
+        return "/images/" + uniqueFilename;
     }
 
     private String extractCoordinates(MultipartFile gpxCoordinates) throws IOException {
