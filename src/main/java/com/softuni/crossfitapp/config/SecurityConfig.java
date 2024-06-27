@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @EnableWebSecurity
@@ -39,7 +40,7 @@ public class SecurityConfig {
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 
                         // Allow access to specific URLs based on roles
-                        .requestMatchers("/", "/users/login", "/users/register", "/users/login-error").permitAll()
+                        .requestMatchers("/", "/users/login", "/users/register", "/users/login-error", "/access-denied").permitAll()
                         .requestMatchers("/memberships").hasRole("USER")
                         .requestMatchers("/users/profile").hasRole("USER")
                         .requestMatchers("/workouts").permitAll()
@@ -49,6 +50,7 @@ public class SecurityConfig {
                         .requestMatchers("/about-us").permitAll()
                         .requestMatchers("/users/updateAcc").hasRole("USER")
                         .requestMatchers("/users/add-event").hasRole("USER")
+                        .requestMatchers("/schedule").hasRole("MEMBER")
                         // Catch-all for any other requests, must be authenticated
                         .anyRequest().authenticated()
                 )
@@ -68,6 +70,9 @@ public class SecurityConfig {
                         .key(rememberMeKey)
                         .rememberMeParameter("rememberme")
                         .rememberMeCookieName("rememberme")
+                )
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .accessDeniedHandler(customHandler())
                 );
 
         return httpSecurity.build();
@@ -79,6 +84,11 @@ public class SecurityConfig {
     @Bean
     public AuthenticationSuccessHandler customAuthenticationSuccessHandler() {
         return new CustomAuthenticationSuccessHandler();
+    }
+
+    @Bean
+    public AccessDeniedHandler customHandler() {
+        return new CustomAccessDeniedHandler();
     }
 
 

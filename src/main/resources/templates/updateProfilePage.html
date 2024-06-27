@@ -18,13 +18,13 @@
             <!-- Page title -->
             <div>
                 <h3>Adjust my profile</h3>
-                <form th:action="@{/profile/edit/delete-profile}" th:method="POST">
+                <form th:action="@{/profile/edit/delete-profile}" th:method="DELETE">
                     <div class="gap-3 d-md-flex justify-content-md-end text-center">
                         <button type="submit" class="btn btn-danger btn-lg">Delete profile</button>
                     </div>
                 </form>
 
-                <form th:action="@{/profile/edit/update-profile}" method="POST">
+                <form th:action="@{/profile/edit/update-profile}" th:method="PATCH">
                     <div class="gap-3 d-md-flex justify-content-md-end text-center">
                         <button type="submit" class="btn btn-primary btn-lg">Update profile</button>
                     </div>

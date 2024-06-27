@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Access denied</title>
+    <link rel="stylesheet" th:href="@{css/access-denied.css}">
+    <link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+</head>
+<body>
+<div class="scene">
+    <div class="overlay"></div>
+    <div class="overlay"></div>
+    <div class="overlay"></div>
+    <div class="overlay"></div>
+    <span class="bg-403">403</span>
+    <div class="text">
+        <span class="hero-text"></span>
+        <span class="msg">Access<span>denied</span> !</span>
+        <span class="support">
+      <span>unexpected?</span>
+      <a th:href="@{/}">Go to home page</a>
+    </span>
+    </div>
+    <div class="lock"></div>
+</div>
+</body>
+</html>

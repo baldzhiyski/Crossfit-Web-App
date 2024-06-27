@@ -33,4 +33,8 @@ public class HomeController {
         return "schedule";
     }
 
+    @GetMapping("/access-denied")
+    public String accessDenied(){
+        return "access-denied";
+    }
 }

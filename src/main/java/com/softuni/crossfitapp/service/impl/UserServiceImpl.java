@@ -29,9 +29,6 @@ public class UserServiceImpl implements UserService {
         this.roleRepository = roleRepository;
         this.mapper = mapper;
     }
-
-    // TODO : Test functionality
-
     @Override
     public void registerNewUser(UserRegisterDto userRegisterDto) throws IOException {
         User toBeRegisteredUser = this.mapper.map(userRegisterDto, User.class);
