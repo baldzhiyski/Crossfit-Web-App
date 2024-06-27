@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Error</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            align-content: center;
+            align-items: center;
+        }
+        .error-container {
+            margin-top: 50px;
+        }
+        .error-card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .error-header {
+            background-color: #dc3545;
+            color: white;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .error-body {
+            padding: 30px;
+        }
+        .error-footer {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container error-container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card error-card">
+                <div class="card-header error-header">
+                    <h4 class="mb-0">Oops! Something Went Wrong</h4>
+                </div>
+                <div class="card-body error-body">
+                    <p class="card-text" th:text="${errorMessage}"></p>
+                </div>
+                <div class="card-footer error-footer">
+                    <a th:href="@{/}" class="btn btn-primary">Go back to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
