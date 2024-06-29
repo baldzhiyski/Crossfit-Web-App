@@ -71,6 +71,9 @@ public class SecurityConfig {
                         .key(rememberMeKey)
                         .rememberMeParameter("rememberme")
                         .rememberMeCookieName("rememberme")
+                )
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .accessDeniedHandler(customHandler())
                 );
 
         return httpSecurity.build();

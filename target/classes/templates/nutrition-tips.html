@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.84.0">
+    <title>Nutrition Blog</title>
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/nutrition.css}" rel="stylesheet">
+    <link th:href="@{/css/navbar.css}" rel="stylesheet"/>
+    <link th:href="@{/css/footer.css}" rel="stylesheet"/>
+    <link href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+          integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+          crossorigin="anonymous" rel="stylesheet"/>
+    <link href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+          crossorigin="" rel="stylesheet"/>
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+
+
+    <!-- Custom styles for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap" rel="stylesheet">
+</head>
+<body>
+<nav th:replace = "~{fragments/navbar::nav}"></nav>
+<main class="container mt-2">
+    <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
+        <div class="col-md-6 px-0">
+            <h1 class="display-4 fst-italic">Nutrition and Supplements for CrossFit Athletes</h1>
+            <p class="lead my-3">Learn how to optimize your diet and supplement intake to enhance your CrossFit performance.</p></p>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-md-6">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                    <strong class="d-inline-block mb-1 text-primary" style="font-size: 0.9rem;">CrossFit Nutrition</strong>
+                    <h3 class="mb-0" style="font-size: 1.2rem;">Essential Nutrients for CrossFit Athletes</h3>
+                    <div class="mb-1 text-muted">June 30</div>
+                    <p class="card-text mb-auto" style="font-size: 0.85rem;">CrossFit athletes require adequate protein intake to support muscle repair and growth.</p>
+                    <ul class="list-unstyled" style="font-size: 0.85rem;">
+                        <li>Variety of foods rich in micronutrients like vitamins and minerals is crucial for sustained energy.</li>
+                        <li>Hydration is key; athletes should drink water regularly to maintain peak performance.</li>
+                    </ul>
+                </div>
+                <div class="col-auto d-none d-lg-block">
+                    <img src="/images/fuel.jpeg" alt="Thumbnail Image" width="240" height="250" class="bd-placeholder-img" style="object-fit: fill;">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                    <strong class="d-inline-block mb-1 text-success" style="font-size: 0.9rem;">CrossFit Exercises</strong>
+                    <h3 class="mb-0" style="font-size: 1.2rem;">Facts about CrossFit Training</h3>
+                    <div class="mb-1 text-muted">June 29</div>
+                    <p class="mb-auto" style="font-size: 0.85rem;">CrossFit incorporates high-intensity functional movements, emphasizing overall fitness.</p>
+                    <ul class="list-unstyled" style="font-size: 0.85rem;">
+                        <li>Workouts are scalable, making CrossFit suitable for individuals of varying fitness levels.</li>
+                        <li>Regular CrossFit training improves cardiovascular health and endurance.</li>
+                    </ul>
+                </div>
+                <div class="col-auto d-none d-lg-block">
+                    <img src="/images/training.jpg" alt="Thumbnail Image" width="240" height="250" class="bd-placeholder-img" style="object-fit: fill;">
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="row g-5">
+        <div class="col-md-8">
+            <h3 class="pb-4 mb-4 fst-italic border-bottom" style="font-size: 1.8rem;">
+                Exploring CrossFit and Nutrition
+            </h3>
+
+            <article class="blog-post">
+                <h2 class="blog-post-title" style="font-size: 2.5rem;">Why CrossFit and Nutrition Matter</h2>
+
+                <p style="font-size: 1.4rem;">In the realm of CrossFit, nutrition stands as a cornerstone of success, influencing both performance and recovery. Athletes immersed in CrossFit regimens rely on a well-rounded diet rich in essential nutrients to sustain their demanding training schedules.</p>
+                <hr>
+                <p style="font-size: 1.4rem;">Fueling CrossFit athletes through intense workouts, nutrition serves as a catalyst for muscle recuperation and growth. Adequate protein consumption is vital for repairing and building muscle tissue, while carbohydrates restore glycogen levels, ensuring sustained energy levels.</p>
+                <h2 style="font-size: 2.2rem;">The Role of Nutrition in Enhancing Performance</h2>
+                <p style="font-size: 1.4rem;">Optimal hydration is equally critical; athletes must maintain sufficient water intake to optimize physical performance and prevent dehydration. Moreover, micronutrients such as vitamins and minerals play pivotal roles in maintaining overall health and optimizing metabolic functions.</p>
+                <h3 style="font-size: 2rem;">Strategies for Maximizing CrossFit Training Through Nutrition</h3>
+                <p style="font-size: 1.4rem;">By prioritizing nutrition, CrossFit enthusiasts can bolster their endurance, strength, and recovery capacities. Tailoring dietary choices to individual needs, including strategically timing meals around workouts and balancing macronutrient intake, yields significant improvements in training outcomes.</p>
+                <h2 style="font-size: 2.2rem;">Conclusion: Integrating Nutrition with CrossFit</h2>
+                <p style="font-size: 1.4rem;">Recognizing the symbiotic relationship between CrossFit and nutrition empowers athletes to achieve peak performance and surpass fitness goals. Whether embarking on the CrossFit journey or seasoned in its rigors, adopting sound nutritional practices fosters enhanced performance and holistic well-being.</p>
+            </article>
+
+
+            <article class="blog-post">
+                <h2 class="blog-post-title">Nutrition Essentials for CrossFit Athletes</h2>
+                <p class="blog-post-meta">June 29, 2024 by <a href="#">Your Name</a></p>
+
+                <p>Proper nutrition is essential for maximizing performance and recovery in CrossFit. Athletes need a well-balanced diet that provides sufficient energy, promotes muscle repair, and supports overall health.</p>
+
+                <blockquote>
+                    <p>"Nutrition is the foundation of athletic performance. Without the right fuel, your body won't perform optimally, no matter how hard you train."</p>
+                </blockquote>
+
+                <p>Here are some key components of a CrossFit athlete's nutrition plan:</p>
+
+                <h3>Nutrient Distribution</h3>
+                <p>Below is a table showing a recommended distribution of nutrients for a CrossFit athlete:</p>
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Nutrient</th>
+                        <th>Recommended Intake</th>
+                        <th>Benefits</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Protein</td>
+                        <td>1.2 - 2.0 g/kg body weight/day</td>
+                        <td>Supports muscle repair and growth</td>
+                    </tr>
+                    <tr>
+                        <td>Carbohydrates</td>
+                        <td>5 - 7 g/kg body weight/day</td>
+                        <td>Provides energy for workouts</td>
+                    </tr>
+                    <tr>
+                        <td>Fats</td>
+                        <td>0.5 - 1.5 g/kg body weight/day</td>
+                        <td>Essential for hormone production and overall health</td>
+                    </tr>
+                    <tr>
+                        <td>Vitamins & Minerals</td>
+                        <td>Variety of fruits and vegetables daily</td>
+                        <td>Supports immune function and overall health</td>
+                    </tr>
+                    <tr>
+                        <td>Water</td>
+                        <td>Approx. 3-4 liters/day</td>
+                        <td>Hydration is crucial for performance and recovery</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>Ensuring adequate intake of these nutrients can help CrossFit athletes perform at their best and recover effectively between workouts. It's also important to tailor nutrition to individual needs and adjust based on training intensity and goals.</p>
+            </article>
+
+            <article class="blog-post">
+                <h2 class="blog-post-title">Fueling Your CrossFit Performance: Pre-Workout Nutrition</h2>
+                <p class="blog-post-meta">June 29, 2024 by <a href="#">Your Name</a></p>
+
+                <p>What you eat before a CrossFit workout can significantly impact your performance and recovery. Pre-workout nutrition aims to provide energy, enhance endurance, and reduce muscle fatigue.</p>
+
+                <ul>
+                    <li><strong>Carbohydrates:</strong> Consuming complex carbs like whole grains or fruits 1-2 hours before training provides a steady release of energy.</li>
+                    <li><strong>Proteins:</strong> Lean proteins such as chicken, fish, or tofu help repair and build muscles during intense workouts.</li>
+                    <li><strong>Fats:</strong> Healthy fats from sources like avocados or nuts can provide sustained energy and support hormone production.</li>
+                    <li><strong>Hydration:</strong> Proper hydration with water or electrolyte-rich drinks ensures optimal performance and prevents dehydration.</li>
+                </ul>
+
+                <p>Timing and portion sizes are crucial. Avoid heavy meals close to training to prevent digestive discomfort. Experiment with different foods to find what works best for your body and training regimen.</p>
+
+                <p>By focusing on quality nutrients and hydration before your CrossFit sessions, you can maximize your performance and achieve your fitness goals more effectively.</p>
+            </article>
+
+
+        </div>
+
+    </div>
+
+</main>
+<!-- Footer -->
+<footer th:replace="~{fragments/footer::footer}"></footer>
+</body>
+</html>

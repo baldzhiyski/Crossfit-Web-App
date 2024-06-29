@@ -40,7 +40,7 @@
                             <li>Help center access</li>
                         </ul>
                         <a type="button" class="w-100 btn btn-lg btn-secondary"
-                           th:href="@{/memberships/checkout/}"
+                           th:href="@{/memberships/checkout/{id}(id= ${})}"
                            sec:authorize="!hasRole('MEMBER')">Buy now</a>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                             <li>Help center access</li>
                         </ul>
                         <a type="button" class="w-100 btn btn-lg btn-secondary"
-                           th:href="@{/memberships/checkout/}"
+                           th:href="@{/memberships/checkout/{id}(id= ${})}"
                            sec:authorize="!hasRole('MEMBER')">Buy now</a>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
                             <li>Help center access</li>
                         </ul>
                         <a type="button" class="w-100 btn btn-lg btn-secondary"
-                           th:href="@{/memberships/checkout/}"
+                           th:href="@{/memberships/checkout/{id}(id= ${})}"
                            sec:authorize="!hasRole('MEMBER')">Buy now</a>
                     </div>
                 </div>
