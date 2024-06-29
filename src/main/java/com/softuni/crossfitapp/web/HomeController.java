@@ -24,17 +24,7 @@ public class HomeController {
         return "about";
     }
 
-    @GetMapping("/memberships")
-    public String memberships(Model model){
-        return "memberships";
-    }
-
-    @GetMapping("/coaches")
-    public String meetTheTeam(){
-        return "coaches-page";
-    }
-
-    @GetMapping("/schedule")
+    @GetMapping("/schedule-for-the-week")
     public String schedule(){
         return "schedule";
     }
@@ -42,5 +32,10 @@ public class HomeController {
     @GetMapping("/access-denied")
     public String accessDenied(){
         return "access-denied";
+    }
+
+    @GetMapping("/nutrition-blog")
+    public String getTips(){
+        return "nutrition-tips";
     }
 }

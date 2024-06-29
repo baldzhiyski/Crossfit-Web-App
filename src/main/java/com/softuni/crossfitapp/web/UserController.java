@@ -96,7 +96,4 @@ public class UserController {
         return "my-trainings";
     }
 
-    @GetMapping("/add-event")
-    public String addEventPage(){return "add-event";}
-
 }

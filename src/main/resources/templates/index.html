@@ -53,7 +53,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-4 mb-4">
-                <a href="#" class="main-btn">
+                <a th:href="@{${#authorization.expression('hasRole(''MEMBER'')') ? '/schedule-for-the-week' : '/memberships'}}" class="main-btn">
                     <div class="box text-center">
                         <i class="fas fa-calendar-alt fa-5x mb-3"></i>
                         <h3>Schedule</h3>
@@ -62,7 +62,7 @@
                 </a>
             </div>
             <div class="col-lg-4 mb-4">
-                <a href="#" class="main-btn">
+                <a th:href="@{/coaches}"  class="main-btn">
                     <div class="box text-center">
                         <i class="fas fa-user-friends fa-5x mb-3"></i>
                         <h3>Coaches</h3>
@@ -71,11 +71,11 @@
                 </a>
             </div>
             <div class="col-lg-4 mb-4">
-                <a href="#" class="main-btn">
+                <a th:href="@{/nutrition-blog}" class="main-btn">
                     <div class="box text-center">
-                        <i class="fas fa-running fa-5x mb-3" style="color: #333;"></i>
-                        <h3>Free Trial</h3>
-                        <p>Experience CrossFit with a free trial</p>
+                        <i class="fas fa-carrot fa-4x mb-2"></i>
+                        <h3>Nutrition Blog</h3>
+                        <p>Discover essential nutrition advice for peak performance in our blog !</p>
                     </div>
                 </a>
             </div>

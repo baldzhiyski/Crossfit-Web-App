@@ -40,8 +40,8 @@ public class SecurityConfig {
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 
                         // Allow access to specific URLs based on roles
-                        .requestMatchers("/", "/users/login", "/users/register", "/users/login-error", "/access-denied").permitAll()
-                        .requestMatchers("/memberships").hasRole("USER")
+                        .requestMatchers("/", "/users/login", "/users/register", "/users/login-error", "/access-denied","/nutrition-blog").permitAll()
+                        .requestMatchers("/memberships/explore").hasRole("USER")
                         .requestMatchers("/users/profile").hasRole("USER")
                         .requestMatchers("/workouts").permitAll()
                         .requestMatchers("/users/my-workouts").hasRole("USER")
@@ -50,7 +50,7 @@ public class SecurityConfig {
                         .requestMatchers("/about-us").permitAll()
                         .requestMatchers("/users/updateAcc").hasRole("USER")
                         .requestMatchers("/users/add-event").hasRole("USER")
-                        .requestMatchers("/schedule").hasRole("MEMBER")
+                        .requestMatchers("/schedule-for-the-week").hasRole("MEMBER")
                         .requestMatchers("/my-weekly-schedule/{id}").hasRole("COACH")
                         // Catch-all for any other requests, must be authenticated
                         .anyRequest().authenticated()

@@ -13,4 +13,9 @@ public class CoachController {
     public String getMyUpcomingSessions(@PathVariable UUID id){
         return "upcoming-trainings";
     }
+
+    @GetMapping("/coaches")
+    public String meetTheTeam(){
+        return "coaches-page";
+    }
 }
