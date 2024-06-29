@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/navbar.css}" rel="stylesheet"/>
+    <script th:src="@{https://cdn.jsdelivr.net/npm/chart.js}"></script>
+    <style>
+        body {
+            padding: 20px;
+            background-color: lightgray;
+        }
+
+        .card {
+            margin-bottom: 20px;
+        }
+
+        .btn-danger {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+<nav th:replace = "~{fragments/navbar::nav}"></nav>
+<div class="container">
+    <h1 class="mb-4">Admin Dashboard</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">Revenue</div>
+                <div class="card-body">
+                    <h5 class="card-title">$<span id="revenue">10000</span></h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-header">Active Users</div>
+                <div class="card-body">
+                    <h5 class="card-title"><span id="active-users">150</span></h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">User Management</div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>john_doe</td>
+                    <td>john@example.com</td>
+                    <td>
+                        <button class="btn btn-danger" data-id="1" onclick="disableAccount(this)">Disable Account</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>jane_doe</td>
+                    <td>jane@example.com</td>
+                    <td>
+                        <button class="btn btn-danger" data-id="2" onclick="disableAccount(this)">Disable Account</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>admin_user</td>
+                    <td>admin@example.com</td>
+                    <td>
+                        <button class="btn btn-danger" data-id="3" onclick="disableAccount(this)">Disable Account</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">New Users Chart</div>
+        <div class="card-body">
+            <canvas id="userChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Initialize Chart
+        var ctx = document.getElementById('userChart').getContext('2d');
+        var userChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ["January", "February", "March", "April", "May", "June"], // Static labels for now
+                datasets: [{
+                    label: 'New Users',
+                    data: [10, 15, 12, 30, 25, 35], // Static data for now
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+</script>
+</body>
+
+</html>

@@ -45,12 +45,13 @@ public class SecurityConfig {
                         .requestMatchers("/users/profile").hasRole("USER")
                         .requestMatchers("/workouts").permitAll()
                         .requestMatchers("/users/my-workouts").hasRole("USER")
-                        .requestMatchers("/profiles-dashboard").hasRole("ADMIN")
+                        .requestMatchers("/profiles-dashboard/{id}").hasRole("ADMIN")
                         .requestMatchers("/weekly-schedule").hasRole("COACH")
                         .requestMatchers("/about-us").permitAll()
                         .requestMatchers("/users/updateAcc").hasRole("USER")
                         .requestMatchers("/users/add-event").hasRole("USER")
                         .requestMatchers("/schedule").hasRole("MEMBER")
+                        .requestMatchers("/my-weekly-schedule/{id}").hasRole("COACH")
                         // Catch-all for any other requests, must be authenticated
                         .anyRequest().authenticated()
                 )
@@ -70,9 +71,6 @@ public class SecurityConfig {
                         .key(rememberMeKey)
                         .rememberMeParameter("rememberme")
                         .rememberMeCookieName("rememberme")
-                )
-                .exceptionHandling(exceptionHandling -> exceptionHandling
-                        .accessDeniedHandler(customHandler())
                 );
 
         return httpSecurity.build();

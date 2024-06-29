@@ -29,7 +29,7 @@
 <div class="content mb-3 mt-2">
     <h1>THE GYM FOR HIGH IMPACT ATHLETES</h1>
     <div sec:authorize="isAuthenticated()">
-        <h2>Welcome, <span th:text="${#authentication.principal.username}"></span>!</h2>
+        <h2>Welcome, <span th:text="${fullName}"></span>!</h2>
         <h3>Explore our high-intensity workouts and community-driven fitness programs.</h3>
     </div>
     <div sec:authorize="isAnonymous()">
