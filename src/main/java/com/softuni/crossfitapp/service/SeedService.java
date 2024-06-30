@@ -20,6 +20,6 @@ public interface SeedService {
         seedMemberships();
         seedCoaches();
         seedCoachesUserAccount();
-//        seedAdmins();
+        seedAdmins();
     }
 }

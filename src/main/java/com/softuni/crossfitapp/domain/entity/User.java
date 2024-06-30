@@ -39,9 +39,9 @@ public class User extends BaseEntity{
     @NotNull
     private String address;
 
-    @Column
-    @NotBlank
-    private String nationality;
+    @ManyToOne
+    @JoinColumn(name = "city_id")
+    private City city;
 
     @Column
     @NotNull
