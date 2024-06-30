@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "cities")
+@Table(name = "countries")
 @Getter
 @Setter
 @NoArgsConstructor
-public class City extends BaseEntity{
+public class Country extends BaseEntity{
 
     private String name;
     private String code;

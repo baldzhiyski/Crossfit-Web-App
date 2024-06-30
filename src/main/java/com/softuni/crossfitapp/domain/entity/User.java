@@ -1,8 +1,6 @@
 package com.softuni.crossfitapp.domain.entity;
 
 import com.softuni.crossfitapp.domain.entity.enums.MembershipType;
-import com.softuni.crossfitapp.domain.entity.enums.RoleType;
-import com.softuni.crossfitapp.vallidation.annotations.ValidEmail;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -40,8 +38,8 @@ public class User extends BaseEntity{
     private String address;
 
     @ManyToOne
-    @JoinColumn(name = "city_id")
-    private City city;
+    @JoinColumn(name = "country_id")
+    private Country country;
 
     @Column
     @NotNull
