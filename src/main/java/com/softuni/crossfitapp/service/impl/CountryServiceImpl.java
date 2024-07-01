@@ -9,6 +9,7 @@ import com.softuni.crossfitapp.repository.CountryRepository;
 import com.softuni.crossfitapp.service.CountryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -41,13 +42,13 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
+    @Cacheable("countriesCodes")
     public List<String> allCountryCodes() {
         return this.countryRepository.findAll()
                 .stream()
                 .map(Country::getCode)
                 .toList();
     }
-
 
     public boolean hasInitializedExRates() {
         return this.countryRepository.count() > 0;
