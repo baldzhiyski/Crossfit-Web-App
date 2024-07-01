@@ -7,6 +7,7 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.modelmapper.spi.MappingContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestClient;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,6 +17,10 @@ import java.time.format.DateTimeFormatter;
 
 @Configuration
 public class Config {
+    @Bean
+    public RestClient restClient() {
+        return RestClient.create();
+    }
 
     @Bean
     public Gson gson() {
