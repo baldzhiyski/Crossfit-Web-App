@@ -14,14 +14,14 @@
         <form th:action="@{/users/register}" th:method="POST" th:object="${registerDto}" enctype="multipart/form-data">
             <h3 style="color: white">Register Now !</h3>
             <div class="row">
-                <div class="form-group col-md-5 mr-1 mb-1" th:classappend="${#fields.hasErrors('firstName')} ? 'has-error'">
+                <div class="form-group col-md-5 mr-1 mb-2" th:classappend="${#fields.hasErrors('firstName')} ? 'has-error'">
                     <label for="firstName">First Name</label>
                     <input type="text" id="firstName" name="firstName" class="form-control"
                            th:classappend="${#fields.hasErrors('firstName')} ? 'is-invalid'"
                            placeholder="Enter first name" th:field="*{firstName}">
                     <div class="invalid-feedback" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
                 </div>
-                <div class="form-group col-md-5 mr-1 mb-1" th:classappend="${#fields.hasErrors('lastName')} ? 'has-error'">
+                <div class="form-group col-md-5 mr-1 mb-2" th:classappend="${#fields.hasErrors('lastName')} ? 'has-error'">
                     <label for="lastName">Last Name</label>
                     <input type="text" id="lastName" name="lastName" class="form-control"
                            th:classappend="${#fields.hasErrors('lastName')} ? 'is-invalid'"
@@ -30,14 +30,14 @@
                 </div>
             </div>
             <div class="row">
-                <div class="form-group col-md-5 mr-1 mb-1" th:classappend="${#fields.hasErrors('username')} ? 'has-error'">
+                <div class="form-group col-md-5 mr-1 mb-2" th:classappend="${#fields.hasErrors('username')} ? 'has-error'">
                     <label for="username">Username</label>
                     <input type="text" id="username" name="username" class="form-control"
                            th:classappend="${#fields.hasErrors('username')} ? 'is-invalid'"
                            placeholder="Enter username" th:field="*{username}">
                     <div class="invalid-feedback" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
                 </div>
-                <div class="form-group col-md-5 mr-1 mb-1" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
+                <div class="form-group col-md-5 mr-1 mb-2" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" class="form-control"
                            th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'"
@@ -46,14 +46,14 @@
                 </div>
             </div>
             <div class="row">
-                <div class="form-group col-md-5 mr-1 mb-1" th:classappend="${#fields.hasErrors('password')} ? 'has-error'">
+                <div class="form-group col-md-5 mr-1 mb-2" th:classappend="${#fields.hasErrors('password')} ? 'has-error'">
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password" class="form-control"
                            th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'"
                            placeholder="Enter password" th:field="*{password}">
                     <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
                 </div>
-                <div class="form-group col-md-5 mr-1 mb-1" th:classappend="${#fields.hasErrors('confirmPassword')} ? 'has-error'">
+                <div class="form-group col-md-5 mr-1 mb-2" th:classappend="${#fields.hasErrors('confirmPassword')} ? 'has-error'">
                     <label for="confirmPassword">Confirm Password</label>
                     <input type="password" id="confirmPassword" name="confirmPassword" class="form-control"
                            th:classappend="${#fields.hasErrors('confirmPassword')} ? 'is-invalid'"
@@ -62,14 +62,14 @@
                 </div>
             </div>
             <div class="row">
-                <div class="form-group col-md-5 mr-1 mb-1" th:classappend="${#fields.hasErrors('bornOn')} ? 'has-error'">
+                <div class="form-group col-md-5 mr-1 mb-2" th:classappend="${#fields.hasErrors('bornOn')} ? 'has-error'">
                     <label for="bornOn">Date of Birth</label>
                     <input type="date" id="bornOn" name="bornOn" class="form-control"
                            th:classappend="${#fields.hasErrors('bornOn')} ? 'is-invalid'"
                            th:field="*{bornOn}">
                     <div class="invalid-feedback" th:if="${#fields.hasErrors('bornOn')}" th:errors="*{bornOn}"></div>
                 </div>
-                <div class="form-group col-md-5 mb-1" th:classappend="${#fields.hasErrors('address')} ? 'has-error'">
+                <div class="form-group col-md-5 mb-2" th:classappend="${#fields.hasErrors('address')} ? 'has-error'">
                     <label for="address">Address</label>
                     <input type="text" id="address" name="address" class="form-control"
                            th:classappend="${#fields.hasErrors('address')} ? 'is-invalid'"
@@ -78,15 +78,11 @@
                 </div>
             </div>
             <div class="row">
-                <div class="form-group col-md-5 mr-1" th:classappend="${#fields.hasErrors('nationality')} ? 'has-error'">
+                <div class="form-group col-md-5 mr-1 mb-2" th:classappend="${#fields.hasErrors('nationality')} ? 'has-error'">
                     <label for="nationality">Nationality</label>
-                    <select id="nationality" name="nationality" class="form-control"
-                            th:classappend="${#fields.hasErrors('nationality')} ? 'is-invalid'"
-                            th:field="*{nationality}">
-                        <option value="">Choose... DO IT WITH API</option>
-                        <option value="BG">BG</option>
-                        <option value="DE">DE</option>
-                        <option value="UK">UK</option>
+                    <select id="nationality" class="form-control" style="color: white;">
+                        <option value="">Choose...</option>
+                        <option th:each="code : ${countryCodes}" th:value="${code}" th:text="${code}"></option>
                     </select>
                     <div class="invalid-feedback" th:if="${#fields.hasErrors('nationality')}" th:errors="*{nationality}"></div>
                 </div>
@@ -100,7 +96,7 @@
             </div>
 
             <div class="row">
-                <div class="form-group col-md-5 mb-1" th:classappend="${#fields.hasErrors('telephoneNumber')} ? 'has-error'">
+                <div class="form-group col-md-5 mb-2" th:classappend="${#fields.hasErrors('telephoneNumber')} ? 'has-error'">
                     <label for="telephoneNumber">Telephone Number</label>
                     <input type="tel" id="telephoneNumber" name="telephoneNumber" class="form-control"
                            th:classappend="${#fields.hasErrors('telephoneNumber')} ? 'is-invalid'"
