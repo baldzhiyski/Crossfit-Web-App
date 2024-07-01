@@ -2,6 +2,22 @@ body {
 
 
 }
+.card-text {
+    margin-top: 1.5rem; /* Adjust as needed */
+}
+
+.card-text label {
+    font-weight: bold;
+    color: white;
+}
+
+.card-text select {
+    width: auto;
+    display: inline-block;
+    background-color: #343a40; /* Dark background color */
+    color: white;
+}
+
 
 .card-body{
     background-color: lightgray;
@@ -25,4 +41,26 @@ body {
     .bd-placeholder-img-lg {
         font-size: 3.5rem;
     }
+}
+.card-header {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+}
+.card {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+}
+.card-title {
+    font-size: 2rem;
+}
+.card-body ul {
+    padding-left: 0;
+}
+.card-body li {
+    list-style: none;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #ddd;
 }

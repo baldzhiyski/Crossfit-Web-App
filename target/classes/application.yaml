@@ -38,4 +38,10 @@ logging:
 server:
   port: 8080
 
+forex:
+  api:
+    key: ${FOREX_API_KEY}
+    url: "https://openexchangerates.org/api/latest.json?app_id={app_id}"
+    base: "USD"
+
 

@@ -23,65 +23,37 @@
         <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
             <h1 class="display-4 fw-normal" style="color: honeydew">Memberships</h1>
             <p class="fs-5 text-white">Welcome to the Memberships page of our CrossFit community! Here, we offer a range of membership plans designed to fit every fitness level and lifestyle. Whether you are just starting your fitness journey or are an experienced athlete, we have the right plan for you.</p>
+            <div class="card-text mt-3 text-center">
+                <label for="currency" class="text-white" style="font-weight: bold;">Select Currency:</label>
+                <select id="currency" class="form-select w-auto d-inline bg-secondary text-white">
+                    <option th:each="currency : ${allCurrencies}"
+                            th:value="${currency}"
+                            th:selected="${currency} == 'USD'"
+                            th:text="${currency}">
+                    </option>
+                </select>
+            </div>
         </div>
+
     <main>
-        <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-            <div class="col">
+        <div class="row row-cols-1 row-cols-md-2 mb-3 text-center">
+            <div class="col" th:each="membership : ${membershipDtos}">
                 <div class="card mb-4 rounded-3 shadow-sm">
                     <div class="card-header py-3 bg-secondary">
-                        <h4 class="my-0 fw-normal">Basic Plan</h4>
+                        <h4 class="my-0 fw-normal" th:text="${membership.membershipType} ">Basic Plan</h4>
                     </div>
                     <div class="card-body">
-                        <h1 class="card-title pricing-card-title">$50<small class="text-muted fw-light">/month</small></h1>
+                        <h1 class="card-title pricing-card-title price" th:text="${membership.price} + ' USD' + '/month' ">$50<small class="text-muted fw-light"></small></h1>
                         <ul class="list-unstyled mt-3 mb-4">
-                            <li>10 users included</li>
-                            <li>2 GB of storage</li>
-                            <li>Email support</li>
-                            <li>Help center access</li>
+                            <li th:text=" 'The duration of the membership is '  + ${membership.duration}  + ' month/s'"></li>
+                            <li>Crossfit is for everyone !</li>
                         </ul>
                         <a type="button" class="w-100 btn btn-lg btn-secondary"
-                           th:href="@{/memberships/checkout/{id}(id= ${})}"
+                           th:href="@{/memberships/checkout}"
                            sec:authorize="!hasRole('MEMBER')">Buy now</a>
                     </div>
                 </div>
-            </div>
-            <div class="col">
-                <div class="card mb-4 rounded-3 shadow-sm">
-                    <div class="card-header py-3 bg-dark">
-                        <h4 class="my-0 fw-normal" style="color:white;">Plus Plan</h4>
-                    </div>
-                    <div class="card-body">
-                        <h1 class="card-title pricing-card-title">$75<small class="text-muted fw-light">/month</small></h1>
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li>20 users included</li>
-                            <li>10 GB of storage</li>
-                            <li>Priority email support</li>
-                            <li>Help center access</li>
-                        </ul>
-                        <a type="button" class="w-100 btn btn-lg btn-secondary"
-                           th:href="@{/memberships/checkout/{id}(id= ${})}"
-                           sec:authorize="!hasRole('MEMBER')">Buy now</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card mb-4 rounded-3 shadow-sm border-primary">
-                    <div class="card-header py-3 text-white bg-primary border-primary">
-                        <h4 class="my-0 fw-normal">Elite Plan</h4>
-                    </div>
-                    <div class="card-body">
-                        <h1 class="card-title pricing-card-title">$99<small class="text-muted fw-light">/month</small></h1>
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li>30 users included</li>
-                            <li>15 GB of storage</li>
-                            <li>Phone and email support</li>
-                            <li>Help center access</li>
-                        </ul>
-                        <a type="button" class="w-100 btn btn-lg btn-secondary"
-                           th:href="@{/memberships/checkout/{id}(id= ${})}"
-                           sec:authorize="!hasRole('MEMBER')">Buy now</a>
-                    </div>
-                </div>
+                <input type="hidden" class="priceInBGN" th:value="${membership.price}">
             </div>
         </div>
 
@@ -145,5 +117,6 @@
 
 </footer>
 
+<script th:src="@{/js/currency.js}"></script>
 </body>
 </html>
