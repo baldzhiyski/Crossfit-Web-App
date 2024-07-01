@@ -45,7 +45,7 @@
                     <div class="card-body">
                         <h1 class="card-title pricing-card-title price" th:text="${membership.price} + ' USD' + '/month' ">$50<small class="text-muted fw-light"></small></h1>
                         <ul class="list-unstyled mt-3 mb-4">
-                            <li th:text=" 'The duration of the membership is '  + ${membership.duration}"></li>
+                            <li th:text=" 'The duration of the membership is '  + ${membership.duration}  + ' month/s'"></li>
                             <li>Crossfit is for everyone !</li>
                         </ul>
                         <a type="button" class="w-100 btn btn-lg btn-secondary"

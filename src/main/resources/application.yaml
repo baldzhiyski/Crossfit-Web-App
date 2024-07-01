@@ -44,4 +44,8 @@ forex:
     url: "https://openexchangerates.org/api/latest.json?app_id={app_id}"
     base: "USD"
 
+countries:
+  api:
+    url: "https://restcountries.com/v3.1/all?fields=name,cca2"
+
 

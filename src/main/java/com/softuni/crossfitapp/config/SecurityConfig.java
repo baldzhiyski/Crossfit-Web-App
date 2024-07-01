@@ -52,6 +52,7 @@ public class SecurityConfig {
                         .requestMatchers("/users/add-event").hasRole("USER")
                         .requestMatchers("/schedule-for-the-week").hasRole("MEMBER")
                         .requestMatchers("/my-weekly-schedule/{id}").hasRole("COACH")
+                        .requestMatchers("/crossfit/api/convert").permitAll()
                         // Catch-all for any other requests, must be authenticated
                         .anyRequest().authenticated()
                 )

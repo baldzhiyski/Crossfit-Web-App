@@ -80,13 +80,9 @@
             <div class="row">
                 <div class="form-group col-md-5 mr-1" th:classappend="${#fields.hasErrors('nationality')} ? 'has-error'">
                     <label for="nationality">Nationality</label>
-                    <select id="nationality" name="nationality" class="form-control"
-                            th:classappend="${#fields.hasErrors('nationality')} ? 'is-invalid'"
-                            th:field="*{nationality}">
-                        <option value="">Choose... DO IT WITH API</option>
-                        <option value="BG">BG</option>
-                        <option value="DE">DE</option>
-                        <option value="UK">UK</option>
+                    <select id="nationality" style="color: black">
+                        <option value="">Choose...</option>
+                        <option th:each="code : ${countryCodes}" th:value="${code}" th:text="${code}"></option>
                     </select>
                     <div class="invalid-feedback" th:if="${#fields.hasErrors('nationality')}" th:errors="*{nationality}"></div>
                 </div>

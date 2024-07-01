@@ -1,6 +1,7 @@
 package com.softuni.crossfitapp.web;
 
 import com.softuni.crossfitapp.domain.dto.users.UserRegisterDto;
+import com.softuni.crossfitapp.service.CountryService;
 import com.softuni.crossfitapp.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -23,9 +24,11 @@ import static com.softuni.crossfitapp.util.Constants.DOT;
 public class UserController {
 
     private UserService userService;
+    private CountryService countryService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, CountryService countryService) {
         this.userService = userService;
+        this.countryService = countryService;
     }
 
 
@@ -43,6 +46,11 @@ public class UserController {
         if(!model.containsAttribute("registerDto")){
             model.addAttribute("registerDto", new UserRegisterDto());
         }
+
+        if(!model.containsAttribute("countryCodes")){
+            model.addAttribute("countryCodes", this.countryService.allCountryCodes());
+        }
+
         return "auth-register";
 
     }
