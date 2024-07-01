@@ -55,5 +55,10 @@ public class UserRegisterDto {
     @ValidEmail
     private String email;
 
+
+    public String getFullName(){
+        return firstName + " " + lastName;
+    }
+
 }
 

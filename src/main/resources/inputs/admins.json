@@ -8,7 +8,7 @@
     "town": "Los Angeles",
     "bornOn": "1980-01-15",
     "password": "adminPwd1",
-    "imageUrl": "images/admin1.jpeg",
+    "imageUrl": "/images/admin1.jpeg",
     "telephoneNumber": "1112223333",
     "email": "admin1@gmail.com",
     "roles": [

@@ -8,7 +8,7 @@
     "town": "New York",
     "bornOn": "1990-05-15",
     "password": "password123",
-    "imageUrl": "images/john.jpeg",
+    "imageUrl": "/images/john.jpeg",
     "telephoneNumber": "1234567890",
     "email": "john.doe@gmail.com",
     "roles": [
@@ -34,7 +34,7 @@
     "town": "London",
     "bornOn": "1985-04-10",
     "password": "securePwd456",
-    "imageUrl": "images/janes.jpeg",
+    "imageUrl": "/images/janes.jpeg",
     "telephoneNumber": "9876543210",
     "email": "jane.smith@yahoo.com",
     "roles": [
@@ -60,7 +60,7 @@
     "town": "Toronto",
     "bornOn": "1988-08-05",
     "password": "mike123",
-    "imageUrl": "images/michael.jpeg",
+    "imageUrl": "/images/michael.jpeg",
     "telephoneNumber": "5551234567",
     "email": "michael.brown@abv.bg",
     "roles": [
@@ -86,7 +86,7 @@
     "town": "Sydney",
     "bornOn": "1992-07-28",
     "password": "emilyPass",
-    "imageUrl": "images/emily.jpeg",
+    "imageUrl": "/images/emily.jpeg",
     "telephoneNumber": "3339998888",
     "email": "emily.johnson@gmail.com",
     "roles": [
@@ -112,7 +112,7 @@
     "town": "Auckland",
     "bornOn": "1995-09-10",
     "password": "davidPwd789",
-    "imageUrl": "images/devid.jpeg",
+    "imageUrl": "/images/devid.jpeg",
     "telephoneNumber": "7774445555",
     "email": "david.lee@abv.bg",
     "roles": [
@@ -138,7 +138,7 @@
     "town": "Berlin",
     "bornOn": "1993-06-30",
     "password": "sarahPass567",
-    "imageUrl": "images/sarah.jpeg",
+    "imageUrl": "/images/sarah.jpeg",
     "telephoneNumber": "9993336666",
     "email": "sarah.clark@gmail.com",
     "roles": [

@@ -80,7 +80,7 @@
             <div class="row">
                 <div class="form-group col-md-5 mr-1 mb-2" th:classappend="${#fields.hasErrors('nationality')} ? 'has-error'">
                     <label for="nationality">Nationality</label>
-                    <select id="nationality" class="form-control" style="color: white;">
+                    <select id="nationality" class="form-control"  name="nationality" style="color: white;">
                         <option value="">Choose...</option>
                         <option th:each="code : ${countryCodes}" th:value="${code}" th:text="${code}"></option>
                     </select>
