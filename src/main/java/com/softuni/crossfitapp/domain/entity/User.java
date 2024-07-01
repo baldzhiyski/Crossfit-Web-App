@@ -76,6 +76,8 @@ public class User extends BaseEntity{
 
     @Column
     private LocalDate membershipEndDate;
+
+    private boolean isActive;
     @PrePersist
     @PreUpdate
     public void encodePassword() {

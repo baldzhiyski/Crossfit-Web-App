@@ -7,10 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -56,6 +53,7 @@ public class UserController {
     }
 
 
+
     @PostMapping("/register")
     public ModelAndView doRegister(@Valid UserRegisterDto userRegisterDto, BindingResult bindingResult , RedirectAttributes redirectAttributes) throws IOException {
         ModelAndView modelAndView = new ModelAndView();
@@ -75,6 +73,13 @@ public class UserController {
         return modelAndView;
     }
 
+    @GetMapping("/user/activate/{activation_code}")
+    public String activateUser(@PathVariable("activation_code") String activationCode,
+                               Model model) {
+
+        this.userService.activateAccount(activationCode);
+        return "redirect:/users/login";
+    }
     @PostMapping("/login-error")
     public String onFailure(
             Model model) {

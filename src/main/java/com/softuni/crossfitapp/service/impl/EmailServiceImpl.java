@@ -1,5 +1,6 @@
 package com.softuni.crossfitapp.service.impl;
 
+import com.softuni.crossfitapp.domain.entity.User;
 import com.softuni.crossfitapp.service.EmailService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -23,7 +24,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendRegistrationEmail(String userEmail, String userName) {
+    public void sendRegistrationEmail(String userEmail, String userName, String activationCode, User savedUser) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
@@ -34,7 +35,7 @@ public class EmailServiceImpl implements EmailService {
             mimeMessageHelper.setFrom(crossfitEmail);
             mimeMessageHelper.setReplyTo(crossfitEmail);
             mimeMessageHelper.setSubject("Welcome to Crossfit Stuttgart!");
-            mimeMessageHelper.setText(generateRegistrationEmailBody(userName), true);
+            mimeMessageHelper.setText(generateRegistrationEmailBody(userName, activationCode,savedUser), true);
 
             javaMailSender.send(mimeMessageHelper.getMimeMessage());
 
@@ -43,10 +44,12 @@ public class EmailServiceImpl implements EmailService {
         }
     }
 
-    private String generateRegistrationEmailBody(String userName) {
+    private String generateRegistrationEmailBody(String userName, String activationCode, User savedUser) {
 
         Context context = new Context();
         context.setVariable("username", userName);
+        context.setVariable("activation_code", activationCode);
+        context.setVariable("username", savedUser.getUsername());
 
         return templateEngine.process("email/registration-email", context);
 

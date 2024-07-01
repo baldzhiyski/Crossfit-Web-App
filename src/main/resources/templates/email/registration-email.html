@@ -63,7 +63,7 @@
     </div>
     <div class="content" style="padding: 30px; color: #666666; font-size: 18px; line-height: 1.6;">
         <p>Hello, <th:block th:text="${username}">Pesho</th:block>. We're thrilled to have you join CrossFit App. To get started, please confirm your account by clicking the button below:</p>
-        <a href="#" class="cta-button" style="display: inline-block; padding: 15px 25px; background-color: #304c59; color: #ffffff; text-decoration: none; border-radius: 3px; font-size: 20px; margin-top: 20px;">Confirm Account</a>
+        <a  th:href="@{http://localhost:8080/user/activate/{activation_code}/(activation_code=${activation_code})}"  class="cta-button" style="display: inline-block; padding: 15px 25px; background-color: #304c59; color: #ffffff; text-decoration: none; border-radius: 3px; font-size: 20px; margin-top: 20px;">Confirm Account</a>
         <p>If you have any questions or need assistance, feel free to reply to this email. We're here to help!</p>
         <p>Best regards,<br>The CrossFit App Team</p>
     </div>
