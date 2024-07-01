@@ -5,4 +5,6 @@ import com.softuni.crossfitapp.domain.events.UserRegisteredEvent;
 public interface UserActivationService {
 
     void userRegistered(UserRegisteredEvent event);
+
+    void cleanUpActivationLinks();
 }
