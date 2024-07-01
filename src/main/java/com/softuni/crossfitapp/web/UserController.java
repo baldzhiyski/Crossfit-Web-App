@@ -53,7 +53,7 @@ public class UserController {
     }
 
 
-
+    // TODO : Redirect here to a page where it says that u need to confirm the email and from there redirect to the log in page !
     @PostMapping("/register")
     public ModelAndView doRegister(@Valid UserRegisterDto userRegisterDto, BindingResult bindingResult , RedirectAttributes redirectAttributes) throws IOException {
         ModelAndView modelAndView = new ModelAndView();

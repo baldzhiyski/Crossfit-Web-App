@@ -9,7 +9,6 @@ public interface UserService {
 
     void registerNewUser(UserRegisterDto userRegisterDto) throws IOException;
 
-    void logInUser(LogInDto logInDto);
 
     void activateAccount(String activationCode);
 }

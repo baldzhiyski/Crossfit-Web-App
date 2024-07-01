@@ -53,9 +53,8 @@ public class UserServiceImpl implements UserService {
         toBeRegisteredUser.setCountry(country);
         String imageUrl = CopyImageFileSaverUtil.saveFile(userRegisterDto.getPhoto());
         toBeRegisteredUser.setImageUrl(imageUrl);
-        Set<Role> roles = new HashSet<>();
-        roles.add(roleRepository.findByRoleType(RoleType.USER));
-        toBeRegisteredUser.setRoles(roles);
+
+        // Setting the role when we click on the confirm url
 
         this.userRepository.saveAndFlush(toBeRegisteredUser);
 
@@ -66,16 +65,14 @@ public class UserServiceImpl implements UserService {
         ));
     }
 
-    @Override
-    public void logInUser(LogInDto logInDto) {
-
-    }
 
     @Override
     @Transactional
     public void activateAccount(String activationCode) {
 
         UserActivationLinkEntity userActivationLinkEntity = this.activationCodeRepository.findByActivationCode(activationCode).orElseThrow(() -> new ObjectNotFoundException("No such code in the db"));
+
+        // TODO : Debug here , nothing is changing in the db
 
         User user = userActivationLinkEntity.getUser();
         Set<Role> roles = new HashSet<>();
