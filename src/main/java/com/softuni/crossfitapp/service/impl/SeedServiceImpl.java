@@ -8,6 +8,7 @@ import com.softuni.crossfitapp.domain.dto.users.SeedAdminDto;
 import com.softuni.crossfitapp.domain.dto.users.SeedCoachesUserProfileDto;
 import com.softuni.crossfitapp.domain.entity.*;
 import com.softuni.crossfitapp.domain.entity.enums.RoleType;
+import com.softuni.crossfitapp.exceptions.ObjectNotFoundException;
 import com.softuni.crossfitapp.repository.*;
 import com.softuni.crossfitapp.service.SeedService;
 import org.modelmapper.ModelMapper;
@@ -37,7 +38,9 @@ public class SeedServiceImpl implements SeedService {
     private Gson converter;
     private ModelMapper mapper;
 
-    public SeedServiceImpl(RoleRepository roleRepository, CertificateRepository certificateRepository, CoachRepository coachRepository, UserRepository userRepository, MembershipRepository membershipRepository, Gson converter, ModelMapper mapper) {
+    private CountryRepository countryRepository;
+
+    public SeedServiceImpl(RoleRepository roleRepository, CertificateRepository certificateRepository, CoachRepository coachRepository, UserRepository userRepository, MembershipRepository membershipRepository, Gson converter, ModelMapper mapper, CountryRepository countryRepository) {
         this.roleRepository = roleRepository;
         this.certificateRepository = certificateRepository;
         this.coachRepository = coachRepository;
@@ -45,6 +48,7 @@ public class SeedServiceImpl implements SeedService {
         this.membershipRepository = membershipRepository;
         this.converter = converter;
         this.mapper = mapper;
+        this.countryRepository = countryRepository;
     }
 
     @Override
@@ -121,7 +125,7 @@ public class SeedServiceImpl implements SeedService {
                     .map(seedCoachesUserProfileDto -> {
                         User user = this.mapper.map(seedCoachesUserProfileDto, User.class);
                         Set<Role> roles = getRoles(seedCoachesUserProfileDto.getRoles());
-
+                        user.setCountry(countryRepository.findByCode(seedCoachesUserProfileDto.getNationality()).orElseThrow(()-> new ObjectNotFoundException("No such country in the db !")));
                         user.setRoles(roles);
                         Membership byMembershipType = this.membershipRepository.findByMembershipType(seedCoachesUserProfileDto.getMembership().getMembershipType());
                         user.setMembership(byMembershipType);
@@ -141,7 +145,7 @@ public class SeedServiceImpl implements SeedService {
                 .map(seedAdminDto -> {
                     User user = this.mapper.map(seedAdminDto, User.class);
                     Set<Role> roles = getRoles(seedAdminDto.getRoles());
-
+                    user.setCountry(countryRepository.findByCode(seedAdminDto.getNationality()).orElseThrow(()-> new ObjectNotFoundException("No such country in the db !")));
                     user.setRoles(roles);
                     return user;
                 }).collect(Collectors.toList());

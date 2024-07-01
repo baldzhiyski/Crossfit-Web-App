@@ -21,8 +21,8 @@ public class DBInitializer  implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        countryService.seedCountries();
         seedService.seedAll();
         exchangeRateService.seedRates();
-        countryService.seedCountries();
     }
 }

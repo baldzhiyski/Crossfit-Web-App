@@ -11,4 +11,5 @@ import java.util.UUID;
 public interface CountryRepository  extends JpaRepository<Country, UUID> {
 
     Optional<Country> findByName(String countryName);
+    Optional<Country> findByCode(String code);
 }

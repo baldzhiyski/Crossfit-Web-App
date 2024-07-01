@@ -4,7 +4,7 @@
     "firstName": "Admin",
     "lastName": "One",
     "address": "789 Elm St",
-    "nationality": "US",
+    "nationality": "DE",
     "town": "Los Angeles",
     "bornOn": "1980-01-15",
     "password": "adminPwd1",
@@ -21,51 +21,5 @@
     ],
     "membershipStartDate": "2023-01-15",
     "membershipEndDate": "2028-01-15"
-  },
-  {
-    "username": "admin2",
-    "firstName": "Admin",
-    "lastName": "Two",
-    "address": "456 Oak Ave",
-    "nationality": "UK",
-    "town": "London",
-    "bornOn": "1985-02-20",
-    "password": "adminPwd2",
-    "imageUrl": "images/admin2.jpeg",
-    "telephoneNumber": "2223334444",
-    "email": "admin2@gmail.com",
-    "roles": [
-      {
-        "roleType": "ADMIN"
-      },
-      {
-        "roleType": "USER"
-      }
-    ],
-    "membershipStartDate": "2023-02-20",
-    "membershipEndDate": "2028-02-20"
-  },
-  {
-    "username": "admin3",
-    "firstName": "Admin",
-    "lastName": "Three",
-    "address": "789 Pine Rd",
-    "nationality": "CA",
-    "town": "Toronto",
-    "bornOn": "1990-03-25",
-    "password": "adminPwd3",
-    "imageUrl": "images/admin3.jpeg",
-    "telephoneNumber": "3334445555",
-    "email": "admin3@gmail.com",
-    "roles": [
-      {
-        "roleType": "ADMIN"
-      },
-      {
-        "roleType": "USER"
-      }
-    ],
-    "membershipStartDate": "2023-03-25",
-    "membershipEndDate": "2028-03-25"
   }
 ]
