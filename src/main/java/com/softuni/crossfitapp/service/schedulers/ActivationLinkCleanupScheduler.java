@@ -15,7 +15,7 @@ public class ActivationLinkCleanupScheduler {
 
     @Scheduled(cron = "*/10 * * * * *")
     public void cleanUp(){
-        System.out.println("Trigger cleanup");
+//        System.out.println("Trigger cleanup");
         activationService.cleanUpActivationLinks();
     }
 }

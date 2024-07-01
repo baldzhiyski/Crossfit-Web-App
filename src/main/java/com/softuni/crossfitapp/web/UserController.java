@@ -73,10 +73,11 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping("/user/activate/{activation_code}")
+    @GetMapping("/activate/{activation_code}")
     public String activateUser(@PathVariable("activation_code") String activationCode,
                                Model model) {
 
+        System.out.println("TEST");
         this.userService.activateAccount(activationCode);
         return "redirect:/users/login";
     }

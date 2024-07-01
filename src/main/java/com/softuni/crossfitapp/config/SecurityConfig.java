@@ -40,7 +40,7 @@ public class SecurityConfig {
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 
                         // Allow access to specific URLs based on roles
-                        .requestMatchers("/", "/users/login", "/users/register", "/users/login-error", "/access-denied","/nutrition-blog").permitAll()
+                        .requestMatchers("/", "/users/login", "/users/register", "/users/login-error", "/access-denied","/nutrition-blog","/users/activate/{activation_code}").permitAll()
                         .requestMatchers("/memberships/explore").hasRole("USER")
                         .requestMatchers("/users/profile").hasRole("USER")
                         .requestMatchers("/workouts").permitAll()
