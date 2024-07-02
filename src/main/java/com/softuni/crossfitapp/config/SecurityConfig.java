@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -42,6 +43,7 @@ public class SecurityConfig {
                         // Allow access to specific URLs based on roles
                         .requestMatchers("/", "/users/login", "/users/register", "/users/login-error", "/access-denied","/nutrition-blog","/users/activate/{activation_code}").permitAll()
                         .requestMatchers("/memberships/explore").hasRole("USER")
+                        .requestMatchers("/memberships/checkout").hasRole("USER")
                         .requestMatchers("/users/profile").hasRole("USER")
                         .requestMatchers("/workouts").permitAll()
                         .requestMatchers("/users/my-workouts").hasRole("USER")
@@ -92,5 +94,6 @@ public class SecurityConfig {
     public AccessDeniedHandler customHandler() {
         return new CustomAccessDeniedHandler();
     }
+
 
 }

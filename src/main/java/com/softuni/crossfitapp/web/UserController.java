@@ -68,9 +68,13 @@ public class UserController {
         }
 
         userService.registerNewUser(userRegisterDto);
-        redirectAttributes.addFlashAttribute("successMessage", "Successfully registered ! Please Log In !");
-        modelAndView.setViewName("redirect:/users/login");
+        modelAndView.setViewName("redirect:/users/last-register-step");
         return modelAndView;
+    }
+
+    @GetMapping("/last-register-step")
+    public String confirmTab(){
+        return "confirm-email";
     }
 
     @GetMapping("/activate/{activation_code}")
@@ -79,6 +83,7 @@ public class UserController {
 
         System.out.println("TEST");
         this.userService.activateAccount(activationCode);
+        model.addAttribute("successMessage","Successfully registered ! Please Log In !");
         return "redirect:/users/login";
     }
     @PostMapping("/login-error")

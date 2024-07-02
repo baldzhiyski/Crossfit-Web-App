@@ -2,9 +2,86 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Confirm Email</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Verification</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, darkslategrey, #2575fc);
+            font-family: 'Arial', sans-serif;
+        }
+        .card {
+            width: 100%;
+            max-width: 500px;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            transform: translateY(-50px);
+            animation: float 1s ease-in-out forwards;
+        }
+        @keyframes float {
+            to {
+                transform: translateY(0);
+            }
+        }
+        .card-header {
+            background-color: #007bff;
+            color: #fff;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            padding: 1.5rem 2rem;
+        }
+        .card-header h2 {
+            margin: 0;
+            font-size: 1.75rem;
+            font-weight: 500;
+        }
+        .card-body {
+            padding: 2rem;
+            background-color: #ffffff;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+        }
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+        }
+        .card-text {
+            font-size: 1rem;
+            color: #6c757d;
+            margin-bottom: 1.5rem;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+    </style>
 </head>
 <body>
-
+<div class="card text-center">
+    <div class="card-header">
+        <h2>Check Your Email</h2>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Email Verification Required</h5>
+        <p class="card-text">Thank you for registering! Please check your email and click the activation link to complete your registration.</p>
+        <a href="https://mailhog.local" class="btn btn-primary">Go to Mailhog</a>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
