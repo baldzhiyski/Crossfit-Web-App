@@ -1,6 +1,10 @@
 package com.softuni.crossfitapp.service.impl;
 
-import com.softuni.crossfitapp.domain.dto.users.LogInDto;
+import com.softuni.crossfitapp.domain.dto.events.EventDto;
+import com.softuni.crossfitapp.domain.dto.memberships.MembershipProfilePageDto;
+import com.softuni.crossfitapp.domain.dto.trainings.TrainingDto;
+import com.softuni.crossfitapp.domain.dto.users.UserProfileDto;
+import com.softuni.crossfitapp.domain.dto.users.UserProfileUpdateDto;
 import com.softuni.crossfitapp.domain.dto.users.UserRegisterDto;
 import com.softuni.crossfitapp.domain.entity.Country;
 import com.softuni.crossfitapp.domain.entity.Role;
@@ -21,8 +25,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -80,6 +91,75 @@ public class UserServiceImpl implements UserService {
         user.setRoles(roles);
         user.setActive(true);
         userActivationLinkEntity.setUser(user);
+        this.userRepository.saveAndFlush(user);
+    }
+
+    @Override
+    public UserProfileDto getProfilePageDto(String username) {
+        User user = this.userRepository.findByUsername(username).orElseThrow(() -> new ObjectNotFoundException("No such user existing !"));
+        String fullName = user.getFirstName()+ " " + user.getLastName();
+        Set<RoleType> roles = user.getRoles().stream().map(Role::getRoleType).collect(Collectors.toSet());
+        MembershipProfilePageDto mapped = this.mapper.map(user.getMembership(), MembershipProfilePageDto.class);
+
+        long daysLeft = ChronoUnit.DAYS.between(user.getMembershipStartDate(), user.getMembershipEndDate());
+        mapped.setTimeLeft(daysLeft);
+
+        Set<EventDto> events = user.getEvents().stream().map(event -> {
+            return this.mapper.map(event, EventDto.class);
+        }).collect(Collectors.toSet());
+
+        Set<TrainingDto> enrolledTrainingsNames = user.getTrainingsPerWeekList().stream().map(weeklyTraining -> {
+            return this.mapper.map(weeklyTraining, TrainingDto.class);
+        }).collect(Collectors.toSet());
+
+        return new UserProfileDto(
+                fullName,user.getUsername(),user.getImageUrl(),user.getId(),user.getEmail(),user.getAddress(),roles,mapped,events, enrolledTrainingsNames
+        );
+    }
+
+    @Override
+    @Transactional
+    public void updateProfile(String username, UserProfileUpdateDto userProfileUpdateDto) throws IOException {
+
+        // TODO : Still to be testet !
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ObjectNotFoundException("User not found with username: " + username));
+
+        // Update only the fields that are not null or not empty in the DTO
+        if (!userProfileUpdateDto.getFirstName().isBlank()) {
+            user.setFirstName(userProfileUpdateDto.getFirstName());
+        }
+        if (!userProfileUpdateDto.getLastName().isBlank()) {
+            user.setLastName(userProfileUpdateDto.getLastName());
+        }
+        if (!userProfileUpdateDto.getEmail().isBlank()) {
+            user.setEmail(userProfileUpdateDto.getEmail());
+        }
+        if (!userProfileUpdateDto.getAddress().isBlank()) {
+            user.setAddress(userProfileUpdateDto.getAddress());
+        }
+        if (!userProfileUpdateDto.getDateOfBirth().isBlank()) {
+
+            LocalDate dateOfBirth = LocalDate.parse(userProfileUpdateDto.getDateOfBirth(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            // Convert LocalDate to Instant
+            Instant instant = dateOfBirth.atStartOfDay(ZoneId.systemDefault()).toInstant();
+
+            // Convert Instant to Date
+            Date dateOfBirthDate = Date.from(instant);
+
+            user.setBornOn(dateOfBirthDate);
+        }
+
+        if(!userProfileUpdateDto.getPicture().isEmpty()){
+            String imageUrl = CopyImageFileSaverUtil.saveFile(userProfileUpdateDto.getPicture());
+            user.setImageUrl(imageUrl);
+        }
+
+        if(!userProfileUpdateDto.getPassword().isBlank() && !userProfileUpdateDto.getConfirmPassword().isBlank()){
+            user.setPassword(userProfileUpdateDto.getPassword());
+        }
+
         this.userRepository.saveAndFlush(user);
     }
 }

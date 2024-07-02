@@ -17,6 +17,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Event extends BaseEntity{
+
+    @NotBlank
+    private String eventName;
+
     @Lob
     @NotBlank
     private String description;

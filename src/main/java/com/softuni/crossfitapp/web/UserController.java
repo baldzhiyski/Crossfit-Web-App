@@ -1,5 +1,6 @@
 package com.softuni.crossfitapp.web;
 
+import com.softuni.crossfitapp.domain.dto.users.UserProfileUpdateDto;
 import com.softuni.crossfitapp.domain.dto.users.UserRegisterDto;
 import com.softuni.crossfitapp.service.CountryService;
 import com.softuni.crossfitapp.service.UserService;
@@ -94,18 +95,42 @@ public class UserController {
         return "auth-login";
     }
 
-    //TODO: With some path-variable
-    @GetMapping("/updateAcc")
-    public String getUpdateAccountPage(){
+    @GetMapping("/profile/{username}")
+    public String getProfile(@PathVariable String username,Model model){
+
+        model.addAttribute("userProfileDto",this.userService.getProfilePageDto(username));
+
+        return "profile-page";
+    }
+
+    @GetMapping("/profile/{username}/edit")
+    public String toEditPage(@PathVariable String username,Model model){
+
+        if(!model.containsAttribute("userProfileUpdateDto")){
+            model.addAttribute("userProfileUpdateDto",new UserProfileUpdateDto());
+        }
+
         return "updateProfilePage";
     }
 
+    @PostMapping("/profile/{username}/edit")
+    public ModelAndView doUpdate(@PathVariable String username,@Valid UserProfileUpdateDto userProfileUpdateDto,BindingResult bindingResult,RedirectAttributes redirectAttributes) throws IOException {
+        ModelAndView modelAndView = new ModelAndView();
 
-    //TODO: With some path-variable
-    @GetMapping("/profile")
-    public String getProfile(){
-        return "profile-page";
+        if(bindingResult.hasErrors()){
+            final String attributeName = "userProfileUpdateDto";
+            redirectAttributes
+                    .addFlashAttribute("userProfileUpdateDto", userProfileUpdateDto)
+                    .addFlashAttribute(BINDING_RESULT_PATH + DOT + attributeName, bindingResult);
+            modelAndView.setViewName("redirect:/users/profile/" + username + "/edit");
+            return modelAndView;
+        }
+        this.userService.updateProfile(username,userProfileUpdateDto);
+        modelAndView.setViewName("redirect:/users/profile/" + username);
+        return modelAndView;
     }
+
+    // TODO : Implement the delete mapping for the profile
 
 
     //TODO: With some path-variable

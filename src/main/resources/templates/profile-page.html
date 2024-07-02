@@ -13,17 +13,17 @@
 </head>
 <body>
 <nav th:replace = "~{fragments/navbar::nav}"></nav>
-<div class="container emp-profile">
+<div class="container emp-profile" th:object="${userProfileDto}">
     <form method="post">
         <div class="row">
             <div class="col-md-4">
                 <div class="profile-img">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt=""/>
+                    <img th:src="*{imageUrl()}" alt=""/>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="profile-head">
-                    <h5>
+                    <h5 th:text=" *{'Current user : ' + username()}">
                         Kshiti Ghelani
                     </h5>
                     <h6>
@@ -37,22 +37,21 @@
                 </div>
             </div>
             <div class="col-md-2">
-                <a class="profile-edit-btn" th:href="@{/profile/edit}">Edit Profile</a>
+                <a class="profile-edit-btn" th:href="@{/users/profile/{username}/edit(username=${#authentication.principal.username})}">Edit Profile</a>
             </div>
         </div>
         <div class="row">
             <div class="col-md-4">
                 <div class="profile-work">
                     <p>Most visited types of trainings :</p>
-                    <a>WOD</a><br/>
-                    <a>HYROX</a><br/>
-                    <a>TABATA</a><br/>
-                    <a>CARDIO</a><br/>
+                    <div th:each="training : *{enrolledTrainingsForTheWeek()}">
+                        <a th:text="${training.trainingType}">Training Type</a><br/>
+                    </div>
 
                     <p>Enrolled in following events : </p>
-                    <a >Event 1</a><br/>
-                    <a >Event 2</a><br/>
-                    <a >Event 3</a><br/>
+                    <div th:each="event : *{events()}">
+                        <a th:text="${event.eventName}">Event Name</a><br/>
+                    </div>
                 </div>
             </div>
             <div class="col-md-8">
@@ -63,15 +62,15 @@
                                 <label>User Id:</label>
                             </div>
                             <div class="col-md-6">
-                                <p>Kshiti123</p>
+                                <p th:text="*{id()}">Kshiti123</p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <label>First Name:</label>
+                                <label>Full Name:</label>
                             </div>
                             <div class="col-md-6">
-                                <p>Kshiti Ghelani</p>
+                                <p th:text="*{fullName()}">Kshiti Ghelani</p>
                             </div>
                         </div>
                         <div class="row">
@@ -79,7 +78,7 @@
                                 <label>Email:</label>
                             </div>
                             <div class="col-md-6">
-                                <p>kshitighelani@gmail.com</p>
+                                <p th:text="*{email()}">kshitighelani@gmail.com</p>
                             </div>
                         </div>
                         <div class="row">
@@ -87,15 +86,17 @@
                                 <label>Address:</label>
                             </div>
                             <div class="col-md-6">
-                                <p>Street Biscuit 1</p>
+                                <p th:text="*{address()}">Street Biscuit 1</p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <label>Role:</label>
+                                <label>Roles:</label>
                             </div>
-                            <div class="col-md-6">
-                                <p>User</p>
+                            <div class="col-md-6 mb-1">
+                                <div th:each="role : *{roles()}" class="col-md-12">
+                                    <a th:text="${role}">RoleType</a><br/>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -104,8 +105,8 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="membership-info">
-                                    <p><strong>Gold Membership</strong></p>
-                                    <p>Expires in: <span id="membership-time-left" th:text="${membershipTimeLeft}">30 days</span></p>
+                                    <p><strong th:text="*{membership.membershipType + ' Membership'}">Gold Membership</strong></p>
+                                    <p>Expires in: <span id="membership-time-left" th:text="*{membership().timeLeft + ' days left of the membership'}">30 days</span></p>
                                 </div>
                             </div>
                         </div>

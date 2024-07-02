@@ -34,7 +34,7 @@ public class CrossfitUserDetailsService implements UserDetailsService {
 
     private UserDetails map(com.softuni.crossfitapp.domain.entity.User userEntity) {
       return new CrossfitUserDetails(
-              userEntity.getEmail(),
+              userEntity.getUsername(),
               userEntity.getPassword(),
               mapAuthorities(userEntity.getRoles()),
               userEntity.getFirstName(),

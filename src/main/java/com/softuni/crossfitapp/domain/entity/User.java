@@ -62,7 +62,7 @@ public class User extends BaseEntity{
 
     @ManyToOne
     private Membership membership;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "participants_trainings",
             joinColumns = @JoinColumn(name = "participant_id"),
@@ -77,7 +77,13 @@ public class User extends BaseEntity{
     @Column
     private LocalDate membershipEndDate;
 
+    @Column
     private boolean isActive;
+
+
+    @OneToMany(mappedBy = "creator",fetch = FetchType.EAGER)
+    private Set<Event> events;
+
     @PrePersist
     @PreUpdate
     public void encodePassword() {
