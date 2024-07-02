@@ -11,6 +11,7 @@
     "imageUrl": "/images/admin1.jpeg",
     "telephoneNumber": "1112223333",
     "email": "admin1@gmail.com",
+    "isActive" : "true",
     "roles": [
       {
         "roleType": "ADMIN"

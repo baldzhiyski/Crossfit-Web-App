@@ -11,6 +11,7 @@
     "imageUrl": "/images/john.jpeg",
     "telephoneNumber": "1234567890",
     "email": "john.doe@gmail.com",
+    "isActive" : "true",
     "roles": [
       {
         "roleType": "COACH"
@@ -37,6 +38,7 @@
     "imageUrl": "/images/janes.jpeg",
     "telephoneNumber": "9876543210",
     "email": "jane.smith@yahoo.com",
+    "isActive" : "true",
     "roles": [
       {
         "roleType": "COACH"
@@ -63,6 +65,7 @@
     "imageUrl": "/images/michael.jpeg",
     "telephoneNumber": "5551234567",
     "email": "michael.brown@abv.bg",
+    "isActive" : "true",
     "roles": [
       {
         "roleType": "COACH"
@@ -89,6 +92,7 @@
     "imageUrl": "/images/emily.jpeg",
     "telephoneNumber": "3339998888",
     "email": "emily.johnson@gmail.com",
+    "isActive" : "true",
     "roles": [
       {
         "roleType": "COACH"
@@ -115,6 +119,7 @@
     "imageUrl": "/images/devid.jpeg",
     "telephoneNumber": "7774445555",
     "email": "david.lee@abv.bg",
+    "isActive" : "true",
     "roles": [
       {
         "roleType": "COACH"
@@ -141,6 +146,7 @@
     "imageUrl": "/images/sarah.jpeg",
     "telephoneNumber": "9993336666",
     "email": "sarah.clark@gmail.com",
+    "isActive" : "true",
     "roles": [
       {
         "roleType": "COACH"

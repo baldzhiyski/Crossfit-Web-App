@@ -79,11 +79,10 @@ public class UserController {
 
     @GetMapping("/activate/{activation_code}")
     public String activateUser(@PathVariable("activation_code") String activationCode,
-                               Model model) {
+                                RedirectAttributes redirectAttributes) {
 
-        System.out.println("TEST");
         this.userService.activateAccount(activationCode);
-        model.addAttribute("successMessage","Successfully registered ! Please Log In !");
+        redirectAttributes.addFlashAttribute("successMessage","Successfully registered ! Please Log In !");
         return "redirect:/users/login";
     }
     @PostMapping("/login-error")

@@ -18,6 +18,7 @@ public class SeedAdminDto {private String username;
     private String lastName;
 
     private String address;
+    private boolean isActive;
 
     private String nationality;
 

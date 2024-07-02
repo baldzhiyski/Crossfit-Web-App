@@ -23,6 +23,8 @@ public class SeedCoachesUserProfileDto {
 
     private String nationality;
 
+    private boolean isActive;
+
     private String town;
 
     private Date bornOn;
