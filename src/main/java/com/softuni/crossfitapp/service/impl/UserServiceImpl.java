@@ -21,6 +21,7 @@ import com.softuni.crossfitapp.service.UserService;
 import com.softuni.crossfitapp.util.CopyImageFileSaverUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -164,5 +165,14 @@ public class UserServiceImpl implements UserService {
         }
 
         this.userRepository.saveAndFlush(user);
+    }
+
+    @Override
+    public void deleteAcc(String username) {
+        User user = this.userRepository.findByUsername(username).orElseThrow(() -> new ObjectNotFoundException("User not found"));
+        // Delete the user
+        this.userRepository.delete(user);
+        // Logout the current user
+        SecurityContextHolder.getContext().setAuthentication(null);
     }
 }

@@ -16,4 +16,6 @@ public interface UserService {
     UserProfileDto getProfilePageDto(String username);
 
     void updateProfile(String username, UserProfileUpdateDto userProfileUpdateDto) throws IOException;
+
+    void deleteAcc(String username);
 }

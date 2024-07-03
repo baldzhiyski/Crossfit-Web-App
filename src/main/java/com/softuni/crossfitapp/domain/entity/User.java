@@ -62,7 +62,8 @@ public class User extends BaseEntity{
 
     @ManyToOne
     private Membership membership;
-    @ManyToMany(fetch = FetchType.EAGER)
+
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)
     @JoinTable(
             name = "participants_trainings",
             joinColumns = @JoinColumn(name = "participant_id"),
@@ -81,7 +82,7 @@ public class User extends BaseEntity{
     private boolean isActive;
 
 
-    @OneToMany(mappedBy = "creator",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "creator",fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)
     private Set<Event> events;
 
     @PrePersist

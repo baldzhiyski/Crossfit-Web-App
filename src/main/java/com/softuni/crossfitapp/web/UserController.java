@@ -2,9 +2,11 @@ package com.softuni.crossfitapp.web;
 
 import com.softuni.crossfitapp.domain.dto.users.UserProfileUpdateDto;
 import com.softuni.crossfitapp.domain.dto.users.UserRegisterDto;
+import com.softuni.crossfitapp.domain.user_details.CrossfitUserDetails;
 import com.softuni.crossfitapp.service.CountryService;
 import com.softuni.crossfitapp.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -131,6 +133,13 @@ public class UserController {
     }
 
     // TODO : Implement the delete mapping for the profile
+
+    @DeleteMapping("/profile/{username}/edit/delete-profile")
+    public String deleteAcc(@PathVariable String username){
+
+        this.userService.deleteAcc(username);
+        return "redirect:/";
+    }
 
 
     //TODO: With some path-variable
