@@ -35,7 +35,7 @@
     "town": "London",
     "bornOn": "1985-04-10",
     "password": "securePwd456",
-    "imageUrl": "images/janes.jpg",
+    "imageUrl": "images/janes.jpeg",
     "telephoneNumber": "9876543210",
     "email": "jane.smith@yahoo.com",
     "isActive" : "true",

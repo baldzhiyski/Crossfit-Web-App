@@ -22,6 +22,7 @@ public class UserActivationServiceImpl implements UserActivationService {
     private static final int ACTIVATION_CODE_LENGTH = 20;
     private EmailService emailService;
 
+
     private final UserRepository userRepository;
     private final UserActivationCodeRepository userActivationCodeRepository;
 
@@ -45,7 +46,7 @@ public class UserActivationServiceImpl implements UserActivationService {
 
     @Override
     public void cleanUpActivationLinks() {
-        // TODO : Implement
+        this.userActivationCodeRepository.deleteAll();
     }
 
     @Override

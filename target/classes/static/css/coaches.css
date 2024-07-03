@@ -1,39 +1,66 @@
+/* Card styling */
 .card {
-    background-color: lightslategrey; /* White background for each card */
-    border: 1px solid #e0e0e0; /* Light gray border */
+    background-color: white; /* White background for cards */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Shadow effect */
+    transition: transform 0.3s ease; /* Smooth hover effect */
     border-radius: 8px; /* Rounded corners */
-    padding: 20px; /* Padding inside the card */
-    margin-bottom: 20px; /* Space between cards */
-    text-align: center; /* Center align contents */
-    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Light shadow */
+    overflow: hidden; /* Ensure images fit within rounded corners */
 }
+
+.card:hover {
+    transform: translateY(-5px); /* Lift card on hover */
+}
+.certificate-item {
+    margin-bottom: 5px;
+    font-style: italic;
+    color: #666; /* Dark grey */
+}
+
+
+/* Image styling */
 .card img {
-    width: 100%; /* Ensure the image takes full width inside the card */
-    height: auto; /* Maintain aspect ratio */
-    border-top-left-radius: 8px; /* Rounded corners for the image */
+    width: 100% ;/* Ensure image fills card */
+    height: 300px; /* Ensure image takes full height */
+    object-fit: cover; /* Maintain aspect ratio and cover the container */
+    border-top-left-radius: 8px; /* Rounded corners */
     border-top-right-radius: 8px;
+    display: block; /* Ensure image starts from top */
+}
+
+/* Card content styling */
+.card-body {
+    padding: 20px;
 }
 
 .card-title {
     font-size: 24px;
-    margin-top: 10px;
     font-weight: bold;
+    margin-bottom: 10px;
 }
-.card-content {
-    font-size: 16px;
-    color: #666666; /* Gray text color */
-    margin-top: 10px;
+
+.title {
+    color: #888; /* Light grey for titles */
 }
+
 .button {
-    background-color: #ae3c33; /* Button background color */
-    color: #ffffff; /* Button text color */
-    border: none;
+    background-color: #000; /* Black background */
+    color: white;
     padding: 10px 20px;
-    border-radius: 5px;
+    border: none;
     cursor: pointer;
-    text-decoration: none; /* Remove underline */
-    transition: background-color 0.3s ease; /* Smooth transition */
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease; /* Smooth hover effect */
 }
+
 .button:hover {
-    background-color: #f11a09; /* Darker background color on hover */
+    background-color: #555; /* Darker grey on hover */
+}
+
+/* Ensure images start from the top */
+@media screen and (max-width: 768px) {
+    .card img {
+        height: auto; /* Adjust height for smaller screens */
+    }
 }
