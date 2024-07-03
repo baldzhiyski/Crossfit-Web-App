@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Meet the Team Page</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/coaches.css}" rel="stylesheet"/>
+    <link th:href="@{/css/navbar.css}" rel="stylesheet"/>
+    <link th:href="@{/css/footer.css}" rel="stylesheet"/>
+</head>
+<body style="background-color: #495057">
+<nav th:replace="~{fragments/navbar::nav}"></nav>
+<div class="container">
+    <h1 class="text-center mt-2" style="margin-bottom: 5rem; color: #d7d8da">Meet the Team</h1>
+
+    <div class="row">
+        <!-- Loop through each coach -->
+        <div th:each="coach : ${coachesDisplayDtos}" class="col-md-4 mb-4">
+            <div class="card">
+                <!-- Coach image -->
+                <img th:src="@{${coach.imageUrl}}" alt="Coach Image" class="card-img-top">
+
+                <!-- Coach details -->
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${coach.firstName} + ' ' + ${coach.lastName}">Coach Name</h5>
+                    <div class="certificates">
+                        <label>Certificates:</label>
+                        <!-- Display certificates -->
+                        <div th:each="certificate : ${coach.certificatesNames}" class="certificate-item">
+                            <p th:text="${certificate}">Certificate Name</p>
+                        </div>
+                    </div>
+                    <!-- Coach description (customize as per your data structure) -->
+                    <p th:text="'Email: ' + ${coach.email}">example@example.com</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Footer -->
+<footer th:replace="~{fragments/footer::footer}"></footer>
+
+</body>
+</html>

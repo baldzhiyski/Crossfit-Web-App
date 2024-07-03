@@ -24,7 +24,7 @@ public class Coach extends BaseEntity{
     private String lastName;
 
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner",fetch = FetchType.EAGER)
     private List<Certificate> certificates;
 
     @OneToMany(mappedBy = "coach", cascade = CascadeType.ALL)
