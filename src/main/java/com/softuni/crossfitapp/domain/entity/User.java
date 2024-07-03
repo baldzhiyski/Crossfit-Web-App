@@ -85,7 +85,6 @@ public class User extends BaseEntity{
     private Set<Event> events;
 
     @PrePersist
-    @PreUpdate
     public void encodePassword() {
         if (this.password != null) {
             this.password = new BCryptPasswordEncoder().encode(this.password);

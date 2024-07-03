@@ -13,10 +13,8 @@ public class PasswordUpdateMatchValidator implements ConstraintValidator<Passwor
         String password = userProfileUpdateDto.getPassword();
         String confirmPassword = userProfileUpdateDto.getConfirmPassword();
 
-        if(password == null && confirmPassword == null){
-            return true;
-        }
-        return password != null && password.equals(confirmPassword);
+
+        return  password.equals(confirmPassword);
 
     }
 }

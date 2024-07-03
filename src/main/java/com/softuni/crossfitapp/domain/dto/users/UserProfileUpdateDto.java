@@ -13,6 +13,9 @@ import java.time.LocalDate;
 @PasswordUpdateMatcher
 public class UserProfileUpdateDto {
 
+    @UniqueUsername
+    private String username;
+
     private String firstName;
     private String lastName;
 

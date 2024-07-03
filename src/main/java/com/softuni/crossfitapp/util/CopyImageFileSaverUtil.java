@@ -42,7 +42,7 @@ public class CopyImageFileSaverUtil {
         }
 
         // Return the URL of the saved photo (relative to the application context)
-        return "/images/" + uniqueFilename;
+        return "images/" + uniqueFilename;
     }
 
     private String extractCoordinates(MultipartFile gpxCoordinates) throws IOException {

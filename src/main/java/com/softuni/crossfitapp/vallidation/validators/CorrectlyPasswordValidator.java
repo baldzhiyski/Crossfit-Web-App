@@ -9,10 +9,11 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 
-public class CorrectlyPasswordValidator implements ConstraintValidator<ValidOldPassword,String> {
+public class CorrectlyPasswordValidator implements ConstraintValidator<ValidOldPassword,CharSequence> {
 
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
@@ -24,7 +25,7 @@ public class CorrectlyPasswordValidator implements ConstraintValidator<ValidOldP
     }
 
     @Override
-    public boolean isValid(String oldPassword, ConstraintValidatorContext constraintValidatorContext) {
+    public boolean isValid(CharSequence oldPassword, ConstraintValidatorContext constraintValidatorContext) {
         if(oldPassword == null){
             return false;
         }

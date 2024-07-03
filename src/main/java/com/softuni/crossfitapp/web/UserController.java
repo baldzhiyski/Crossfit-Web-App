@@ -113,7 +113,7 @@ public class UserController {
         return "updateProfilePage";
     }
 
-    @PostMapping("/profile/{username}/edit")
+    @PatchMapping("/profile/{username}/edit")
     public ModelAndView doUpdate(@PathVariable String username,@Valid UserProfileUpdateDto userProfileUpdateDto,BindingResult bindingResult,RedirectAttributes redirectAttributes) throws IOException {
         ModelAndView modelAndView = new ModelAndView();
 

@@ -21,6 +21,7 @@ import com.softuni.crossfitapp.service.UserService;
 import com.softuni.crossfitapp.util.CopyImageFileSaverUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,6 +47,8 @@ public class UserServiceImpl implements UserService {
     private CountryRepository countryRepository;
 
     private UserActivationCodeRepository activationCodeRepository;
+
+    private PasswordEncoder passwordEncoder;
     private ModelMapper mapper;
 
     public UserServiceImpl(ApplicationEventPublisher applicationEventPublisher, UserRepository userRepository, RoleRepository roleRepository, CountryRepository countryRepository, UserActivationCodeRepository activationCodeRepository, ModelMapper mapper) {
@@ -157,7 +160,7 @@ public class UserServiceImpl implements UserService {
         }
 
         if(!userProfileUpdateDto.getPassword().isBlank() && !userProfileUpdateDto.getConfirmPassword().isBlank()){
-            user.setPassword(userProfileUpdateDto.getPassword());
+            user.setPassword(this.passwordEncoder.encode(userProfileUpdateDto.getPassword()));
         }
 
         this.userRepository.saveAndFlush(user);
