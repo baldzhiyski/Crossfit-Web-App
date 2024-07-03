@@ -5,6 +5,8 @@ import com.softuni.crossfitapp.domain.dto.users.UserRegisterDto;
 import com.softuni.crossfitapp.domain.user_details.CrossfitUserDetails;
 import com.softuni.crossfitapp.service.CountryService;
 import com.softuni.crossfitapp.service.UserService;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -116,7 +118,7 @@ public class UserController {
     }
 
     @PatchMapping("/profile/{username}/edit")
-    public ModelAndView doUpdate(@PathVariable String username,@Valid UserProfileUpdateDto userProfileUpdateDto,BindingResult bindingResult,RedirectAttributes redirectAttributes) throws IOException {
+    public ModelAndView doUpdate(@PathVariable String username, @Valid UserProfileUpdateDto userProfileUpdateDto, BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpServletRequest request) throws IOException, ServletException {
         ModelAndView modelAndView = new ModelAndView();
 
         if(bindingResult.hasErrors()){
@@ -128,7 +130,9 @@ public class UserController {
             return modelAndView;
         }
         this.userService.updateProfile(username,userProfileUpdateDto);
-        modelAndView.setViewName("redirect:/users/profile/" + username);
+
+        request.getSession().invalidate();
+        modelAndView.setViewName("redirect:/users/login");
         return modelAndView;
     }
 

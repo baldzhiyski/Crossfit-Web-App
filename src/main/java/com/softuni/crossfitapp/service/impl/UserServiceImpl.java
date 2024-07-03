@@ -164,6 +164,9 @@ public class UserServiceImpl implements UserService {
             user.setPassword(this.passwordEncoder.encode(userProfileUpdateDto.getPassword()));
         }
 
+        if(!userProfileUpdateDto.getUsername().isBlank()){
+            user.setUsername(userProfileUpdateDto.getUsername());
+        }
         this.userRepository.saveAndFlush(user);
     }
 

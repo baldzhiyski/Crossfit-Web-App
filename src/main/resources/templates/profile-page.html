@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="profile-img">
-                    <img th:src="*{imageUrl()}" alt=""/>
+                    <img th:src="@{${userProfileDto.imageUrl()}}" alt=""/>
                 </div>
             </div>
             <div class="col-md-6">
