@@ -4,10 +4,7 @@ import com.softuni.crossfitapp.domain.entity.enums.MembershipType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDate;
@@ -16,6 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor

@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
@@ -15,6 +16,8 @@ import java.util.Date;
 import static com.softuni.crossfitapp.util.Constants.FIELD_ACCEPTED;
 import static com.softuni.crossfitapp.util.Constants.FIELD_REQUIRED;
 
+
+@SuperBuilder
 @Getter
 @NoArgsConstructor
 @Setter

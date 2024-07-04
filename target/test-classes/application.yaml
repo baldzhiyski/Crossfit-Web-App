@@ -1,0 +1,42 @@
+spring:
+  servlet:
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
+    open-in-view: 'false'
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: 'true'
+remember_me_key: topseccc
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor: TRACE
+        SQL: DEBUG
+      nodeValue: WARN
+    blog: WARN
+server:
+  port: 8080
+
+forex:
+  api:
+    key: dummy
+    url: "https:/dummy/api"
+    base: "USD"
+
+countries:
+  api:
+    url: "https:/dummy/second"
+
+
+mail:
+  crossfit: "crossfit-stuttgart@gmail.com"
+  host: localhost
+  port: 5655
+  username: dummy
+  password: dummy

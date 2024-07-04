@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
         this.mapper = mapper;
     }
     @Override
-    public void registerNewUser(UserRegisterDto userRegisterDto) throws IOException {
+    public User registerNewUser(UserRegisterDto userRegisterDto) throws IOException {
         User toBeRegisteredUser = this.mapper.map(userRegisterDto, User.class);
 
         Country country = this.countryRepository.findByCode(userRegisterDto.getNationality()).orElseThrow(() -> new ObjectNotFoundException("No such code for country found !"));
@@ -78,6 +78,7 @@ public class UserServiceImpl implements UserService {
                 userRegisterDto.getEmail(),
                 userRegisterDto.getFullName()
         ));
+        return toBeRegisteredUser;
     }
 
 
@@ -86,8 +87,6 @@ public class UserServiceImpl implements UserService {
     public void activateAccount(String activationCode) {
 
         UserActivationLinkEntity userActivationLinkEntity = this.activationCodeRepository.findByActivationCode(activationCode).orElseThrow(() -> new ObjectNotFoundException("No such code in the db"));
-
-        // TODO : Debug here , nothing is changing in the db
 
         User user = userActivationLinkEntity.getUser();
         Set<Role> roles = new HashSet<>();
