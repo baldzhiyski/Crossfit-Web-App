@@ -14,4 +14,6 @@ public interface ExchangeRateService {
     BigDecimal convert(String from, String to, BigDecimal amount);
 
     void seedRates();
+
+    void refreshRates(ExRatesDTO exRatesDTO);
 }

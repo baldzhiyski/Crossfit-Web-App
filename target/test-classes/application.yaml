@@ -1,15 +1,8 @@
 spring:
-  servlet:
-
   jpa:
     hibernate:
       ddl-auto: create-drop
     defer-datasource-initialization: true
-    open-in-view: 'false'
-  mvc:
-    hiddenmethod:
-      filter:
-        enabled: 'true'
 remember_me_key: topseccc
 logging:
   level:
@@ -20,18 +13,19 @@ logging:
         SQL: DEBUG
       nodeValue: WARN
     blog: WARN
-server:
-  port: 8080
+datasource:
+  username: test
+  password: test
 
 forex:
   api:
+    url: "https://dummy/api{app_id}"
     key: dummy
-    url: "https:/dummy/api"
     base: "USD"
 
 countries:
   api:
-    url: "https:/dummy/second"
+    url: "https://dummy/second"
 
 
 mail:

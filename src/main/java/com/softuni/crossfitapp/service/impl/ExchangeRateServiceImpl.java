@@ -121,4 +121,77 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
             updateRates(fetchExRates());
         }
     }
+
+    @Override
+    public void refreshRates(ExRatesDTO exRatesDTO) {
+
+        LOGGER.info("Exhange rates received {}", exRatesDTO);
+
+        BigDecimal BGN_TO_USD = getExchangeRate(exRatesDTO, "BGN", "USD").orElse(null);
+        BigDecimal BGN_TO_EUR = getExchangeRate(exRatesDTO, "BGN", "EUR").orElse(null);
+
+        if (BGN_TO_USD != null) {
+            ExRateEntity exchangeRateEntity =
+                     ExRateEntity.builder().currency("USD").rate(BGN_TO_USD).build();
+            exRateRepository.save(exchangeRateEntity);
+        } else {
+            LOGGER.error("Unable to get exchange rate for BGN TO USD");
+        }
+
+        if (BGN_TO_EUR != null) {
+            ExRateEntity exchangeRateEntity =
+                     ExRateEntity.builder().currency("EUR").rate(BGN_TO_EUR).build();
+            exRateRepository.save(exchangeRateEntity);
+        } else {
+            LOGGER.error("Unable to get exchange rate for BGN TO EUR");
+        }
+
+        LOGGER.info("Rates refreshed...");
+    }
+    private static Optional<BigDecimal> getExchangeRate(
+            ExRatesDTO exchangeRatesDTO,
+            String from,
+            String to
+    ) {
+
+        Objects.requireNonNull(from, "From currency cannot be null");
+        Objects.requireNonNull(to, "To currency cannot be null");
+
+//    {
+//        "base": "USD",
+//        "rates": {
+//          "BGN": 1.840515,
+//          "EUR": 0.937668
+//    }
+
+        // e.g. USD -> USD
+        if (Objects.equals(from, to)) {
+            return Optional.of(BigDecimal.ONE);
+        }
+
+        if (from.equals(exchangeRatesDTO.base())) {
+            // e.g. USD -> BGN
+            if (exchangeRatesDTO.rates().containsKey(to)) {
+                return Optional.of(exchangeRatesDTO.rates().get(to));
+            }
+        } else if (Objects.equals(to, exchangeRatesDTO.base())){
+            // e.g. BGN -> USD
+            if (exchangeRatesDTO.rates().containsKey(from)) {
+                return Optional.of(BigDecimal.ONE.divide(
+                        exchangeRatesDTO.rates().get(from),
+                        3,
+                        RoundingMode.DOWN
+                ));
+            }
+        } else if (exchangeRatesDTO.rates().containsKey(from) &&
+                exchangeRatesDTO.rates().containsKey(to)) {
+            return Optional.of(
+                    exchangeRatesDTO.rates().get(to)
+                            .divide(exchangeRatesDTO.rates().get(from),
+                                    3, RoundingMode.DOWN)
+            );
+        }
+
+        return Optional.empty();
+    }
 }

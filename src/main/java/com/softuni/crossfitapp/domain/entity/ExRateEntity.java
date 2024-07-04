@@ -6,10 +6,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
@@ -17,6 +14,8 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "ex_rates")
 @Setter
+@Builder
+@AllArgsConstructor
 @Getter
 public class ExRateEntity extends BaseEntity {
 
