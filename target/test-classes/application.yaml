@@ -13,9 +13,6 @@ logging:
         SQL: DEBUG
       nodeValue: WARN
     blog: WARN
-datasource:
-  username: test
-  password: test
 
 forex:
   api:
