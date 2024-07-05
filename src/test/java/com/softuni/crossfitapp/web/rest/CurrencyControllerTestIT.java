@@ -15,6 +15,8 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+
+//TODO : FIX IT
 @SpringBootTest
 @AutoConfigureMockMvc
 class CurrencyControllerTestIT {
@@ -28,16 +30,37 @@ class CurrencyControllerTestIT {
     @Test
     public void testConvert() throws Exception {
 
-        testData.createExchangeRate("EUR", BigDecimal.valueOf(0.54));
+        // Set up test data for valid conversion
+        testData.createExchangeRate("EUR", BigDecimal.valueOf(0.93));
+        testData.createExchangeRate("BGN", BigDecimal.valueOf(1.81));
 
+        // Perform the conversion request
         this.mockMvc.perform(MockMvcRequestBuilders.get("/crossfit/api/convert")
-                        .param("target", "EUR")
-                        .param("amount", "1000")).
-                andExpect(status().isOk()).
-                andExpect(jsonPath("$.currency", is("EUR"))).
-                andExpect(jsonPath("$.amount", is(540.0)))
-        ;
+                        .param("from", "BGN")
+                        .param("to", "EUR")
+                        .param("amount", "1000"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.result", is(510.0)))
+                .andExpect(jsonPath("$.from", is("BGN")))
+                .andExpect(jsonPath("$.to", is("EUR")))
+                .andExpect(jsonPath("$.amount", is(1000)));
 
+    }
+    @Test
+    public void testConvertObjectNotFoundException() throws Exception {
+        // Perform the conversion request with invalid 'from' currency
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/crossfit/api/convert")
+                        .param("from", "INVALID")
+                        .param("to", "BGN")
+                        .param("amount", "1000"))
+                .andExpect(jsonPath("$.result").doesNotExist());
+
+        // Perform the conversion request with invalid 'to' currency
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/crossfit/api/convert")
+                        .param("from", "EUR")
+                        .param("to", "INVALID")
+                        .param("amount", "1000"))
+                .andExpect(jsonPath("$.result").doesNotExist());
     }
 
 }

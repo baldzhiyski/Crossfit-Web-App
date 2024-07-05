@@ -23,6 +23,7 @@ forex:
 countries:
   api:
     url: "https://dummy/second"
+    init-exchange-rates: false
 
 
 mail:

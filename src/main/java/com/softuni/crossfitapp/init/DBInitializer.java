@@ -4,9 +4,12 @@ import com.softuni.crossfitapp.service.CountryService;
 import com.softuni.crossfitapp.service.ExchangeRateService;
 import com.softuni.crossfitapp.service.SeedService;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 @Component
+@ConditionalOnProperty(name = "forex.api.init-exchange-rates", havingValue = "true")
+
 public class DBInitializer  implements CommandLineRunner {
     private SeedService seedService;
     private ExchangeRateService exchangeRateService;

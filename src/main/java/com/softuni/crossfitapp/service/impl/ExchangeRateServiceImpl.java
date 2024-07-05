@@ -95,14 +95,16 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
 
         Optional<BigDecimal> fromOpt = forexApiConfig.getBase().equals(from) ?
                 Optional.of(BigDecimal.ONE) :
-                exRateRepository.findByCurrency(from).map(ExRateEntity::getRate);
+                Optional.ofNullable(exRateRepository.findByCurrency(from).orElseThrow(() -> new ObjectNotFoundException("Not existing currentcy!"))
+                        .getRate());
 
         Optional<BigDecimal> toOpt = forexApiConfig.getBase().equals(to) ?
                 Optional.of(BigDecimal.ONE) :
-                exRateRepository.findByCurrency(to).map(ExRateEntity::getRate);
+                Optional.ofNullable(exRateRepository.findByCurrency(to).orElseThrow(() -> new ObjectNotFoundException("Not existing currentcy!"))
+                        .getRate());
 
         if (fromOpt.isEmpty() || toOpt.isEmpty()) {
-            return Optional.empty();
+            throw new ObjectNotFoundException("Conversion from " + from + " to " + to + " not possible!");
         } else {
             return Optional.of(toOpt.get().divide(fromOpt.get(), 2, RoundingMode.HALF_DOWN));
         }
