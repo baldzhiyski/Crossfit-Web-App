@@ -56,3 +56,7 @@ mail:
   port: 1025
   username: ${MAIL_USER}
   password: ${MAIL_PASSWORD}
+
+workouts :
+  api:
+    all-trainings-url: "http://localhost:8081/crossfit-api/get-all-trainings"
