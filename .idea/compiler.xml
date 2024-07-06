@@ -6,13 +6,19 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Crossfit-Web-App" />
+        <module name="crossfit-client" />
+        <module name="crossfit-trainings" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Crossfit-Web-App-Project" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="Crossfit-Web-App" options="-parameters" />
+      <module name="Crossfit-Web-App-Project" options="-parameters" />
+      <module name="crossfit-client" options="-parameters" />
+      <module name="crossfit-trainings" options="-parameters" />
     </option>
   </component>
 </project>
