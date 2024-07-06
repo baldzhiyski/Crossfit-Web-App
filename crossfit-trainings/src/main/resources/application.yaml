@@ -23,7 +23,7 @@ spring:
     url: jdbc:mysql://localhost:3306/trainingsDB?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
   sql:
     init:
-      mode: always
+      mode: never
 
 logging:
   level:
@@ -35,4 +35,4 @@ logging:
       nodeValue: WARN
     blog: WARN
 server:
-  port: 8080
+  port: 8081
