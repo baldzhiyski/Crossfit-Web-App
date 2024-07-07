@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class WorkoutController {
+
+    // TODO : Make dto for this page !
     @GetMapping("/workouts")
     public  String getWorkouts(){
         return "workouts";
