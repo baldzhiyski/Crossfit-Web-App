@@ -55,6 +55,7 @@ public class SecurityConfig {
                         .requestMatchers("/schedule-for-the-week").hasRole("MEMBER")
                         .requestMatchers("/my-weekly-schedule/{id}").hasRole("COACH")
                         .requestMatchers("/crossfit/api/convert").permitAll()
+                        .requestMatchers("/workouts/explore-current/{trainingsType}").permitAll()
                         // Catch-all for any other requests, must be authenticated
                         .anyRequest().authenticated()
                 )

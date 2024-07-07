@@ -22,9 +22,9 @@ import java.util.Set;
 @AllArgsConstructor
 public class Training extends BaseEntity{
 
-    @Column
+
     @NotBlank
-    @Size(min = 10,max = 200)
+    @Column(columnDefinition = "TEXT")
     private String description;
 
 

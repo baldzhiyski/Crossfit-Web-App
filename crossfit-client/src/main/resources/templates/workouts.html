@@ -34,8 +34,8 @@
             <h1 class="display-4 fw-normal">Workouts by Crossfit Stuttgart </h1>
             <p class="lead fw-normal">Welcome to our workouts page !</p>
         </div>
-        <div class="product-device shadow-sm d-none d-md-block" style="background: url('images/weights.jpg') no-repeat center center fixed; background-size: cover;"></div>
-        <div class="product-device product-device-2 shadow-sm d-none d-md-block" style="background: url('images/weights2.jpg') no-repeat center center fixed; background-size: cover;"></div>
+        <div class="product-device shadow-sm d-none d-md-block" style="background: url('/images/weights.jpg') no-repeat center center fixed; background-size: cover;"></div>
+        <div class="product-device product-device-2 shadow-sm d-none d-md-block" style="background: url('/images/weights2.jpg') no-repeat center center fixed; background-size: cover;"></div>
     </div>
 
     <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
@@ -43,7 +43,7 @@
             <div class="my-3 py-3">
                 <h2 class="display-5">HYROX</h2>
                 <p class="lead">High-intensity fitness race designed to push your limits.</p>
-                <a class="btn btn-outline-secondary" th:href="@{/workouts/explore-current/(type)}">Explore</a>
+                <a class="btn btn-outline-secondary" th:href="@{/workouts/explore-current/{trainingsType}(trainingsType=${'HYROX'})}">Explore</a>
             </div>
             <div class="product-image bg-light shadow-sm mx-auto">
                 <img src="images/hyrox.webp" alt="Product Image">
@@ -53,7 +53,7 @@
             <div class="my-3 p-3" style="color: white">
                 <h2 class="display-5">WOD</h2>
                 <p class="lead">Workout of the Day: Diverse, dynamic, and demanding.</p>
-                <a class="btn btn-outline-secondary" th:href="@{/workouts/explore-current/(type)}">Explore</a>
+                <a class="btn btn-outline-secondary" th:href="@{/workouts/explore-current/{trainingsType}(trainingsType=${'WOD'})}">Explore</a>
             </div>
             <div class="product-image bg-light shadow-sm mx-auto">
                 <img src="images/community2.webp" alt="Product Image">
@@ -66,7 +66,7 @@
             <div class="my-3 p-3">
                 <h2 class="display-5">CARDIO</h2>
                 <p class="lead">Heart-pumping routines to boost your endurance.</p>
-                <a class="btn btn-outline-secondary" href="#">Explore</a>
+                <a class="btn btn-outline-secondary" th:href="@{/workouts/explore-current/{trainingsType}(trainingsType=${'CARDIO'})}">Explore</a>
             </div>
             <div class="product-image bg-light shadow-sm mx-auto">
                 <img src="images/cardio.webp" alt="Product Image">
@@ -76,7 +76,7 @@
             <div class="my-3 py-3">
                 <h2 class="display-5">MUMFIT</h2>
                 <p class="lead">Tailored fitness programs for busy moms.</p>
-                <a class="btn btn-outline-secondary" th:href="@{/workouts/explore-current/(type)}">Explore</a>
+                <a class="btn btn-outline-secondary" th:href="@{/workouts/explore-current/{trainingsType}(trainingsType=${'MUMFIT'})}">Explore</a>
             </div>
             <div class="product-image bg-light shadow-sm mx-auto">
                 <img src="images/mumfit.jpg" alt="Product Image">
@@ -89,7 +89,7 @@
             <div class="my-3 p-3">
                 <h2 class="display-5">GYMNASTICS</h2>
                 <p class="lead">Experience dynamic workouts that focus on strength, flexibility, and precision.</p>
-                <a class="btn btn-outline-secondary" href="#">Explore</a>
+                <a class="btn btn-outline-secondary" th:href="@{/workouts/explore-current/{trainingsType}(trainingsType=${'GYMNASTICS'})}">Explore</a>
             </div>
             <div class="product-image bg-light shadow-sm mx-auto">
                 <img src="images/gymnastics.webp" alt="Product Image">
@@ -99,7 +99,7 @@
             <div class="my-3 py-3">
                 <h2 class="display-5">WEIGHTLIFTING</h2>
                 <p class="lead">Lifting weights and improve your style !</p>
-                <a class="btn btn-outline-secondary" th:href="@{/workouts/explore-current/(type)}">Explore</a>
+                <a class="btn btn-outline-secondary" th:href="@{/workouts/explore-current/{trainingsType}(trainingsType=${'WEIGHTLIFTING'})}">Explore</a>
             </div>
             <div class="product-image bg-light shadow-sm mx-auto">
                 <img src="images/weightlifting.jpg" alt="Product Image">

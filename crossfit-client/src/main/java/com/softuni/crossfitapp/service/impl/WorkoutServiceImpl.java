@@ -2,7 +2,10 @@ package com.softuni.crossfitapp.service.impl;
 
 import com.softuni.crossfitapp.config.rest.WorkoutsAPIConfig;
 import com.softuni.crossfitapp.domain.dto.trainings.SeedTrainingFromApiDto;
+import com.softuni.crossfitapp.domain.dto.trainings.TrainingDetailsDto;
 import com.softuni.crossfitapp.domain.entity.Training;
+import com.softuni.crossfitapp.domain.entity.enums.TrainingType;
+import com.softuni.crossfitapp.exceptions.ObjectNotFoundException;
 import com.softuni.crossfitapp.repository.TrainingRepository;
 import com.softuni.crossfitapp.service.WorkoutsService;
 import org.modelmapper.ModelMapper;
@@ -64,6 +67,15 @@ public class WorkoutServiceImpl implements WorkoutsService {
             }).forEach(this.trainingRepository::save);
         }
 
+    }
+
+    @Override
+    public TrainingDetailsDto getTrainingDto(TrainingType trainingType) {
+        Training training = this.trainingRepository
+                .findByTrainingType(trainingType)
+                .orElseThrow(() -> new ObjectNotFoundException("No such training specified in the crossfit community !"));
+
+        return mapper.map(training, TrainingDetailsDto.class);
     }
 
     private void setSpecificPictureUrl(Training mapped) {

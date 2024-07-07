@@ -17,15 +17,13 @@
 <div class="container">
     <div class="row">
         <!-- Left Side: Training Description Card -->
-        <div class="col-md-12 mt-2">
+        <div class="col-md-12 mt-2" th:object="${currentTrainingDto}">
             <div class="card mb-7">
-                <img src="/images/hyrox.webp" class="card-img-top" alt="Training Image">
+                <img th:src="@{*{imageUrl}}" class="card-img-top" alt="Training Image">
                 <div class="card-body bg-dark" style="color:white;">
-                    <h5 class="card-title">Cardio</h5>
-                    <p class="card-text">Heart-pumping routines to boost your endurance.
-                        Heart-pumping routines to boost your endurance.
-                        Heart-pumping routines to boost your endurance.</p>
-                    <p class="card-text"><small class="text-muted">Advanced</small></p>
+                    <h5 class="card-title" th:text="*{trainingType}"></h5>
+                    <p class="card-text" th:text="*{description}"></p>
+                    <p class="card-text"><small>Level of the training: <span class="text-danger" th:text="*{level}">Advanced</span></small></p>
                 </div>
             </div>
         </div>
@@ -117,11 +115,11 @@
                     </div>
                 </div>
                 <!-- Comment Form -->
-                <form class="form-block" th:method="POST" th:action="@{/workout/details/comment}">
+                <form class="form-block"  th:if="${isAuthenticated}" th:method="POST" th:action="@{/workout/details/comment}">
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="form-group">
-                                <textarea class="form-input" required="" placeholder="Your text"></textarea>
+                                <textarea class="form-input" placeholder="Your text"></textarea>
                             </div>
                         </div>
                         <div class="col-xs-12">
