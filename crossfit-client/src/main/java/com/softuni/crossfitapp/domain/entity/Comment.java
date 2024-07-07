@@ -16,7 +16,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 public class Comment extends BaseEntity{
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)
     private User author;
 
     @Column
@@ -26,6 +26,6 @@ public class Comment extends BaseEntity{
     @NotNull
     private LocalDate date;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     private Training training;
 }

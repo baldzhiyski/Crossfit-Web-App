@@ -12,4 +12,6 @@ public interface CommentService {
     void addComment(AddCommentDto addCommentDto, TrainingType trainingType);
 
     List<DisplayCommentDto> getAllCommentsOnCurrentTrainingType(TrainingType trainingType);
+
+    void cleanUpOldComments();
 }

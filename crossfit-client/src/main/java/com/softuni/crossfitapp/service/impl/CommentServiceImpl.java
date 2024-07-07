@@ -56,4 +56,9 @@ public class CommentServiceImpl implements CommentService {
                 .map(comment -> this.mapper.map(comment, DisplayCommentDto.class))
                 .toList();
     }
+
+    @Override
+    public void cleanUpOldComments() {
+        this.commentRepository.deleteAll();
+    }
 }
