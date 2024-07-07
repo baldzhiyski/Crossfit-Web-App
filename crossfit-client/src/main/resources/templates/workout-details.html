@@ -60,7 +60,7 @@
         </div>
         <!-- Comment Form -->
         <!-- Comment Form -->
-        <h5 class="mt-3">Add Comment Section</h5>
+        <h5 class="mt-3" th:if="${isAuthenticated}">Add Comment Section</h5>
         <form class="form-block" th:if="${isAuthenticated}" th:method="POST"
               th:action="@{/workouts/details/comment/{trainingsType}(trainingsType=${trainingType})}">
             <div class="row mt-2">
