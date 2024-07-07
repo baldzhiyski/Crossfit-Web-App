@@ -1,6 +1,6 @@
 package com.softuni.crossfitapp.service.impl;
 
-import com.softuni.crossfitapp.config.WorkoutsAPIConfig;
+import com.softuni.crossfitapp.config.rest.WorkoutsAPIConfig;
 import com.softuni.crossfitapp.domain.dto.trainings.SeedTrainingFromApiDto;
 import com.softuni.crossfitapp.domain.entity.Training;
 import com.softuni.crossfitapp.repository.TrainingRepository;

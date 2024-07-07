@@ -66,4 +66,5 @@ public enum Constants {
     public static final Pattern PATTERN_UPPER = Pattern.compile("[A-Z]");
     public static final Pattern PATTERN_DIGIT = Pattern.compile("[0-9]");
     public static final Pattern PATTERN_SYMBOL = Pattern.compile("[!@#$%^&*()_+<>?]");
+    public static final String EVENT_CACHE = "Cache eviction initiated.";
 }

@@ -1,24 +1,18 @@
 package com.softuni.crossfitapp.service.impl;
 
-import com.softuni.crossfitapp.config.CountriesNowConfig;
+import com.softuni.crossfitapp.config.rest.CountriesNowConfig;
 import com.softuni.crossfitapp.domain.dto.countries.CountryDto;
-import com.softuni.crossfitapp.domain.dto.exrates.ExRatesDTO;
 import com.softuni.crossfitapp.domain.entity.Country;
-import com.softuni.crossfitapp.domain.entity.ExRateEntity;
 import com.softuni.crossfitapp.repository.CountryRepository;
 import com.softuni.crossfitapp.service.CountryService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClient;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service

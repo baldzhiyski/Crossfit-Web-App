@@ -1,6 +1,6 @@
 package com.softuni.crossfitapp.service.impl;
 
-import com.softuni.crossfitapp.config.ForexAPIConfig;
+import com.softuni.crossfitapp.config.rest.ForexAPIConfig;
 import com.softuni.crossfitapp.domain.dto.exrates.ExRatesDTO;
 import com.softuni.crossfitapp.domain.entity.ExRateEntity;
 import com.softuni.crossfitapp.exceptions.ObjectNotFoundException;

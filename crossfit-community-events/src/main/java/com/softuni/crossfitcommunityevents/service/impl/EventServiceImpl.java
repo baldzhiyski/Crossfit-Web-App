@@ -4,16 +4,14 @@ import com.softuni.crossfitcommunityevents.model.Event;
 import com.softuni.crossfitcommunityevents.model.dto.EventDto;
 import com.softuni.crossfitcommunityevents.repository.EventRepository;
 import com.softuni.crossfitcommunityevents.service.EventService;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.util.List;
 import java.util.UUID;
 
 @Service
 public class EventServiceImpl implements EventService {
-    private EventRepository eventRepository;
+    private final EventRepository eventRepository;
 
     public EventServiceImpl(EventRepository eventRepository) {
         this.eventRepository = eventRepository;
@@ -33,9 +31,9 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<EventDto> findMostRecentEvents() {
-        return eventRepository.findTop3ByOrderByDateDesc()
-                .stream().map(this::mapToDto).toList();
+    public List<EventDto> findSomeRandomEvents() {
+        return eventRepository.findSomeRandomEvents()
+                .stream().limit(3).map(this::mapToDto).toList();
 
     }
 
@@ -50,6 +48,7 @@ public class EventServiceImpl implements EventService {
                 .address(event.getAddress())
                 .date(event.getDate())
                 .description(event.getDescription())
+                .videoUrl(event.getVideoUrl())
                 .build();
     }
     private Event mapToEntity(EventDto eventDto) {
@@ -58,6 +57,7 @@ public class EventServiceImpl implements EventService {
                 .address(eventDto.getAddress())
                 .description(eventDto.getDescription())
                 .date(eventDto.getDate())
+                .videoUrl(eventDto.getVideoUrl())
                 .build();
     }
 

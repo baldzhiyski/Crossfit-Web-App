@@ -1,15 +1,14 @@
--- SQL script to insert 12 CrossFit events with specified UUIDs
-INSERT INTO events (id, event_name, description, address, date)
+INSERT INTO eventsdb.events (id, event_name, description, address, date, video_url)
 VALUES
-    ('123e4567-e89b-12d3-a456-426614174000', 'CrossFit Open 2024', 'Join us for the annual CrossFit Open competition!', '123 Main St, Cityville, USA', '2024-08-01'),
-    ('123e4567-e89b-12d3-a456-426614174001', 'Summer Slam 2024', 'Test your strength and endurance in this summer CrossFit challenge!', '456 Elm St, Townsville, USA', '2024-08-15'),
-    ('123e4567-e89b-12d3-a456-426614174002', 'CrossFit Games Qualifier', 'Qualify for the prestigious CrossFit Games in this intense competition!', '789 Oak St, Villageton, USA', '2024-08-30'),
-    ('123e4567-e89b-12d3-a456-426614174003', 'Box Battle 2024', 'Teams battle it out in this thrilling CrossFit competition!', '111 Pine St, Hamletville, USA', '2024-09-10'),
-    ('123e4567-e89b-12d3-a456-426614174004', 'Fall Fit Fest 2024', 'Celebrate fall with CrossFit challenges for all fitness levels!', '222 Cedar St, Hillside, USA', '2024-09-25'),
-    ('123e4567-e89b-12d3-a456-426614174005', 'Iron Athlete Challenge', 'Push your limits and compete to become the Iron Athlete of 2024!', '333 Maple St, Summit City, USA', '2024-10-05'),
-    ('123e4567-e89b-12d3-a456-426614174006', 'Winter War Games 2024', 'Stay strong through winter with this epic CrossFit showdown!', '444 Walnut St, Lakeside, USA', '2024-10-20'),
-    ('123e4567-e89b-12d3-a456-426614174007', 'Holiday Havoc 2024', 'Celebrate the holidays with CrossFit challenges and festive fun!', '555 Birch St, Rivertown, USA', '2024-11-01'),
-    ('123e4567-e89b-12d3-a456-426614174008', 'New Year''s Resolution Rumble 2025', 'Kick off the new year with a bang in this CrossFit challenge!', '666 Spruce St, Harbor City, USA', '2025-01-05'),
-    ('123e4567-e89b-12d3-a456-426614174009', 'Spring Fling 2025', 'Welcome spring with exciting CrossFit activities and community!', '777 Oak St, Sunnyvale, USA', '2025-03-10'),
-    ('123e4567-e89b-12d3-a456-426614174010', 'Summer Showdown 2025', 'Heat up your summer with this high-energy CrossFit event!', '888 Elm St, Beachtown, USA', '2025-06-15'),
-    ('123e4567-e89b-12d3-a456-426614174011', 'End of Year Extravaganza 2025', 'Close out the year with an unforgettable CrossFit celebration!', '999 Pine St, Mountainview, USA', '2025-12-01');
+    ('5f3a6f57-82d4-4851-a7f3-24f63477a101', 'CrossFit Open 2024', 'Join us for the annual CrossFit Open competition!', '123 Main St, Cityville, USA', '2024-08-01', 'https://www.youtube.com/watch?v=7lrpUDZuHKQ'),
+    ('a1b2c3d4-5e6f-7g8h-9i0j-k1l2m3n4o5p6', 'Summer Slam 2024', 'Test your strength and endurance in this summer CrossFit challenge!', '456 Elm St, Townsville, USA', '2024-08-15', 'https://www.youtube.com/watch?v=UJklpY4Jw7Q'),
+    ('c7d8e9f0-1a2b-3c4d-5e6f-7g8h9i0j1l2', 'CrossFit Games Qualifier', 'Qualify for the prestigious CrossFit Games in this intense competition!', '789 Oak St, Villageton, USA', '2024-08-30', 'https://www.youtube.com/watch?v=gf7GbOISg4o'),
+    ('d3e4f5g6-7h8i-9j0k-l1m2-n3o4p5q6r7s8', 'Box Battle 2024', 'Teams battle it out in this thrilling CrossFit competition!', '111 Pine St, Hamletville, USA', '2024-09-10', 'https://www.youtube.com/watch?v=pEUVg7oi064'),
+    ('e1f2g3h4-5i6j-7k8l-9m0n-o1p2q3r4s5t6', 'Fall Fit Fest 2024', 'Celebrate fall with CrossFit challenges for all fitness levels!', '222 Cedar St, Hillside, USA', '2024-09-25', 'https://www.youtube.com/shorts/fxWGS_jaV_Y'),
+    ('f7g8h9i0-1j2k-3l4m-5n6o-7p8q9r0s1t2u', 'Iron Athlete Challenge', 'Push your limits and compete to become the Iron Athlete of 2024!', '333 Maple St, Summit City, USA', '2024-10-05', 'https://www.youtube.com/watch?v=naJ-kDaaJns'),
+    ('g1h2i3j4-5k6l-7m8n-9o0p-1q2r3s4t5u6v', 'Winter War Games 2024', 'Stay strong through winter with this epic CrossFit showdown!', '444 Walnut St, Lakeside, USA', '2024-10-20', 'https://www.youtube.com/watch?v=qc69K9x35Ig'),
+    ('h7i8j9k0-1l2m-3n4o-5p6q-7r8s9t0u1v2', 'Holiday Havoc 2024', 'Celebrate the holidays with CrossFit challenges and festive fun!', '555 Birch St, Rivertown, USA', '2024-11-01', 'https://www.youtube.com/watch?v=I2cAPewTgKU'),
+    ('i3j4k5l6-7m8n-9o0p-1q2r-3s4t5u6v7w8', 'New Year''s Resolution Rumble 2025', 'Kick off the new year with a bang in this CrossFit challenge!', '666 Spruce St, Harbor City, USA', '2025-01-05', 'https://www.youtube.com/watch?v=E7yzaxVBfr4'),
+    ('j1k2l3m4-5n6o-7p8q-9r0s-1t2u3v4w5x6y', 'Spring Fling 2025', 'Welcome spring with exciting CrossFit activities and community!', '777 Oak St, Sunnyvale, USA', '2025-03-10', 'https://www.youtube.com/watch?v=AUr5ZD0htvE'),
+    ('k7l8m9n0-1o2p-3q4r-5s6t-7u8v9w0x1y2z', 'Summer Showdown 2025', 'Heat up your summer with this high-energy CrossFit event!', '888 Elm St, Beachtown, USA', '2025-06-15', 'https://www.youtube.com/watch?v=rxlWQDuoWaA'),
+    ('l3m4n5o6-7p8q-9r0s-1t2u-3v4w5x6y7z8a', 'End of Year Extravaganza 2025', 'Close out the year with an unforgettable CrossFit celebration!', '999 Pine St, Mountainview, USA', '2025-12-01', 'https://www.youtube.com/watch?v=jBgi_nXDOKY');

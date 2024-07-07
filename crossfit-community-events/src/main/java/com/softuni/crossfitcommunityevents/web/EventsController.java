@@ -43,7 +43,7 @@ public class EventsController {
     @GetMapping("/events/most-recent")
     public ResponseEntity<List<EventDto>> findMostRecentEvents() {
         return ResponseEntity
-                .ok(eventService.findMostRecentEvents());
+                .ok(eventService.findSomeRandomEvents());
     }
 
     @GetMapping("/events/all")

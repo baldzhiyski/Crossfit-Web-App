@@ -13,7 +13,7 @@ public interface EventService {
 
     void createEvent(EventDto addEventDto);
 
-    List<EventDto> findMostRecentEvents();
+    List<EventDto> findSomeRandomEvents();
 
     List<EventDto> findAllEvents();
 }

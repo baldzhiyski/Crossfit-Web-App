@@ -1,4 +1,4 @@
-package com.softuni.crossfitapp.config;
+package com.softuni.crossfitapp.config.rest;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.boot.context.properties.ConfigurationProperties;

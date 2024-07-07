@@ -1,4 +1,4 @@
-package com.softuni.crossfitapp.config;
+package com.softuni.crossfitapp.config.rest;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +15,14 @@ public class RestConfig {
 
     @Bean("trainingsRestClient")
     public RestClient offersRestClient(WorkoutsAPIConfig workoutsAPIConfig) {
+        return RestClient
+                .builder()
+                .defaultHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
+                .build();
+    }
+
+    @Bean("eventsRestClient")
+    public RestClient eventsRestClient(EventsAPIConfig eventsAPIConfig) {
         return RestClient
                 .builder()
                 .defaultHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)

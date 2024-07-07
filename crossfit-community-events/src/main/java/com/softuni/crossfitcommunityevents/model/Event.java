@@ -31,4 +31,7 @@ public class Event extends BaseEntity {
 
     @NotBlank
     private Date date;
+
+    @NotBlank
+    private String videoUrl;
 }

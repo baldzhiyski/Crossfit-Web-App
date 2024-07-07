@@ -22,18 +22,28 @@ body {
     font-size: 13px;
     text-transform: uppercase;
 }
-.events_area .event-link img {
+
+.events_area .event-link iframe {
+    margin-left: 5px;
+    display: inline-block;
+}
+.events_area .event-link {
+    color: #fdc632;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+.events_area .event-link iframe {
     margin-left: 5px;
     display: inline-block;
 }
 
 .single_event {
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
-.single_event .event_thumb {
+.single_event .event_video {
     overflow: hidden;
 }
-.single_event .event_thumb img {
+.single_event .event_thumb iframe {
     -webkit-transition: all 0.3s ease 0s;
     -moz-transition: all 0.3s ease 0s;
     -o-transition: all 0.3s ease 0s;
@@ -73,11 +83,30 @@ body {
     font-size: 13px;
     font-weight: 500;
 }
-.single_event:hover img {
+.single_event:hover iframe {
     transform: scale(1.1);
 }
 .single_event:hover h4 a {
     color: #fdc632;
+}
+.event_video {
+    position: relative;
+    width: 100%; /* Adjust width as needed */
+    padding-top: 85%; /* 4:3 aspect ratio for larger frame */
+    overflow: hidden;
+}
+
+.event_video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; /* Adjust width as needed */
+    height: 100%; /* Adjust height for larger frame */
+    border: none;
+}
+
+.single_event:hover .event_video {
+    transform: scale(1.00); /* Scale up video frame on hover */
 }
 
 /* CUSTOMIZE THE CAROUSEL
