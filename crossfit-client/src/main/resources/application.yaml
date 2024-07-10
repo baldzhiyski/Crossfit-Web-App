@@ -68,3 +68,4 @@ crossfit :
     publishUrl : "http://localhost:8082/crossfit-community/publish"
     byIdUrl : "http://localhost:8082/crossfit-community/events/find/{id}"
     allEvents: "http://localhost:8082/crossfit-community/publish"
+    init-crossfit-events: true

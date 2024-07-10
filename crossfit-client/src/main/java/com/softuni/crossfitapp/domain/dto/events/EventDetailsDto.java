@@ -1,9 +1,14 @@
 package com.softuni.crossfitapp.domain.dto.events;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@AllArgsConstructor
+@NoArgsConstructor
 public class EventDetailsDto {
     private String description;
     private Date date;

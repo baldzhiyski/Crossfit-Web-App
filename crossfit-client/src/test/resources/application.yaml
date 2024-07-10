@@ -32,3 +32,16 @@ mail:
   port: 5655
   username: dummy
   password: dummy
+
+workouts:
+    api:
+      allTrainingsUrl: "http://localhost:8081/crossfit-api/get-all-trainings"
+      baseUrl: "http://localhost:8081/crossfit-api"
+
+crossfit:
+  api:
+    mostRecentEvents: "http://testing"
+    publishUrl: "http://testing/publish"
+    byIdUrl: "http://testing/find/{id}"
+    allEvents: "http://testing/all"
+    init-crossfit-events: false
