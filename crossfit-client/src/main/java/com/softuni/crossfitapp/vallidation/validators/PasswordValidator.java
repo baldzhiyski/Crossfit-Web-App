@@ -31,40 +31,40 @@ public class PasswordValidator implements ConstraintValidator<PasswordAnnotation
 
     @Override
     public boolean isValid(final CharSequence value, final ConstraintValidatorContext context) {
-        if (value == null) {
-            AnnotationsUtil.setErrorMessage(context, Constants.PASSWORD_CANNOT_BE_NULL);
+        if (value.isEmpty()) {
+            AnnotationsUtil.setErrorMessage(context, "{password.cannot.be.null}");
             return false;
         }
 
         if (value.length() < this.minLength) {
-            AnnotationsUtil.setErrorMessage(context, Constants.PASSWORD_TOO_SHORT);
+            AnnotationsUtil.setErrorMessage(context, "{password.too.short}");
             return false;
         }
 
         if (value.length() > this.maxLength) {
-            AnnotationsUtil.setErrorMessage(context, Constants.PASSWORD_TOO_LONG);
+            AnnotationsUtil.setErrorMessage(context,"{password.too.long}" );
             return false;
         }
 
         String password = value.toString();
 
         if (!Constants.PATTERN_LOWER.matcher(password).find() && this.hasLower) {
-            AnnotationsUtil.setErrorMessage(context, Constants.PASSWORD_SHOULD_CONTAIN_LOWERCASE_LETTER);
+            AnnotationsUtil.setErrorMessage(context, "{password.should.contain.lowercase.letter}");
             return false;
         }
 
         if (!Constants.PATTERN_UPPER.matcher(password).find() && this.hasUpper) {
-            AnnotationsUtil.setErrorMessage(context, Constants.PASSWORD_SHOULD_CONTAIN_UPPERCASE_LETTER);
+            AnnotationsUtil.setErrorMessage(context,"{password.should.contain.uppercase.letter}");
             return false;
         }
 
         if (!Constants.PATTERN_DIGIT.matcher(password).find() && this.hasDigit) {
-            AnnotationsUtil.setErrorMessage(context, Constants.PASSWORD_SHOULD_CONTAIN_DIGIT);
+            AnnotationsUtil.setErrorMessage(context, "{password.should.contain.digit}");
             return false;
         }
 
         if (!Constants.PATTERN_SYMBOL.matcher(password).find() && this.hasSpecialSymbol) {
-            AnnotationsUtil.setErrorMessage(context, Constants.PASSWORD_SHOULD_CONTAIN_SPECIAL_SYMBOL);
+            AnnotationsUtil.setErrorMessage(context, "{password.should.contain.special.symbol}");
             return false;
         }
 

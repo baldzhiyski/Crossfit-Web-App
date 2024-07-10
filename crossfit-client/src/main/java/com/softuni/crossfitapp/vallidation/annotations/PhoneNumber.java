@@ -15,9 +15,9 @@ import static com.softuni.crossfitapp.util.Constants.*;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PhoneNumber {
-    String message() default INVALID_PHONE_NUMBER_FORMAT;
-    String emptyMessage() default EMPTY_PHONE;
-    String uniqueMessage() default UNIQUE_PHONE_REQUIRED;
+    String message() default "{invalid.phone.number.format}";
+    String emptyMessage() default "{empty.phone}";
+    String uniqueMessage() default "{unique.phone.required}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

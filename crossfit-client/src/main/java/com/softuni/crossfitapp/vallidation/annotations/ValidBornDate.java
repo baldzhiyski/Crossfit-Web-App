@@ -16,10 +16,10 @@ import static com.softuni.crossfitapp.util.Constants.*;
 @Target(ElementType.FIELD)
 @Constraint(validatedBy = ValidBornDateValidator.class)
 public @interface ValidBornDate {
-    String invalidBornDate() default INVALID_BORN_DATE;
-    String notOldEnough() default NOT_OLD_ENOUGH;
-    String emptyMessage() default EMPTY_BORN_DATE;
-    String message() default INVALID_BORN_DATE;
+    String invalidBornDate() default "{invalid.born.date}";
+    String notOldEnough() default "{not.old.enough}";
+    String emptyMessage() default "{empty.born.date}";
+    String message() default "{invalid.born.date}";
 
     Class<?>[] groups() default {};
 

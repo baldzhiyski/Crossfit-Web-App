@@ -16,10 +16,10 @@ import static com.softuni.crossfitapp.util.Constants.*;
 @Target({ ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.PARAMETER})
 @Constraint(validatedBy = ValidEmailValidator.class)
 public @interface ValidEmail {
-    String message() default INVALID_EMAIL_FORMAT;
-    String emptyMessage() default EMPTY_EMAIL;
-    String invalidDomainMessage() default INVALID_DOMAIN_OPTION;
-    String alreadyInUseMessage() default EMAIL_ALREADY_IN_USE;
+    String message() default "{invalid.email.format}";
+    String emptyMessage() default "{empty.email}";
+    String invalidDomainMessage() default "{invalid.domain.option}";
+    String alreadyInUseMessage() default "{email.already.in.use}";
 
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};

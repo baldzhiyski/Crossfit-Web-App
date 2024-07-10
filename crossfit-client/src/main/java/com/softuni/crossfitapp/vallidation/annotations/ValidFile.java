@@ -15,10 +15,10 @@ import static com.softuni.crossfitapp.util.Constants.*;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidFile {
-    String message() default FILE_INVALID;
-    String emptyMessage() default FILE_EMPTY;
-    String invalidType() default FILE_TYPE_NOT_ALLOWED;
-    String fileSizeExceed() default FILE_SIZE_EXCEEDED;
+    String message() default "{file.invalid}";
+    String emptyMessage() default "{file.empty}";
+    String invalidType() default "{file.type.not.allowed}";
+    String fileSizeExceed() default "{file.size.exceeded}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 

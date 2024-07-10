@@ -1,6 +1,4 @@
 package com.softuni.crossfitapp.vallidation.annotations;
-
-import com.softuni.crossfitapp.vallidation.validators.PasswordMatchValidator;
 import com.softuni.crossfitapp.vallidation.validators.PasswordUpdateMatchValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -8,8 +6,6 @@ import jakarta.validation.Payload;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
-
-import static com.softuni.crossfitapp.util.Constants.NOT_MATCHING_PASSWORDS;
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
@@ -18,7 +14,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Documented
 @Constraint(validatedBy = { PasswordUpdateMatchValidator.class })
 public @interface PasswordUpdateMatcher {
-    String message() default NOT_MATCHING_PASSWORDS;
+    String message() default "{not.matching.passwords}";
+
 
     Class<?>[] groups() default { };
 

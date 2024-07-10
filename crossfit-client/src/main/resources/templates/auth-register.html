@@ -2,27 +2,26 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>Register page</title>
+    <title th:text="#{register.title}">Register page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
     <link th:href="@{/css/register.css}" rel="stylesheet"/>
-
 </head>
 <body>
 <div class="wrapper" style="background-image: url('/images/inner-register.jpg');">
     <div class="inner" style="background: url('/images/register.jpg') no-repeat; background-size: cover;">
         <form th:action="@{/users/register}" th:method="POST" th:object="${registerDto}" enctype="multipart/form-data">
-            <h3 style="color: white">Register Now !</h3>
+            <h3 style="color: white" th:text="#{register.heading}">Register Now !</h3>
             <div class="row">
                 <div class="form-group col-md-5 mr-1 mb-2" th:classappend="${#fields.hasErrors('firstName')} ? 'has-error'">
-                    <label for="firstName">First Name</label>
+                    <label for="firstName" th:text="#{register.firstName}">First Name</label>
                     <input type="text" id="firstName" name="firstName" class="form-control"
                            th:classappend="${#fields.hasErrors('firstName')} ? 'is-invalid'"
                            placeholder="Enter first name" th:field="*{firstName}">
                     <div class="invalid-feedback" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
                 </div>
                 <div class="form-group col-md-5 mr-1 mb-2" th:classappend="${#fields.hasErrors('lastName')} ? 'has-error'">
-                    <label for="lastName">Last Name</label>
+                    <label for="lastName" th:text="#{register.lastName}">Last Name</label>
                     <input type="text" id="lastName" name="lastName" class="form-control"
                            th:classappend="${#fields.hasErrors('lastName')} ? 'is-invalid'"
                            placeholder="Enter last name" th:field="*{lastName}">
@@ -31,14 +30,14 @@
             </div>
             <div class="row">
                 <div class="form-group col-md-5 mr-1 mb-2" th:classappend="${#fields.hasErrors('username')} ? 'has-error'">
-                    <label for="username">Username</label>
+                    <label for="username" th:text="#{register.username}">Username</label>
                     <input type="text" id="username" name="username" class="form-control"
                            th:classappend="${#fields.hasErrors('username')} ? 'is-invalid'"
                            placeholder="Enter username" th:field="*{username}">
                     <div class="invalid-feedback" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
                 </div>
                 <div class="form-group col-md-5 mr-1 mb-2" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
-                    <label for="email">Email</label>
+                    <label for="email" th:text="#{register.email}">Email</label>
                     <input type="email" id="email" name="email" class="form-control"
                            th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'"
                            placeholder="Enter valid email" th:field="*{email}">
@@ -47,14 +46,14 @@
             </div>
             <div class="row">
                 <div class="form-group col-md-5 mr-1 mb-2" th:classappend="${#fields.hasErrors('password')} ? 'has-error'">
-                    <label for="password">Password</label>
+                    <label for="password" th:text="#{register.password}">Password</label>
                     <input type="password" id="password" name="password" class="form-control"
                            th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'"
                            placeholder="Enter password" th:field="*{password}">
                     <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
                 </div>
                 <div class="form-group col-md-5 mr-1 mb-2" th:classappend="${#fields.hasErrors('confirmPassword')} ? 'has-error'">
-                    <label for="confirmPassword">Confirm Password</label>
+                    <label for="confirmPassword" th:text="#{register.confirmPassword}">Confirm Password</label>
                     <input type="password" id="confirmPassword" name="confirmPassword" class="form-control"
                            th:classappend="${#fields.hasErrors('confirmPassword')} ? 'is-invalid'"
                            placeholder="Confirm password" th:field="*{confirmPassword}">
@@ -63,14 +62,14 @@
             </div>
             <div class="row">
                 <div class="form-group col-md-5 mr-1 mb-2" th:classappend="${#fields.hasErrors('bornOn')} ? 'has-error'">
-                    <label for="bornOn">Date of Birth</label>
+                    <label for="bornOn" th:text="#{register.bornOn}">Date of Birth</label>
                     <input type="date" id="bornOn" name="bornOn" class="form-control"
                            th:classappend="${#fields.hasErrors('bornOn')} ? 'is-invalid'"
                            th:field="*{bornOn}">
                     <div class="invalid-feedback" th:if="${#fields.hasErrors('bornOn')}" th:errors="*{bornOn}"></div>
                 </div>
                 <div class="form-group col-md-5 mb-2" th:classappend="${#fields.hasErrors('address')} ? 'has-error'">
-                    <label for="address">Address</label>
+                    <label for="address" th:text="#{register.address}">Address</label>
                     <input type="text" id="address" name="address" class="form-control"
                            th:classappend="${#fields.hasErrors('address')} ? 'is-invalid'"
                            placeholder="Enter current address" th:field="*{address}">
@@ -79,7 +78,7 @@
             </div>
             <div class="row">
                 <div class="form-group col-md-5 mr-1 mb-2" th:classappend="${#fields.hasErrors('nationality')} ? 'has-error'">
-                    <label for="nationality">Nationality</label>
+                    <label for="nationality" th:text="#{register.nationality}">Nationality</label>
                     <select id="nationality" class="form-control"  name="nationality" style="color: white;">
                         <option value="">Choose...</option>
                         <option th:each="code : ${countryCodes}" th:value="${code}" th:text="${code}"></option>
@@ -87,7 +86,7 @@
                     <div class="invalid-feedback" th:if="${#fields.hasErrors('nationality')}" th:errors="*{nationality}"></div>
                 </div>
                 <div class="form-group" th:classappend="${#fields.hasErrors('photo')} ? 'has-error'">
-                    <label class="text-center text-white font-weight-bold" for="photo">Photo</label>
+                    <label class="text-center text-white font-weight-bold" for="photo" th:text="#{register.photo}">Photo</label>
                     <input id="photo" name="photo" type="file" class="form-control"
                            th:classappend="${#fields.hasErrors('photo')} ? 'is-invalid'"
                            th:field="*{photo}">
@@ -97,7 +96,7 @@
 
             <div class="row">
                 <div class="form-group col-md-5 mb-2" th:classappend="${#fields.hasErrors('telephoneNumber')} ? 'has-error'">
-                    <label for="telephoneNumber">Telephone Number</label>
+                    <label for="telephoneNumber" th:text="#{register.telephoneNumber}">Telephone Number</label>
                     <input type="tel" id="telephoneNumber" name="telephoneNumber" class="form-control"
                            th:classappend="${#fields.hasErrors('telephoneNumber')} ? 'is-invalid'"
                            placeholder="Enter telephone number" th:field="*{telephoneNumber}">
@@ -106,8 +105,8 @@
             </div>
 
             <div class="button-container">
-                <button type="submit" >Sign in</button>
-                <a class="btn btn-dark" id="homeButton" th:href="@{/}">
+                <button type="submit" th:text="#{register.submit}">Sign in</button>
+                <a class="btn btn-dark" id="homeButton" th:href="@{/}" th:text="#{register.home.link}">
                     Go to home page
                 </a>
             </div>

@@ -1,4 +1,6 @@
 spring:
+  messages:
+   basename: messages
   servlet:
     multipart:
       max-file-size: 5MB

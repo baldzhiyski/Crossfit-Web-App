@@ -9,13 +9,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import static com.softuni.crossfitapp.util.Constants.INVALID_PASS;
-
 @Constraint(validatedBy = PasswordValidator.class)
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PasswordAnnotation {
-    String message() default INVALID_PASS;
+    String message() default "{invalid.pass}";
 
     Class<?>[] groups() default {};
 
