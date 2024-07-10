@@ -29,22 +29,22 @@
 <div class="content mb-3 mt-2">
     <h1>THE GYM FOR HIGH IMPACT ATHLETES</h1>
     <div sec:authorize="isAuthenticated()">
-        <h2>Welcome, <span th:text="${fullName}"></span>!</h2>
+        <h2 th:text="#{index_welcome_authenticated}">Welcome, <span th:text="${fullName}"></span>!</h2>
         <h3>Explore our high-intensity workouts and community-driven fitness programs.</h3>
     </div>
     <div sec:authorize="isAnonymous()">
-        <h2>Welcome to our CrossFit community, where we push boundaries and achieve greatness. Our state-of-the-art facilities and expert trainers are dedicated to helping you reach your fitness goals.</h2>
-        <h3>Join us and experience high-intensity workouts, personalized training plans, and a supportive community that will motivate you every step of the way. Transform your body and mind with our innovative fitness programs designed to challenge and inspire you.</h3>
+        <h2 th:text="#{index_welcome_anonymous}">Welcome to our CrossFit community, where we push boundaries and achieve greatness. Our state-of-the-art facilities and expert trainers are dedicated to helping you reach your fitness goals.</h2>
+        <h3 th:text="#{index_description_anonymous}">Join us and experience high-intensity workouts, personalized training plans, and a supportive community that will motivate you every step of the way. Transform your body and mind with our innovative fitness programs designed to challenge and inspire you.</h3>
     </div>
-    <a  sec:authorize="isAnonymous()" th:href="@{/users/register}" class="btn btn-primary btn-lg mb-5">Join Now</a>
-    <a  sec:authorize="isAnonymous()" th:href="@{/users/login}" class="btn btn-secondary btn-lg mb-5">Log In</a>
+    <a  sec:authorize="isAnonymous()" th:href="@{/users/register}" class="btn btn-primary btn-lg mb-5" th:text="#{index_join_now}">Join Now</a>
+    <a  sec:authorize="isAnonymous()" th:href="@{/users/login}" class="btn btn-secondary btn-lg mb-5" th:text="#{index_login}">Log In</a>
 </div>
 
 
 <!-- Find amazing friends Section -->
 <section class="top-container">
     <div class="showcase text-white">
-        <button class="btn btn-secondary btn-lg">Explore our community</button>
+        <button class="btn btn-secondary btn-lg" th:text="#{index_explore_community}">Explore our community</button>
     </div>
 </section>
 
@@ -57,7 +57,7 @@
                     <div class="box text-center">
                         <i class="fas fa-calendar-alt fa-5x mb-3"></i>
                         <h3>Schedule</h3>
-                        <p>Plan your workouts effectively</p>
+                        <p th:text="#{index_schedule_description}">Plan your workouts effectively</p>
                     </div>
                 </a>
             </div>
@@ -66,7 +66,7 @@
                     <div class="box text-center">
                         <i class="fas fa-user-friends fa-5x mb-3"></i>
                         <h3>Coaches</h3>
-                        <p>Meet our experienced coaches</p>
+                        <p th:text="#{index_coaches_description}">Meet our experienced coaches</p>
                     </div>
                 </a>
             </div>
@@ -75,7 +75,7 @@
                     <div class="box text-center">
                         <i class="fas fa-carrot fa-4x mb-2"></i>
                         <h3>Nutrition Blog</h3>
-                        <p>Discover essential nutrition advice for peak performance in our blog !</p>
+                        <p th:text="#{index_nutrition_blog_description}">Discover essential nutrition advice for peak performance in our blog !</p>
                     </div>
                 </a>
             </div>

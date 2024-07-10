@@ -10,6 +10,12 @@
             font-size: 1.5rem; /* Larger font size */
             margin-right: 2rem; /* Increased space between links */
         }
+        .form-inline .custom-select {
+            width: auto; /* Adjust width of the select element */
+        }
+        .navbar-nav .form-inline {
+            margin-left: auto; /* Push form to the right end of the navbar */
+        }
     </style>
 </head>
 <body>
@@ -24,35 +30,45 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/}"  th:classappend="${activeLink == 'brands'}? 'active'">Home</a>
+                    <a class="nav-link" th:href="@{/}"  th:classappend="${activeLink == 'brands'}? 'active'" th:text="#{nav_bar_home}">Home</a>
                 </li>
                 <li class="nav-item" sec:authorize= "!hasRole('ADMIN')">
-                    <a class="nav-link" th:href="@{/about-us}">About Us</a>
+                    <a class="nav-link" th:href="@{/about-us}" th:text="#{nav_bar_about_us}">About Us</a>
                 </li>
                 <li class="nav-item" sec:authorize= "!hasRole('ADMIN')" >
-                    <a class="nav-link" th:href="@{/workouts}" >Workouts</a>
+                    <a class="nav-link" th:href="@{/workouts}" th:text="#{nav_bar_workouts}" >Workouts</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a class="nav-link" th:href="@{/events/add-event/{id}(id=${#authentication.principal.id})}">Add Event</a>
+                    <a class="nav-link" th:href="@{/events/add-event/{id}(id=${#authentication.principal.id})}" th:text="#{nav_bar_add_event}">Add Event</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated() and !hasRole('ADMIN')">
-                    <a class="nav-link" th:href="@{/my-workouts}">My Workouts</a>
+                    <a class="nav-link" th:href="@{/my-workouts}" th:text="#{nav_bar_my_workouts}">My Workouts</a>
                 </li>
-                <li class="nav-item" sec:authorize="isAuthenticated() and !hasRole('ADMIN')">
-                    <a class="nav-link" th:href="@{/users/profile/{username}(username=${#authentication.principal.username})}">Profile</a>
+                <li class="nav-item" sec:authorize="isAuthenticated() and !hasRole('ADMIN')" >
+                    <a class="nav-link" th:href="@{/users/profile/{username}(username=${#authentication.principal.username})}" th:text="#{nav_bar_profile}">Profile</a>
                 </li>
                 <li class="nav-item"  sec:authorize= "!hasRole('COACH') and !hasRole('ADMIN')" >
-                    <a class="nav-link" th:href="@{/memberships}">Memberships</a>
+                    <a class="nav-link"  th:text="#{nav_bar_memberships}" th:href="@{/memberships}" >Memberships</a>
                 </li>
                 <li class="nav-item" sec:authorize="hasRole('ADMIN')">
-                    <a class="nav-link" th:href="@{/profiles-dashboard/{id}(id=${#authentication.principal.id})}">All User Profiles</a>
+                    <a class="nav-link" th:href="@{/profiles-dashboard/{id}(id=${#authentication.principal.id})}" th:text="#{nav_bar_all_user_profiles}">All User Profiles</a>
                 </li>
                 <li class="nav-item" sec:authorize="hasRole('COACH')">
-                    <a class="nav-link" th:href="@{/my-weekly-schedule/{id}(id=${#authentication.principal.id})}">Upcoming Trainings</a>
+                    <a class="nav-link" th:href="@{/my-weekly-schedule/{id}(id=${#authentication.principal.id})}" th:text="#{nav_bar_upcoming_trainings}">Upcoming Trainings</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
                     <form th:action="@{/logout}" th:method="POST">
-                        <button class="btn btn-outline-light logout-button m-lg-2" type="submit">Logout</button>
+                        <button class="btn btn-outline-light logout-button m-lg-2" type="submit" th:text="#{nav_bar_logout}">Logout</button>
+                    </form>
+                </li>
+                <li class="nav-item ms-5">
+                    <form th:method="GET" class="navbar-dark">
+                        <label class="text-white mr-2" for="lang" th:text="#{nav_bar_language}">Language: </label>
+                        <!-- HTML select element -->
+                        <select class="form-select" aria-label="Language" id="lang" name="lang" onchange="this.form.submit()">
+                            <option value="en_US" th:selected="${#locale.toString()} == 'en_US'">English</option>
+                            <option value="de_DE" th:selected="${#locale.toString()} == 'de_DE'">Deutsch</option>
+                        </select>
                     </form>
                 </li>
             </ul>

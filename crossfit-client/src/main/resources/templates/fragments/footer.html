@@ -12,13 +12,13 @@
             <div class="row mt-4">
                 <!--Grid column-->
                 <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
-                    <h5 class="text-uppercase mb-4">Stay motivated</h5>
+                    <h5 class="text-uppercase mb-4" th:text="#{footer_stay_motivated}">Stay motivated</h5>
 
-                    <p>
+                    <p th:text="#{footer_join_community}">
                         Join our CrossFit community and transform together
                     </p>
 
-                    <p>
+                    <p th:text="#{footer_pushing_limits}">
                         Pushing limits, breaking barriers, together.
                     </p>
 
@@ -53,7 +53,7 @@
 
                 <!--Grid column-->
                 <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
-                    <h5 class="text-uppercase mb-4" style="margin-top: 1rem;">Opening hours</h5>
+                    <h5 class="text-uppercase mb-4" style="margin-top: 1rem;" th:text="#{footer_opening_hours}">Opening hours</h5>
 
                     <table class="table text-center text-white">
                         <tbody class="fw-normal">
@@ -67,7 +67,7 @@
                         </tr>
                         <tr>
                             <td>Sunday:</td>
-                            <td>Closed</td>
+                            <td th:text="#{footer_hours_closed}">Closed</td>
                         </tr>
                         </tbody>
                     </table>
