@@ -28,7 +28,7 @@ public class CopyImageFileSaverUtil {
         String uniqueFilename = UUID.randomUUID().toString() + "." + originalFilename;
 
         // Construct the full path where you want to save the file
-        Path filePath = Paths.get("src/main/resources/static/images").resolve(uniqueFilename);
+        Path filePath = Paths.get("crossfit-client/src/main/resources/static/images").resolve(uniqueFilename);
 
         // Ensure the parent directory exists
         Files.createDirectories(filePath.getParent());

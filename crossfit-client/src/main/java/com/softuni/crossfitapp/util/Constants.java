@@ -9,11 +9,11 @@ public enum Constants {
     public static final String DOT = ".";
 
     // Paths
-    public static final String PATH_TO_COACHES = "src/main/resources/inputs/coaches.json";
-    public static final String PATH_TO_MEMBERSHIPS = "src/main/resources/inputs/memberships.json";
-    public static final String PATH_TO_ROLES = "src/main/resources/inputs/roles.json";
-    public static final String PATH_TO_COACHES_USERS = "src/main/resources/inputs/coaches_user-profiles.json";
-    public static final String PATH_TO_ADMINS = "src/main/resources/inputs/admins.json";
+    public static final String PATH_TO_COACHES = "crossfit-client/src/main/resources/inputs/coaches.json";
+    public static final String PATH_TO_MEMBERSHIPS = "crossfit-client/src/main/resources/inputs/memberships.json";
+    public static final String PATH_TO_ROLES = "crossfit-client/src/main/resources/inputs/roles.json";
+    public static final String PATH_TO_COACHES_USERS = "crossfit-client/src/main/resources/inputs/coaches_user-profiles.json";
+    public static final String PATH_TO_ADMINS = "crossfit-client/src/main/resources/inputs/admins.json";
 
     // File validation constants
     public static final long MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB in bytes

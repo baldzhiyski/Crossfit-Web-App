@@ -10,6 +10,7 @@ import com.softuni.crossfitapp.domain.entity.Country;
 import com.softuni.crossfitapp.domain.entity.Role;
 import com.softuni.crossfitapp.domain.entity.User;
 import com.softuni.crossfitapp.domain.entity.UserActivationLinkEntity;
+import com.softuni.crossfitapp.domain.entity.enums.MembershipType;
 import com.softuni.crossfitapp.domain.entity.enums.RoleType;
 import com.softuni.crossfitapp.domain.events.UserRegisteredEvent;
 import com.softuni.crossfitapp.exceptions.ObjectNotFoundException;
@@ -17,6 +18,7 @@ import com.softuni.crossfitapp.repository.CountryRepository;
 import com.softuni.crossfitapp.repository.RoleRepository;
 import com.softuni.crossfitapp.repository.UserActivationCodeRepository;
 import com.softuni.crossfitapp.repository.UserRepository;
+import com.softuni.crossfitapp.service.CloudinaryService;
 import com.softuni.crossfitapp.service.UserService;
 import com.softuni.crossfitapp.util.CopyImageFileSaverUtil;
 import org.modelmapper.ModelMapper;
@@ -50,14 +52,17 @@ public class UserServiceImpl implements UserService {
     private UserActivationCodeRepository activationCodeRepository;
 
     private PasswordEncoder passwordEncoder;
+
+    private CloudinaryService cloudinaryService;
     private ModelMapper mapper;
 
-    public UserServiceImpl(ApplicationEventPublisher applicationEventPublisher, UserRepository userRepository, RoleRepository roleRepository, CountryRepository countryRepository, UserActivationCodeRepository activationCodeRepository, ModelMapper mapper) {
+    public UserServiceImpl(ApplicationEventPublisher applicationEventPublisher, UserRepository userRepository, RoleRepository roleRepository, CountryRepository countryRepository, UserActivationCodeRepository activationCodeRepository, CloudinaryService cloudinaryService, ModelMapper mapper) {
         this.applicationEventPublisher = applicationEventPublisher;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.countryRepository = countryRepository;
         this.activationCodeRepository = activationCodeRepository;
+        this.cloudinaryService = cloudinaryService;
         this.mapper = mapper;
     }
     @Override
@@ -66,7 +71,7 @@ public class UserServiceImpl implements UserService {
 
         Country country = this.countryRepository.findByCode(userRegisterDto.getNationality()).orElseThrow(() -> new ObjectNotFoundException("No such code for country found !"));
         toBeRegisteredUser.setCountry(country);
-        String imageUrl = CopyImageFileSaverUtil.saveFile(userRegisterDto.getPhoto());
+        String imageUrl = cloudinaryService.uploadPhoto(userRegisterDto.getPhoto(), "users-accounts-photos");
         toBeRegisteredUser.setImageUrl(imageUrl);
 
         // Setting the role when we click on the confirm url
@@ -102,11 +107,18 @@ public class UserServiceImpl implements UserService {
         User user = this.userRepository.findByUsername(username).orElseThrow(() -> new ObjectNotFoundException("No such user existing !"));
         String fullName = user.getFirstName()+ " " + user.getLastName();
         Set<RoleType> roles = user.getRoles().stream().map(Role::getRoleType).collect(Collectors.toSet());
-        MembershipProfilePageDto mapped = this.mapper.map(user.getMembership(), MembershipProfilePageDto.class);
+        MembershipProfilePageDto mapped;
+        if(user.getMembership()!=null) {
+             mapped = this.mapper.map(user.getMembership(), MembershipProfilePageDto.class);
 
-        long daysLeft = ChronoUnit.DAYS.between(user.getMembershipStartDate(), user.getMembershipEndDate());
-        mapped.setTimeLeft(daysLeft);
+            long daysLeft = ChronoUnit.DAYS.between(user.getMembershipStartDate(), user.getMembershipEndDate());
+            mapped.setTimeLeft(daysLeft);
 
+        }else{
+            mapped= new MembershipProfilePageDto();
+            mapped.setTimeLeft(0L);
+            mapped.setMembershipType(MembershipType.NONE);
+        }
         Set<EventDto> events = user.getEvents().stream().map(event -> {
             return this.mapper.map(event, EventDto.class);
         }).collect(Collectors.toSet());
@@ -123,9 +135,6 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void updateProfile(String username, UserProfileUpdateDto userProfileUpdateDto) throws IOException {
-
-        // TODO : Still to be testet !
-
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ObjectNotFoundException("User not found with username: " + username));
 
@@ -155,8 +164,19 @@ public class UserServiceImpl implements UserService {
         }
 
         if(!userProfileUpdateDto.getPicture().isEmpty()){
-            String imageUrl = CopyImageFileSaverUtil.saveFile(userProfileUpdateDto.getPicture());
-            user.setImageUrl(imageUrl);
+            if (!userProfileUpdateDto.getPicture().isEmpty()) {
+                // Delete old photo from Cloudinary
+                String oldImageUrl = user.getImageUrl();
+                if (oldImageUrl != null) {
+                    String publicId = oldImageUrl.substring(oldImageUrl.lastIndexOf("/") + 1);
+                    cloudinaryService.deletePhoto(publicId);
+                }
+
+                // Upload new photo to Cloudinary
+                String imageUrl = cloudinaryService.uploadPhoto(userProfileUpdateDto.getPicture(), "users-accounts-photos");
+                user.setImageUrl(imageUrl);
+            }
+
         }
 
         if(!userProfileUpdateDto.getPassword().isBlank() && !userProfileUpdateDto.getConfirmPassword().isBlank()){

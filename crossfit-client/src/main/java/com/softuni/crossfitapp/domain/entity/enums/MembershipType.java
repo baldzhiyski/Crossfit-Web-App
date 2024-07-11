@@ -4,5 +4,6 @@ public enum MembershipType {
     BASIC,
     PREMIUM,
     ELITE,
-    UNLIMITED
+    UNLIMITED,
+    NONE
 }

@@ -1,6 +1,8 @@
 spring:
   messages:
    basename: messages
+   resources:
+     static-locations: classpath:/static/
   servlet:
     multipart:
       max-file-size: 5MB
@@ -71,3 +73,8 @@ crossfit :
     byIdUrl : "http://localhost:8082/crossfit-community/events/find/{id}"
     allEvents: "http://localhost:8082/crossfit-community/publish"
     init-crossfit-events: true
+
+cloudinary :
+  cloud_name : ${CLOUDINARY_NAME}
+  apiKey: ${CLOUDINARY_API_KEY}
+  apiSecret : ${CLOUDINARY_API_SECRET}
