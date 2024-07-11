@@ -120,7 +120,7 @@
                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
                                 </div>
                                 <!-- Confirm  new password -->
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <label for="confirmPassword" class="form-label">Confirm Password *</label>
                                     <input type="password" name="confirmPassword" th:classappend="${#fields.hasErrors('confirmPassword')} ? 'is-invalid'"  class="form-control" id="confirmPassword" th:field="*{confirmPassword}">
                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></div>

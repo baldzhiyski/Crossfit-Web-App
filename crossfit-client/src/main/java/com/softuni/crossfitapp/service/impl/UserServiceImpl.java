@@ -56,12 +56,13 @@ public class UserServiceImpl implements UserService {
     private CloudinaryService cloudinaryService;
     private ModelMapper mapper;
 
-    public UserServiceImpl(ApplicationEventPublisher applicationEventPublisher, UserRepository userRepository, RoleRepository roleRepository, CountryRepository countryRepository, UserActivationCodeRepository activationCodeRepository, CloudinaryService cloudinaryService, ModelMapper mapper) {
+    public UserServiceImpl(ApplicationEventPublisher applicationEventPublisher, UserRepository userRepository, RoleRepository roleRepository, CountryRepository countryRepository, UserActivationCodeRepository activationCodeRepository, PasswordEncoder passwordEncoder, CloudinaryService cloudinaryService, ModelMapper mapper) {
         this.applicationEventPublisher = applicationEventPublisher;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.countryRepository = countryRepository;
         this.activationCodeRepository = activationCodeRepository;
+        this.passwordEncoder = passwordEncoder;
         this.cloudinaryService = cloudinaryService;
         this.mapper = mapper;
     }
@@ -192,6 +193,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteAcc(String username) {
         User user = this.userRepository.findByUsername(username).orElseThrow(() -> new ObjectNotFoundException("User not found"));
+        this.activationCodeRepository.deleteAll(this.activationCodeRepository.findAllByUser_Id(user.getId()));
         // Delete the user
         this.userRepository.delete(user);
         // Logout the current user
