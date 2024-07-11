@@ -1,5 +1,6 @@
 package com.softuni.crossfitcommunityevents.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
 import jakarta.persistence.Lob;
@@ -23,7 +24,7 @@ public class Event extends BaseEntity {
     private String eventName;
 
     @NotBlank
-    @Lob
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @NotBlank

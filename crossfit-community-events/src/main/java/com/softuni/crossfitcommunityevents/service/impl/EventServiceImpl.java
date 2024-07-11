@@ -27,7 +27,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public void createEvent(EventDto addEventDto) {
         Event event = mapToEntity(addEventDto);
-        this.eventRepository.save(event);
+        this.eventRepository.saveAndFlush(event);
     }
 
     @Override

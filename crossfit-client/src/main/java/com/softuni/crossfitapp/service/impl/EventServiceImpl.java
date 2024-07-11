@@ -1,6 +1,7 @@
 package com.softuni.crossfitapp.service.impl;
 
 import com.softuni.crossfitapp.config.rest.EventsAPIConfig;
+import com.softuni.crossfitapp.domain.dto.events.AddEventDto;
 import com.softuni.crossfitapp.domain.dto.events.EventDetailsDto;
 import com.softuni.crossfitapp.service.EventService;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,7 +26,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public void addEvent(EventDetailsDto eventDetailsDto) {
+    public void addEvent(AddEventDto eventDetailsDto) {
         restClient.post()
                 .uri(this.eventsAPIConfig.getPublishUrl())
                 .body(eventDetailsDto)

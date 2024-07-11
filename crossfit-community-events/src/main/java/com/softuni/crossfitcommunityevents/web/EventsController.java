@@ -31,10 +31,11 @@ public class EventsController {
 
 
     @PostMapping("/events/publish")
-    public ResponseEntity<EventDto> createOffer(
+    public ResponseEntity<EventDto> createEvent(
             @RequestBody EventDto addEventDto
     ) {
         LOGGER.info("Going to create an offer {}", addEventDto);
+        System.out.println("Starting");
 
         eventService.createEvent(addEventDto);
         return ResponseEntity.ok().build();

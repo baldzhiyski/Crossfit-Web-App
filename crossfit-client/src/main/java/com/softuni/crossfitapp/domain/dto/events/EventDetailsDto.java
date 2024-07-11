@@ -1,7 +1,12 @@
 package com.softuni.crossfitapp.domain.dto.events;
 
+import com.softuni.crossfitapp.vallidation.annotations.NotPastDate;
+import com.softuni.crossfitapp.vallidation.annotations.ValidYouTubeUrl;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.regex.Matcher;

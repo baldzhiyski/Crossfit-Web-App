@@ -17,32 +17,31 @@
 <div class="container2 mt-5">
     <div id="event_form">
         <h2>Add Event</h2>
-        <form th:action="@{/event-add}" th:method="POST" enctype="multipart/form-data">
+        <form th:action="@{/events/publish-event}" th:method="POST" th:object="${eventDetailsDto}" enctype="multipart/form-data">
             <div class="form-group">
-                <label for="event_name">Event Name</label>
-                <input type="text" class="form-control" id="event_name" name="eventName" required>
+                <label for="eventName">Event Name</label>
+                <input type="text" class="form-control" id="eventName" name="eventName" th:classappend="${#fields.hasErrors('eventName')} ? 'is-invalid'" th:field="*{eventName}" placeholder="Enter name of the event">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('eventName')}" th:errors="*{eventName}" ></div>
             </div>
             <div class="form-group">
-                <label for="event_date">Event Date</label>
-                <input type="date" class="form-control" id="event_date" name="event_date" required>
+                <label for="date">Event Date</label>
+                <input type="date" class="form-control" id="date" name="date" th:classappend="${#fields.hasErrors('date')} ? 'is-invalid'" th:field="*{date}">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
             </div>
             <div class="form-group">
-                <label for="event_time">Event Time</label>
-                <input type="time" class="form-control" id="event_time" name="event_time" required>
+                <label for="address">Event Place</label>
+                <input type="text" class="form-control" id="address" name="address" th:classappend="${#fields.hasErrors('address')} ? 'is-invalid'" th:field="*{address}" placeholder="Enter the valid address of the event">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
             </div>
             <div class="form-group">
-                <label for="event_place">Event Place</label>
-                <input type="text" class="form-control" id="event_place" name="event_place" required>
+                <label for="description">Event Description</label>
+                <textarea class="form-control" id="description" name="description" rows="4" th:classappend="${#fields.hasErrors('description')} ? 'is-invalid'" th:field="*{description}" placeholder="Add description of the event" ></textarea>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
             </div>
             <div class="form-group">
-                <label for="event_description">Event Description</label>
-                <textarea class="form-control" id="event_description" name="event_description" rows="4" required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="event_picture">Event Video With API</label>
-            </div>
-            <div class="form-group">
-                <input type="file" class="form-control-file" id="event_picture" name="event_picture" accept="image/*" required>
+                <label for="videoUrl">Event Video</label>
+                <input type="text" class="form-control" id="videoUrl" name="videoUrl" th:classappend="${#fields.hasErrors('videoUrl')} ? 'is-invalid'" th:field="*{videoUrl}" placeholder="Place a valid youtube URL from past events like this one">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('videoUrl')}" th:errors="*{videoUrl}"></div>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Submit</button>
         </form>

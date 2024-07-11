@@ -1,3 +1,16 @@
+/* Ensure general text color is white */
+body {
+    color: #fff;
+}
+
+/* Override text color for form controls within the event_form */
+#event_form input,
+#event_form textarea,
+#event_form select {
+    color: white; /* Change text color to black or another readable color */
+}
+
+/* Additional styles for form and other elements */
 body {
     background: url('/images/games2.jpg') no-repeat center center fixed;
     background-size: cover;
