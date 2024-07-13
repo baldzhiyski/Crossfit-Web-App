@@ -8,6 +8,8 @@ import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
+import java.util.Locale;
+
 @Configuration
 public class I18Config {
 
@@ -28,6 +30,7 @@ public class I18Config {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasename("classpath:i18n/messages");
         messageSource.setDefaultEncoding("UTF-8");// todo: check if utf-8 is finally default
+        messageSource.setDefaultLocale(Locale.ENGLISH);
         return messageSource;
     }
 }
