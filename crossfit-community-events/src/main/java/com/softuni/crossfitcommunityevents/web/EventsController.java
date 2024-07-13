@@ -1,5 +1,6 @@
 package com.softuni.crossfitcommunityevents.web;
 
+import com.softuni.crossfitcommunityevents.exception.ObjectNotFoundException;
 import com.softuni.crossfitcommunityevents.model.dto.EventDto;
 import com.softuni.crossfitcommunityevents.service.EventService;
 import org.slf4j.Logger;
@@ -25,7 +26,7 @@ public class EventsController {
 
 
     @GetMapping("/events/find/{id}")
-    public ResponseEntity<EventDto> findById(@PathVariable("id") UUID id) {
+    public ResponseEntity<EventDto> findById(@PathVariable("id") Long id) {
         return ResponseEntity
                 .ok(eventService.getEventById(id));
     }
@@ -57,6 +58,12 @@ public class EventsController {
     public ResponseEntity<List<EventDto>> findAllEvents() {
         return ResponseEntity
                 .ok(eventService.findAllEvents());
+    }
+
+    @ExceptionHandler(ObjectNotFoundException.class)
+    public ResponseEntity<String> handleObjectNotFoundException(ObjectNotFoundException ex) {
+        LOGGER.error("ObjectNotFoundException caught: {}", ex.getMessage());
+        return ResponseEntity.badRequest().body(ex.getMessage());
     }
 
 }

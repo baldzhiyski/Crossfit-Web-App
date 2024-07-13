@@ -1,5 +1,6 @@
 package com.softuni.crossfitcommunityevents.service.impl;
 
+import com.softuni.crossfitcommunityevents.exception.ObjectNotFoundException;
 import com.softuni.crossfitcommunityevents.model.Event;
 import com.softuni.crossfitcommunityevents.model.dto.EventDto;
 import com.softuni.crossfitcommunityevents.repository.EventRepository;
@@ -7,7 +8,6 @@ import com.softuni.crossfitcommunityevents.service.EventService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -18,8 +18,8 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public EventDto getEventById(UUID id) {
-        Event event = this.eventRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("No such upcomming event !"));
+    public EventDto getEventById(Long id) {
+        Event event = this.eventRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("No such upcomming event !"));
 
         return mapToDto(event);
     }

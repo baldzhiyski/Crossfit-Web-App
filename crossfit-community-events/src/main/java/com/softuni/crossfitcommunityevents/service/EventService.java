@@ -4,12 +4,11 @@ package com.softuni.crossfitcommunityevents.service;
 import com.softuni.crossfitcommunityevents.model.dto.EventDto;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface EventService {
 
 
-    EventDto getEventById(UUID id);
+    EventDto getEventById(Long id);
 
     void createEvent(EventDto addEventDto);
 
