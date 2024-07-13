@@ -42,9 +42,6 @@ class UserServiceImplTest {
     private CrossfitUserDetailsService serviceToTest;
 
     private UserService userService;
-
-    @Mock
-    private UserRepository mockUserRepository;
     @Mock
     private ApplicationEventPublisher applicationEventPublisher;
     @Mock
@@ -74,7 +71,7 @@ class UserServiceImplTest {
     @BeforeEach
     void setUp() {
         serviceToTest = new CrossfitUserDetailsService(
-                mockUserRepository
+                userRepository
         );
         userService = new UserServiceImpl( applicationEventPublisher,  userRepository,
                 roleRepository,  countryRepository,  activationCodeRepository,passwordEncoder,cloudinaryService,mapper);
@@ -92,7 +89,7 @@ class UserServiceImplTest {
     void testUserFoundException() {
         // Arrange
         User testUserEntity = createTestUser();
-        when(mockUserRepository.findByUsername(testUserEntity.getUsername()))
+        when(userRepository.findByUsername(testUserEntity.getUsername()))
                 .thenReturn(Optional.of(testUserEntity));
 
         // Act
@@ -114,6 +111,60 @@ class UserServiceImplTest {
         assertTrue(
                 containsAuthority(userDetails, "ROLE_" + RoleType.USER),
                 "The user is not user");
+    }
+    @Test
+    void testUserSuccessfullyRegistered() throws IOException {
+        // Arrange
+        UserRegisterDto userToRegister = createUserToRegister();
+
+        // Mock dependencies
+        Country country = new Country();
+        country.setCode("BG");
+        when(countryRepository.findByCode("BG")).thenReturn(Optional.of(country));
+
+        // Mock mapper to return a User entity when mapping from UserRegisterDto
+        User expectedUserEntity = createTestUserFromDto(userToRegister);
+        when(mapper.map(userToRegister, User.class)).thenReturn(expectedUserEntity);
+
+        // Act
+        User registeredUser = userService.registerNewUser(userToRegister);
+
+        // Assert
+        assertNotNull(registeredUser);
+        assertEquals(expectedUserEntity.getUsername(), registeredUser.getUsername());
+
+        verify(userRepository).saveAndFlush(userCaptor.capture());
+
+        User saved = userCaptor.getValue();
+        assertEquals(userToRegister.getUsername(),saved.getUsername());
+        assertEquals(userToRegister.getEmail(),saved.getEmail());
+
+    }
+    @Test
+    void testActivateAccount() {
+        // Arrange
+        String activationCode = "testActivationCode";
+
+        // Mock UserActivationLinkEntity and User
+        UserActivationLinkEntity activationLinkEntity = new UserActivationLinkEntity();
+        User user = new User();
+        activationLinkEntity.setUser(user);
+
+        // Mock repository behavior
+
+        when(activationCodeRepository.findByActivationCode(activationCode))
+                .thenReturn(Optional.of(activationLinkEntity));
+        when(roleRepository.findByRoleType(RoleType.USER))
+                .thenReturn( Role.builder().roleType(RoleType.USER).build());
+
+        // Act
+        assertDoesNotThrow(() -> userService.activateAccount(activationCode));
+
+        // Assert
+        assertTrue(user.isActive());
+        assertEquals(1, user.getRoles().size());
+        assertTrue(user.getRoles().stream().anyMatch(role -> role.getRoleType() == RoleType.USER));
+
     }
 
     private boolean containsAuthority(UserDetails userDetails, String expectedAuthority) {
@@ -175,58 +226,4 @@ class UserServiceImplTest {
                 .build();
     }
 
-    @Test
-    void testUserSuccessfullyRegistered() throws IOException {
-        // Arrange
-        UserRegisterDto userToRegister = createUserToRegister();
-
-        // Mock dependencies
-        Country country = new Country();
-        country.setCode("BG");
-        when(countryRepository.findByCode("BG")).thenReturn(Optional.of(country));
-
-        // Mock mapper to return a User entity when mapping from UserRegisterDto
-        User expectedUserEntity = createTestUserFromDto(userToRegister);
-        when(mapper.map(userToRegister, User.class)).thenReturn(expectedUserEntity);
-
-        // Act
-        User registeredUser = userService.registerNewUser(userToRegister);
-
-        // Assert
-        assertNotNull(registeredUser);
-        assertEquals(expectedUserEntity.getUsername(), registeredUser.getUsername());
-
-        verify(userRepository).saveAndFlush(userCaptor.capture());
-
-        User saved = userCaptor.getValue();
-        assertEquals(userToRegister.getUsername(),saved.getUsername());
-        assertEquals(userToRegister.getEmail(),saved.getEmail());
-
-    }
-    @Test
-    void testActivateAccount() {
-        // Arrange
-        String activationCode = "testActivationCode";
-
-        // Mock UserActivationLinkEntity and User
-        UserActivationLinkEntity activationLinkEntity = new UserActivationLinkEntity();
-        User user = new User();
-        activationLinkEntity.setUser(user);
-
-        // Mock repository behavior
-
-        when(activationCodeRepository.findByActivationCode(activationCode))
-                .thenReturn(Optional.of(activationLinkEntity));
-        when(roleRepository.findByRoleType(RoleType.USER))
-                .thenReturn( Role.builder().roleType(RoleType.USER).build());
-
-        // Act
-        assertDoesNotThrow(() -> userService.activateAccount(activationCode));
-
-        // Assert
-        assertTrue(user.isActive());
-        assertEquals(1, user.getRoles().size());
-        assertTrue(user.getRoles().stream().anyMatch(role -> role.getRoleType() == RoleType.USER));
-
-    }
 }

@@ -1,9 +1,16 @@
 spring:
+  datasource:
+    url: jdbc:hsqldb:mem:crossfit_app;sql.syntax_mys=true
+    driver-class-name: org.hsqldb.jdbcDriver
+    username: test
+    password: test
   jpa:
     hibernate:
       ddl-auto: create-drop
     defer-datasource-initialization: true
 remember_me_key: topseccc
+
+
 logging:
   level:
     org:
