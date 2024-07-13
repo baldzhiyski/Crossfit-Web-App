@@ -45,3 +45,8 @@ crossfit:
     byIdUrl: "http://testing/find/{id}"
     allEvents: "http://testing/all"
     init-crossfit-events: false
+
+cloudinary :
+  cloud_name : "somename"
+  apiKey: "testkey"
+  apiSecret : "testsecret"

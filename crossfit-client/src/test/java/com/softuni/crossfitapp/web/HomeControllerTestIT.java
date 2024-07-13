@@ -9,6 +9,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -27,9 +28,9 @@ public class HomeControllerTestIT {
     @Autowired
     private MockMvc mockMvc;
 
-//
-//    @Autowired
-//    private EventService eventService;
+
+    @MockBean
+    private EventService eventService;
 
 
     @Test
@@ -39,23 +40,23 @@ public class HomeControllerTestIT {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("index"));
     }
-//
-//    @Test
-//    public void testAbout() throws Exception {
-//        List<EventDetailsDto> mockEvents = Arrays.asList(
-//                new EventDetailsDto("Description 1", new Date(), "Address 1", "Event 1", "Video URL 1"),
-//                new EventDetailsDto("Description 2", new Date(), "Address 2", "Event 2", "Video URL 2"),
-//                new EventDetailsDto("Description 3", new Date(), "Address 3", "Event 3", "Video URL 3")
-//        );
-//
-//        // Add mock events as needed for testing
-//        when(eventService.getTopThreeEvents()).thenReturn(mockEvents);
-//
-//        mockMvc.perform(MockMvcRequestBuilders.get("/about-us"))
-//                .andExpect(MockMvcResultMatchers.status().isOk())
-//                .andExpect(MockMvcResultMatchers.view().name("about"))
-//                .andExpect(MockMvcResultMatchers.model().attributeExists("events"));
-//    }
+
+    @Test
+    public void testAbout() throws Exception {
+        List<EventDetailsDto> mockEvents = Arrays.asList(
+                new EventDetailsDto("Description 1", new Date(), "Address 1", "Event 1", "Video URL 1"),
+                new EventDetailsDto("Description 2", new Date(), "Address 2", "Event 2", "Video URL 2"),
+                new EventDetailsDto("Description 3", new Date(), "Address 3", "Event 3", "Video URL 3")
+        );
+
+        // Add mock events as needed for testing
+        when(eventService.getTopThreeEvents()).thenReturn(mockEvents);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/about-us"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("about"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("events"));
+    }
 
     @Test
     public void testSchedule() throws Exception {

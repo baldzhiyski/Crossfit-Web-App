@@ -10,11 +10,13 @@ import com.softuni.crossfitapp.repository.CountryRepository;
 import com.softuni.crossfitapp.repository.RoleRepository;
 import com.softuni.crossfitapp.repository.UserActivationCodeRepository;
 import com.softuni.crossfitapp.repository.UserRepository;
+import com.softuni.crossfitapp.service.CloudinaryService;
 import com.softuni.crossfitapp.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -32,6 +34,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -62,13 +65,19 @@ class UserServiceImplTest {
     @Mock
     private ModelMapper mapper;
 
+    @Captor
+    private ArgumentCaptor<User> userCaptor;
+
+    @Mock
+    private CloudinaryService cloudinaryService;
+
     @BeforeEach
     void setUp() {
         serviceToTest = new CrossfitUserDetailsService(
                 mockUserRepository
         );
         userService = new UserServiceImpl( applicationEventPublisher,  userRepository,
-                roleRepository,  countryRepository,  activationCodeRepository,  mapper);
+                roleRepository,  countryRepository,  activationCodeRepository,passwordEncoder,cloudinaryService,mapper);
     }
 
     @Test
@@ -152,11 +161,6 @@ class UserServiceImplTest {
         role.setRoleType(RoleType.USER);
         roles.add(role);
 
-        MultipartFile mockPhoto = Mockito.mock(MultipartFile.class);
-        when(mockPhoto.isEmpty()).thenReturn(false);
-        when(mockPhoto.getOriginalFilename()).thenReturn("photo.jpg");
-        when(mockPhoto.getInputStream()).thenReturn(new ByteArrayInputStream("dummy content".getBytes()));
-
 
         return  UserRegisterDto.builder()
                 .firstName("firstName")
@@ -168,7 +172,6 @@ class UserServiceImplTest {
                 .confirmPassword("topsecret")
                 .nationality("BG")
                 .telephoneNumber("0899178929")
-                .photo(mockPhoto)
                 .build();
     }
 
@@ -192,6 +195,12 @@ class UserServiceImplTest {
         // Assert
         assertNotNull(registeredUser);
         assertEquals(expectedUserEntity.getUsername(), registeredUser.getUsername());
+
+        verify(userRepository).saveAndFlush(userCaptor.capture());
+
+        User saved = userCaptor.getValue();
+        assertEquals(userToRegister.getUsername(),saved.getUsername());
+        assertEquals(userToRegister.getEmail(),saved.getEmail());
 
     }
     @Test
