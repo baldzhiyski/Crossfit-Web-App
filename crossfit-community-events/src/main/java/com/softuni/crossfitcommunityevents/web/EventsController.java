@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 import java.util.UUID;
@@ -38,7 +39,12 @@ public class EventsController {
         System.out.println("Starting");
 
         eventService.createEvent(addEventDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.created(
+                ServletUriComponentsBuilder
+                        .fromCurrentContextPath()
+                        .buildAndExpand(addEventDto.getEventName())
+                        .toUri()
+        ).body(addEventDto);
     }
 
     @GetMapping("/events/most-recent")
