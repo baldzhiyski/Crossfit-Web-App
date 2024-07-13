@@ -2,27 +2,32 @@ package com.softuni.crossfitapp.web;
 
 import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.ServerSetup;
+import com.softuni.crossfitapp.service.CloudinaryService;
 import com.softuni.crossfitapp.testUtils.TestData;
 import jakarta.mail.internet.MimeMessage;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class UserRegistrationController {
+public class UserRegistrationControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -40,6 +45,9 @@ public class UserRegistrationController {
 
     private GreenMail greenMail;
 
+    @MockBean
+    private CloudinaryService cloudinaryService;
+
     @Autowired
     private TestData data;
 
@@ -48,6 +56,8 @@ public class UserRegistrationController {
         greenMail = new GreenMail(new ServerSetup(port, host,"smtp"));
         greenMail.start();
         greenMail.setUser(username, password);
+        // Mock Cloudinary service behavior
+        Mockito.when(cloudinaryService.uploadPhoto(any(org.springframework.web.multipart.MultipartFile.class), anyString())).thenReturn("http://mockurl.com/mockimage.jpg");
     }
 
     @AfterEach
@@ -89,5 +99,6 @@ public class UserRegistrationController {
 
         Assertions.assertEquals(1, registrationMessage.getAllRecipients().length);
         Assertions.assertEquals("petrov2147@gmail.com", registrationMessage.getAllRecipients()[0].toString());
+
     }
 }
