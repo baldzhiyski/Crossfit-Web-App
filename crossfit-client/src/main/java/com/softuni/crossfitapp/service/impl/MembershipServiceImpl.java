@@ -3,9 +3,11 @@ package com.softuni.crossfitapp.service.impl;
 import com.softuni.crossfitapp.domain.dto.exrates.ExRatesDTO;
 import com.softuni.crossfitapp.domain.dto.memberships.MembershipDto;
 import com.softuni.crossfitapp.domain.dto.memberships.MembershipDtoWrapper;
+import com.softuni.crossfitapp.domain.entity.enums.MembershipType;
 import com.softuni.crossfitapp.repository.MembershipRepository;
 import com.softuni.crossfitapp.service.ExchangeRateService;
 import com.softuni.crossfitapp.service.MembershipService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,5 +33,10 @@ public class MembershipServiceImpl implements MembershipService {
         MembershipDtoWrapper membershipDtoWrapper = new MembershipDtoWrapper();
         membershipDtoWrapper.setMembershipDtos(getMemberships());
         return membershipDtoWrapper;
+    }
+
+    @Override
+    public MembershipDto getMembershipDto(MembershipType membershipType) {
+        return  MembershipDto.fromEntity(this.membershipRepository.findByMembershipType(membershipType));
     }
 }

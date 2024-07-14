@@ -48,7 +48,7 @@
                     <a class="nav-link" th:href="@{/users/profile/{username}(username=${#authentication.principal.username})}" th:text="#{nav_bar_profile}">Profile</a>
                 </li>
                 <li class="nav-item"  sec:authorize= "!hasRole('COACH') and !hasRole('ADMIN')" >
-                    <a class="nav-link"  th:text="#{nav_bar_memberships}" th:href="@{/memberships}" >Memberships</a>
+                    <a class="nav-link"  th:text="#{nav_bar_memberships}" th:href="@{/memberships/explore}" >Memberships</a>
                 </li>
                 <li class="nav-item" sec:authorize="hasRole('ADMIN')">
                     <a class="nav-link" th:href="@{/profiles-dashboard/{id}(id=${#authentication.principal.id})}" th:text="#{nav_bar_all_user_profiles}">All User Profiles</a>

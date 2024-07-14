@@ -10,66 +10,89 @@
     <link th:href="@{/css/card-payment.css}" rel="stylesheet"/>
     <link th:href="@{/css/navbar.css}" rel="stylesheet"/>
     <link th:href="@{/css/footer.css}" rel="stylesheet"/>
+    <style>
+        /* Custom styles to remove margins */
 
+        .invalid-feedback {
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+    </style>
 </head>
 <body style="background-color: #323539">
 <nav th:replace = "~{fragments/navbar::nav}"></nav>
-<div class="row">
+<div class="row" th:object="${membershipDto}">
     <div class="col-75">
         <div class="container2">
-            <form th:action="@{/memberships/checkout}" th:method="POST">
+            <form th:action="@{/memberships/checkout/{membershipType}(membershipType= ${membershipDto.membershipType()})}" th:method="POST" th:object="${paymentDto}">
 
                 <div class="row">
                     <div class="col-50">
                         <h3>Billing Address</h3>
-                        <label for="fname"><i class="fa fa-user"></i> Full Name</label>
-                        <input type="text" id="fname" name="firstname" placeholder="John M. Doe">
+                        <label for="fullName"><i class="fa fa-user"></i> Full Name</label>
+                        <input type="text" id="fullName" name="fullName" th:classappend="${#fields.hasErrors('fullName')} ? 'is-invalid'"  placeholder="John M. Doe" th:field="*{fullName}">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></div>
+
                         <label for="email"><i class="fa fa-envelope"></i> Email</label>
-                        <input type="text" id="email" name="email" placeholder="john@example.com">
-                        <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
-                        <input type="text" id="adr" name="address" placeholder="542 W. 15th Street">
-                        <label for="city"><i class="fa fa-institution"></i> Country</label>
-                        <input type="text" id="city" name="city" placeholder="Bulgaria">
+                        <input type="text" id="email" name="email" placeholder="john@example.com" th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'" th:field="*{email}">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+
+                        <label for="address"><i class="fa fa-address-card-o"></i> Address</label>
+                        <input type="text" id="address" name="address" placeholder="542 W. 15th Street" th:classappend="${#fields.hasErrors('address')} ? 'is-invalid'" th:field="*{address}">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
+
+                        <label for="city"><i class="fa fa-institution" ></i> City</label>
+                        <input type="text" id="city" name="city" placeholder="Plovdiv" th:classappend="${#fields.hasErrors('city')} ? 'is-invalid'" th:field="*{city}">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></div>
 
                         <div class="row">
                             <div class="col-50">
-                                <label for="state">Town</label>
-                                <input type="text" id="state" name="state" placeholder="NY">
+                                <label for="state">State</label>
+                                <input type="text" id="state" name="state" placeholder="NY" th:field="*{state}">
                             </div>
                         </div>
                     </div>
 
                     <div class="col-50">
                         <h3>Payment</h3>
-                        <label for="fname">Accepted Cards</label>
+                        <label for="fullName">Accepted Cards</label>
                         <div class="icon-container">
                             <i class="fab fa-cc-visa" style="color:navy;"></i>
                             <i class="fab fa-cc-amex" style="color:blue;"></i>
                             <i class="fab fa-cc-mastercard" style="color:red;"></i>
                             <i class="fab fa-cc-discover" style="color:orange;"></i>
                         </div>
-                        <label for="cname">Name on Card</label>
-                        <input type="text" id="cname" name="cardname" placeholder="John More Doe">
-                        <label for="ccnum">Credit card number</label>
-                        <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
+                        <label for="cardName">Name on Card</label>
+                        <input type="text" id="cardName" name="cardName" placeholder="John More Doe"  th:classappend="${#fields.hasErrors('cardName')} ? 'is-invalid'" th:field="*{cardName}">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('cardName')}" th:errors="*{cardName}"></div>
+
+                        <label for="cardNumber">Credit card number</label>
+                        <input type="text" id="cardNumber" name="cardNumber" placeholder="1111-2222-3333-4444" th:classappend="${#fields.hasErrors('cardNumber')} ? 'is-invalid'" th:field="*{cardNumber}">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('cardNumber')}" th:errors="*{cardNumber}"></div>
+
                         <label for="expmonth">Exp Month</label>
-                        <input type="text" id="expmonth" name="expmonth" placeholder="September">
+                        <input type="text" id="expmonth" name="expmonth" placeholder="September" th:classappend="${#fields.hasErrors('expmonth')} ? 'is-invalid'" th:field="*{expmonth}">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('expmonth')}" th:errors="*{expmonth}"></div>
 
                         <div class="row">
                             <div class="col-50">
                                 <label for="expyear">Exp Year</label>
-                                <input type="text" id="expyear" name="expyear" placeholder="2018">
+                                <input type="text" id="expyear" name="expyear" placeholder="2028" th:classappend="${#fields.hasErrors('expyear')} ? 'is-invalid'" th:field="*{expyear}">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('expyear')}" th:errors="*{expyear}"></div>
                             </div>
                             <div class="col-50">
                                 <label for="cvv">CVV</label>
-                                <input type="text" id="cvv" name="cvv" placeholder="352">
+                                <input type="text" id="cvv" name="cvv" placeholder="352" th:classappend="${#fields.hasErrors('cvv')} ? 'is-invalid'" th:field="*{cvv}">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('cvv')}" th:errors="*{cvv}"></div>
                             </div>
                         </div>
                     </div>
 
                 </div>
 
-                <input type="submit" value="Continue to checkout" class="btn2">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary btn-outline-dark btn-block text-white">Click to proceed</button>
+                </div>
             </form>
         </div>
     </div>
@@ -82,9 +105,9 @@
           <b>1</b>
         </span>
             </h4>
-            <p>Elite Crossfit Membership <span class="price">$190</span></p>
+            <p th:text="*{membershipType() + '  Crossfit Membership'}">Elite Crossfit Membership></p>
             <hr>
-            <p>Total <span class="price" style="color:black"><b>$190</b></span></p>
+            <p>Total <span class="price" style="color:black"><b th:text="*{price() + '$'}">$190</b></span></p>
         </div>
     </div>
 </div>

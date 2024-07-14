@@ -43,7 +43,7 @@ public class SecurityConfig {
                         // Allow access to specific URLs based on roles
                         .requestMatchers("/", "/users/login", "/users/register", "/users/login-error", "/coaches","/access-denied","/nutrition-blog","/users/activate/{activation_code}","/users/last-register-step").permitAll()
                         .requestMatchers("/memberships/explore").hasRole("USER")
-                        .requestMatchers("/memberships/checkout").hasAnyRole("USER","ADMIN")
+                        .requestMatchers("/memberships/checkout/{membershipType}").hasRole("USER")
                         .requestMatchers("/users/profile/{username}").hasRole("USER")
                         .requestMatchers("/workouts").permitAll()
                         .requestMatchers("/users/my-workouts").hasRole("USER")

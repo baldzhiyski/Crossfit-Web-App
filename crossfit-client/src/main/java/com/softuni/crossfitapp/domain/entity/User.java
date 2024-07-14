@@ -1,6 +1,7 @@
 package com.softuni.crossfitapp.domain.entity;
 
 import com.softuni.crossfitapp.domain.entity.enums.MembershipType;
+import com.softuni.crossfitapp.exceptions.ObjectNotFoundException;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -97,18 +98,14 @@ public class User extends BaseEntity{
 
         // Calculate membership end date based on the selected membership type
         switch (membershipType) {
-            case BASIC:
+            case BASIC, PREMIUM,ELITE:
                 this.membershipEndDate = currentDate.plusMonths(1);
                 break;
-            case PREMIUM:
+            case UNLIMITED:
                 this.membershipEndDate = currentDate.plusMonths(3);
                 break;
-            case ELITE:
-                this.membershipEndDate = currentDate.plusMonths(6);
-                break;
             default:
-                // Handle unknown membership type
-                break;
+                throw new ObjectNotFoundException("Unsupported Membership Type !");
         }
     }
 

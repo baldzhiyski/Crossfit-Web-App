@@ -48,9 +48,12 @@
                             <li th:text=" 'The duration of the membership is '  + ${membership.duration}  + ' month/s'"></li>
                             <li>Crossfit is for everyone !</li>
                         </ul>
-                        <a type="button" class="w-100 btn btn-lg btn-secondary"
-                           th:href="@{/memberships/checkout}"
-                           sec:authorize="!hasRole('MEMBER')">Buy now</a>
+                        <div sec:authorize="!hasRole('MEMBER')">
+                            <a type="button" class="w-100 btn btn-lg btn-secondary"
+                               th:href="@{/memberships/checkout/{membershipType}(membershipType= ${membership.membershipType()})}">
+                                Buy now
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <input type="hidden" class="priceInBGN" th:value="${membership.price}">

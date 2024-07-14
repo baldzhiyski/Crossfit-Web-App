@@ -6,18 +6,12 @@ import com.softuni.crossfitapp.domain.dto.trainings.TrainingDto;
 import com.softuni.crossfitapp.domain.dto.users.UserProfileDto;
 import com.softuni.crossfitapp.domain.dto.users.UserProfileUpdateDto;
 import com.softuni.crossfitapp.domain.dto.users.UserRegisterDto;
-import com.softuni.crossfitapp.domain.entity.Country;
-import com.softuni.crossfitapp.domain.entity.Role;
-import com.softuni.crossfitapp.domain.entity.User;
-import com.softuni.crossfitapp.domain.entity.UserActivationLinkEntity;
+import com.softuni.crossfitapp.domain.entity.*;
 import com.softuni.crossfitapp.domain.entity.enums.MembershipType;
 import com.softuni.crossfitapp.domain.entity.enums.RoleType;
 import com.softuni.crossfitapp.domain.events.UserRegisteredEvent;
 import com.softuni.crossfitapp.exceptions.ObjectNotFoundException;
-import com.softuni.crossfitapp.repository.CountryRepository;
-import com.softuni.crossfitapp.repository.RoleRepository;
-import com.softuni.crossfitapp.repository.UserActivationCodeRepository;
-import com.softuni.crossfitapp.repository.UserRepository;
+import com.softuni.crossfitapp.repository.*;
 import com.softuni.crossfitapp.service.CloudinaryService;
 import com.softuni.crossfitapp.service.UserService;
 import com.softuni.crossfitapp.util.CopyImageFileSaverUtil;
@@ -47,6 +41,8 @@ public class UserServiceImpl implements UserService {
 
     private RoleRepository roleRepository;
 
+    private MembershipRepository membershipRepository;
+
     private CountryRepository countryRepository;
 
     private UserActivationCodeRepository activationCodeRepository;
@@ -56,10 +52,11 @@ public class UserServiceImpl implements UserService {
     private CloudinaryService cloudinaryService;
     private ModelMapper mapper;
 
-    public UserServiceImpl(ApplicationEventPublisher applicationEventPublisher, UserRepository userRepository, RoleRepository roleRepository, CountryRepository countryRepository, UserActivationCodeRepository activationCodeRepository, PasswordEncoder passwordEncoder, CloudinaryService cloudinaryService, ModelMapper mapper) {
+    public UserServiceImpl(ApplicationEventPublisher applicationEventPublisher, UserRepository userRepository, RoleRepository roleRepository, MembershipRepository membershipRepository, CountryRepository countryRepository, UserActivationCodeRepository activationCodeRepository, PasswordEncoder passwordEncoder, CloudinaryService cloudinaryService, ModelMapper mapper) {
         this.applicationEventPublisher = applicationEventPublisher;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.membershipRepository = membershipRepository;
         this.countryRepository = countryRepository;
         this.activationCodeRepository = activationCodeRepository;
         this.passwordEncoder = passwordEncoder;
@@ -198,5 +195,32 @@ public class UserServiceImpl implements UserService {
         this.userRepository.delete(user);
         // Logout the current user
         SecurityContextHolder.getContext().setAuthentication(null);
+    }
+
+    @Override
+    @Transactional
+    public void buyMembership(String loggedUserName, MembershipType membershipType) {
+        Membership byMembershipType = this.membershipRepository.findByMembershipType(membershipType);
+        User user = this.userRepository.findByUsername(loggedUserName).orElseThrow(() -> new ObjectNotFoundException("Something went wrong with the logged user !"));
+
+        user.setMembership(byMembershipType);
+        user.setMembershipDuration(membershipType);
+        user.getRoles().add(this.roleRepository.findByRoleType(RoleType.MEMBER));
+
+    }
+
+    @Override
+    public Set<User> findAllUsersWithExpiredMembership() {
+        return this.userRepository.findAllUsersWithExpiredMembership(LocalDate.now());
+    }
+
+    @Override
+    @Transactional
+    public void removeExpiredMembership(User user) {
+        user.setMembership(null);
+        user.setMembershipStartDate(null);
+        user.setMembershipEndDate(null);
+        user.getRoles().remove(this.roleRepository.findByRoleType(RoleType.MEMBER));
+        this.userRepository.saveAndFlush(user);
     }
 }
