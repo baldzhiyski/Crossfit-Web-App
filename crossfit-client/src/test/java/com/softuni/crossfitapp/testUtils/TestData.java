@@ -59,7 +59,7 @@ public class TestData {
         Role userRole = creteRole(); // Assuming createRole method exists
 
         User user = new User();
-        user.setUsername("testUser");
+        user.setUsername("testuser");
         user.setFirstName("Ivo");
         user.setLastName("Ivov");
         user.setAddress("Test Address");

@@ -3,6 +3,7 @@ package com.softuni.crossfitapp.domain.dto.users;
 import com.softuni.crossfitapp.vallidation.annotations.*;
 import jakarta.validation.constraints.Email;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @PasswordUpdateMatcher
+@NoArgsConstructor
 public class UserProfileUpdateDto {
 
     @UniqueUsername

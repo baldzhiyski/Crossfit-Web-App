@@ -36,7 +36,12 @@
             <version>2.0.0</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>com.maciejwalkowiak.spring</groupId>
+            <artifactId>wiremock-spring-boot</artifactId>
+            <version>2.1.2</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>com.cloudinary</groupId>
             <artifactId>cloudinary-http44</artifactId>
@@ -58,6 +63,13 @@
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-test -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <version>6.2.3</version>
             <scope>test</scope>
         </dependency>
 

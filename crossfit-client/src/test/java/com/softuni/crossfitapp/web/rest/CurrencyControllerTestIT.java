@@ -16,7 +16,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 
-//TODO : FIX IT
 @SpringBootTest
 @AutoConfigureMockMvc
 class CurrencyControllerTestIT {

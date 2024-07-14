@@ -16,4 +16,6 @@ public interface ExchangeRateService {
     void seedRates();
 
     void refreshRates(ExRatesDTO exRatesDTO);
+
+    ExRatesDTO fetchExRates();
 }

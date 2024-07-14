@@ -49,6 +49,7 @@ public class CountryServiceImpl implements CountryService {
     }
 
 
+    @Override
     public CountryDto[] fetchCountries() {
         return restClient
                 .get()
@@ -61,6 +62,7 @@ public class CountryServiceImpl implements CountryService {
 
 
     @Transactional
+    @Override
     public void updateCountries(CountryDto[] countryDtos) {
         List<Country> countriesToUpdate = new ArrayList<>();
 

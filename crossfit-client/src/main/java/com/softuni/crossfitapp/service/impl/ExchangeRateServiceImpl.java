@@ -47,6 +47,7 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
     }
 
 
+    @Override
     public ExRatesDTO fetchExRates() {
         return restClient
                 .get()

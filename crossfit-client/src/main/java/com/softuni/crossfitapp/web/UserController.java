@@ -58,7 +58,6 @@ public class UserController {
     }
 
 
-    // TODO : Redirect here to a page where it says that u need to confirm the email and from there redirect to the log in page !
     @PostMapping("/register")
     public ModelAndView doRegister(@Valid UserRegisterDto userRegisterDto, BindingResult bindingResult , RedirectAttributes redirectAttributes) throws IOException {
         ModelAndView modelAndView = new ModelAndView();
@@ -136,8 +135,6 @@ public class UserController {
         return modelAndView;
     }
 
-    // TODO : Implement the delete mapping for the profile
-
     @DeleteMapping("/profile/{username}/edit/delete-profile")
     public String deleteAcc(@PathVariable String username){
 
@@ -145,8 +142,6 @@ public class UserController {
         return "redirect:/";
     }
 
-
-    //TODO: With some path-variable
     @GetMapping("/my-trainings")
     public String myTrainings(){
         return "my-trainings";
