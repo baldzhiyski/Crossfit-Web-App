@@ -8,7 +8,7 @@ import com.softuni.crossfitapp.domain.entity.Training;
 import com.softuni.crossfitapp.domain.entity.enums.Level;
 import com.softuni.crossfitapp.domain.entity.enums.TrainingType;
 import com.softuni.crossfitapp.domain.user_details.CrossfitUserDetails;
-import com.softuni.crossfitapp.repository.TrainingRepository;
+import com.softuni.crossfitapp.repository.*;
 import com.softuni.crossfitapp.service.CommentService;
 import com.softuni.crossfitapp.service.WorkoutsService;
 import com.softuni.crossfitapp.service.impl.WorkoutServiceImpl;
@@ -72,16 +72,32 @@ class WorkoutControllerTestIT {
 
     @Autowired
     private ModelMapper mapper;
+    @Autowired
+    private WeeklyTrainingRepository weeklyTrainingRepository;
+
+    @Autowired
+    private CoachRepository coachRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
+
+    @Autowired
+    private RestClient trainingsRestClient;
 
     @AfterEach
     public void tearDown(){
+        this.commentRepository.deleteAll();
         this.trainingRepository.deleteAll();
     }
 
 
     @BeforeEach
     public void beforeEach(){
-        this.workoutsService = new WorkoutServiceImpl(trainingRepository,restClient,workoutsAPIConfig,mapper);
+        this.workoutsService = new WorkoutServiceImpl( trainingRepository,  weeklyTrainingRepository,  coachRepository,  userRepository,
+                trainingsRestClient,  workoutsAPIConfig,  mapper);
     }
 
     @Test

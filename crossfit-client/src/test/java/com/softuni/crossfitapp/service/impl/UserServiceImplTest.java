@@ -6,10 +6,7 @@ import com.softuni.crossfitapp.domain.entity.Role;
 import com.softuni.crossfitapp.domain.entity.User;
 import com.softuni.crossfitapp.domain.entity.UserActivationLinkEntity;
 import com.softuni.crossfitapp.domain.entity.enums.RoleType;
-import com.softuni.crossfitapp.repository.CountryRepository;
-import com.softuni.crossfitapp.repository.RoleRepository;
-import com.softuni.crossfitapp.repository.UserActivationCodeRepository;
-import com.softuni.crossfitapp.repository.UserRepository;
+import com.softuni.crossfitapp.repository.*;
 import com.softuni.crossfitapp.service.CloudinaryService;
 import com.softuni.crossfitapp.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,37 +41,36 @@ class UserServiceImplTest {
     private UserService userService;
     @Mock
     private ApplicationEventPublisher applicationEventPublisher;
-    @Mock
-    private UserRepository userRepository;
-
-    @Mock
-    private RoleRepository roleRepository;
-
-    @Mock
-    private CountryRepository countryRepository;
-
-    @Mock
-    private UserActivationCodeRepository activationCodeRepository;
-
-    @Mock
-    private PasswordEncoder passwordEncoder;
-
-    @Mock
-    private ModelMapper mapper;
 
     @Captor
     private ArgumentCaptor<User> userCaptor;
 
     @Mock
+    private UserRepository userRepository;
+    @Mock
+    private RoleRepository roleRepository;
+    @Mock
+    private MembershipRepository membershipRepository;
+    @Mock
+    private CountryRepository countryRepository;
+    @Mock
+    private UserActivationCodeRepository activationCodeRepository;
+    @Mock
+    private PasswordEncoder passwordEncoder;
+    @Mock
     private CloudinaryService cloudinaryService;
+
+    @Mock
+    private ModelMapper mapper;
+
 
     @BeforeEach
     void setUp() {
         serviceToTest = new CrossfitUserDetailsService(
                 userRepository
         );
-        userService = new UserServiceImpl( applicationEventPublisher,  userRepository,
-                roleRepository,  countryRepository,  activationCodeRepository,passwordEncoder,cloudinaryService,mapper);
+        userService = new UserServiceImpl(  applicationEventPublisher,  userRepository,  roleRepository,  membershipRepository,  countryRepository,  activationCodeRepository,
+                passwordEncoder,  cloudinaryService,  mapper);
     }
 
     @Test
@@ -148,7 +144,7 @@ class UserServiceImplTest {
         // Mock UserActivationLinkEntity and User
         UserActivationLinkEntity activationLinkEntity = new UserActivationLinkEntity();
         User user = new User();
-        activationLinkEntity.setUser(user);
+        activationLinkEntity.setUserEntity(user);
 
         // Mock repository behavior
 

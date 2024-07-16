@@ -62,6 +62,8 @@ public class WorkoutController {
         return "redirect:/workouts/explore-current/" + trainingType;
     }
 
+    // TODO : Add and Dislike comment each user can do one of both just one time;
+
     @GetMapping("/schedule-for-the-week")
     public String schedule(Model model) {
         for (DayOfWeek dayOfWeek : DayOfWeek.values()) {

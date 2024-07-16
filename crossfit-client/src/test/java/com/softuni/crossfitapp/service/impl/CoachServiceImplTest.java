@@ -9,6 +9,7 @@ import com.softuni.crossfitapp.domain.entity.enums.RoleType;
 import com.softuni.crossfitapp.repository.CoachRepository;
 import com.softuni.crossfitapp.repository.RoleRepository;
 import com.softuni.crossfitapp.repository.UserRepository;
+import com.softuni.crossfitapp.repository.WeeklyTrainingRepository;
 import com.softuni.crossfitapp.service.CoachService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.ApplicationEventPublisher;
 
 import java.util.*;
 
@@ -24,16 +26,18 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class CoachServiceImplTest {
-
+    @Mock
+    private ApplicationEventPublisher applicationEventPublisher;
     @Mock
     private UserRepository userRepository;
-
     @Mock
     private RoleRepository roleRepository;
 
-
     @Mock
     private CoachRepository coachRepository;
+
+    @Mock
+    private WeeklyTrainingRepository weeklyTrainingRepository;
 
 
     private CoachService coachService;
@@ -42,7 +46,7 @@ class CoachServiceImplTest {
 
     @BeforeEach
     public void setUp(){
-        this.coachService = new CoachServiceImpl(userRepository,roleRepository,coachRepository);
+        this.coachService = new CoachServiceImpl( applicationEventPublisher, userRepository,  roleRepository,  coachRepository, weeklyTrainingRepository);
         coachDisplayDtos = getSomeCoachesDtos();
     }
 

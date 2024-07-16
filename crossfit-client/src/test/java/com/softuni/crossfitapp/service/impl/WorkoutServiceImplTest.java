@@ -5,7 +5,10 @@ import com.softuni.crossfitapp.domain.dto.trainings.TrainingDetailsDto;
 import com.softuni.crossfitapp.domain.entity.Training;
 import com.softuni.crossfitapp.domain.entity.enums.TrainingType;
 import com.softuni.crossfitapp.exceptions.ObjectNotFoundException;
+import com.softuni.crossfitapp.repository.CoachRepository;
 import com.softuni.crossfitapp.repository.TrainingRepository;
+import com.softuni.crossfitapp.repository.UserRepository;
+import com.softuni.crossfitapp.repository.WeeklyTrainingRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,6 +17,7 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.client.RestClient;
 
 import java.util.Optional;
@@ -29,13 +33,22 @@ class WorkoutServiceImplTest {
     private TrainingRepository trainingRepository;
 
     @Mock
+    private WeeklyTrainingRepository weeklyTrainingRepository;
+
+    @Mock
+    private CoachRepository coachRepository;
+
+    @Mock
+    private UserRepository userRepository;
+
+    @Mock
+    private RestClient trainingsRestClient;
+
+    @Mock
     private WorkoutsAPIConfig workoutsAPIConfig;
 
     @Mock
     private ModelMapper mapper;
-
-    @Mock
-    private RestClient restClient;
 
     private WorkoutServiceImpl workoutService;
 
@@ -44,7 +57,8 @@ class WorkoutServiceImplTest {
 
     @BeforeEach
     void setUp() {
-       workoutService = new WorkoutServiceImpl(trainingRepository,restClient,workoutsAPIConfig,mapper);
+       workoutService = new WorkoutServiceImpl( trainingRepository,  weeklyTrainingRepository,  coachRepository,  userRepository,
+                trainingsRestClient,  workoutsAPIConfig,  mapper);
     }
 
     @Test

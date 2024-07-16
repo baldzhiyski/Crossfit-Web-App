@@ -26,6 +26,6 @@ public class Comment extends BaseEntity{
     @NotNull
     private LocalDate date;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(cascade = CascadeType.ALL)
     private Training training;
 }
