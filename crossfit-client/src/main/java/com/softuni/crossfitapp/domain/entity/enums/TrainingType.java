@@ -7,5 +7,6 @@ public enum TrainingType {
     CARDIO,
     MUMFIT,
     GYMNASTICS,
-    OPENGYM
+    OPENGYM,
+
 }

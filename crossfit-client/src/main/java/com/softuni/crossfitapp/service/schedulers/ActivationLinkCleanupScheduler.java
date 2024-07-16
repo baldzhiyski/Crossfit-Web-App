@@ -13,9 +13,9 @@ public class ActivationLinkCleanupScheduler {
         this.activationService = activationService;
     }
 
-    @Scheduled(cron = "*/10 * * * * *")
-    public void cleanUp(){
-//        System.out.println("Trigger cleanup");
+    @Scheduled(cron = "0 0 0 * * 7")
+    public void cleanUp() {
+        // Trigger cleanup every week at midnight on Sunday (beginning of Sunday)
         activationService.cleanUpActivationLinks();
     }
 }

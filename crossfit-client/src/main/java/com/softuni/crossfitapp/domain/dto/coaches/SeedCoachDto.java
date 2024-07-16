@@ -9,6 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 public class SeedCoachDto {
+    private String username;
     private String firstName;
     private String lastName;
 

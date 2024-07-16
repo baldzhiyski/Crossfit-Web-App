@@ -12,7 +12,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "trainings")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Getter
 @Setter
 @Builder

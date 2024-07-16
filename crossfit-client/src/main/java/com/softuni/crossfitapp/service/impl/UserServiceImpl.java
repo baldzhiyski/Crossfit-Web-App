@@ -30,6 +30,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -91,12 +92,12 @@ public class UserServiceImpl implements UserService {
 
         UserActivationLinkEntity userActivationLinkEntity = this.activationCodeRepository.findByActivationCode(activationCode).orElseThrow(() -> new ObjectNotFoundException("No such code in the db"));
 
-        User user = userActivationLinkEntity.getUser();
+        User user = userActivationLinkEntity.getUserEntity();
         Set<Role> roles = new HashSet<>();
         roles.add(roleRepository.findByRoleType(RoleType.USER));
         user.setRoles(roles);
         user.setActive(true);
-        userActivationLinkEntity.setUser(user);
+        userActivationLinkEntity.setUserEntity(user);
         this.userRepository.saveAndFlush(user);
     }
 
@@ -190,7 +191,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteAcc(String username) {
         User user = this.userRepository.findByUsername(username).orElseThrow(() -> new ObjectNotFoundException("User not found"));
-        this.activationCodeRepository.deleteAll(this.activationCodeRepository.findAllByUser_Id(user.getId()));
+        this.activationCodeRepository.deleteAll(this.activationCodeRepository.findAllByUserEntity_Id(user.getId()));
         // Delete the user
         this.userRepository.delete(user);
         // Logout the current user
@@ -205,7 +206,9 @@ public class UserServiceImpl implements UserService {
 
         user.setMembership(byMembershipType);
         user.setMembershipDuration(membershipType);
-        user.getRoles().add(this.roleRepository.findByRoleType(RoleType.MEMBER));
+        Role byRoleType = this.roleRepository.findByRoleType(RoleType.MEMBER);
+        user.getRoles().add(byRoleType);
+        this.userRepository.saveAndFlush(user);
 
     }
 

@@ -2,6 +2,7 @@
   {
     "firstName": "John",
     "lastName": "Doe",
+    "username" :"johndoe" ,
     "certificates": [
       {
         "name": "CrossFit Level 1",
@@ -20,6 +21,7 @@
   {
     "firstName": "Jane",
     "lastName": "Smith",
+    "username" :"janesmith" ,
     "certificates": [
       {
         "name": "CrossFit Level 1",
@@ -38,6 +40,7 @@
   {
     "firstName": "Michael",
     "lastName": "Brown",
+    "username" :"michaelbrown" ,
     "certificates": [
       {
         "name": "CrossFit Level 2",
@@ -56,6 +59,7 @@
   {
     "firstName": "Emily",
     "lastName": "Johnson",
+    "username" :"emilyjohnson" ,
     "certificates": [
       {
         "name": "CrossFit Level 1",
@@ -74,6 +78,7 @@
   {
     "firstName": "David",
     "lastName": "Lee",
+    "username" :"davidlee" ,
     "certificates": [
       {
         "name": "CrossFit Level 1",
@@ -92,6 +97,7 @@
   {
     "firstName": "Sarah",
     "lastName": "Clark",
+    "username": "sarahclark",
     "certificates": [
       {
         "name": "CrossFit Level 2",

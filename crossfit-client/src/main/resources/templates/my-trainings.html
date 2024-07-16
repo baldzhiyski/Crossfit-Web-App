@@ -16,66 +16,46 @@
     <section class="py-5 text-center">
         <div class="container">
             <h1 class="title">My workouts for the week</h1>
-            <h4  style="color:ghostwhite;">Browse your scheduled workouts below. Click 'Delete' to remove a workout session.</h4>
+            <h4 style="color: ghostwhite;">Browse your scheduled workouts below. Click 'Delete' to remove a workout session.</h4>
         </div>
     </section>
 
-        <div class="container">
-
-            <div class="row justify-content-center">
-                <!-- Workout Session Card -->
-                <div class="col-md-4 mb-4">
-                    <div class="card shadow-sm">
-                        <img src="https://via.placeholder.com/800x600" class="card-img-top" alt="Placeholder Image">
-                        <div class="card-body">
-                            <h5 class="card-title">Training Name</h5>
-                            <p class="card-text">Date: 2024-06-24</p>
-                            <p class="card-text">Time: 10:00 AM</p>
-                            <form th:action="@{/delete/training}" th:method="POST">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="submit" class="btn btn-sm btn-outline-secondary btn-delete">Delete</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <!-- Repeat this block for each card -->
-                <div class="col-md-4 mb-4">
-                    <div class="card shadow-sm">
-                        <img src="https://via.placeholder.com/800x600" class="card-img-top" alt="Placeholder Image">
-                        <div class="card-body">
-                            <h5 class="card-title">Training Name</h5>
-                            <p class="card-text">Date: 2024-06-25</p>
-                            <p class="card-text">Time: 2:00 PM</p>
+    <div class="container">
+        <div class="row justify-content-center">
+            <!-- Workout Session Card -->
+            <div class="col-md-4 mb-4" th:each="weeklyTraining : ${currentWeeklyTrainings}">
+                <div class="card shadow-sm">
+                    <img th:src="@{*{weeklyTraining.imageUrl}}" class="card-img-top" alt="Placeholder Image">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="*{'Type of training ' + weeklyTraining.trainingType}">Training Name</h5>
+                        <p class="card-text" th:text="*{'Date of the training: ' + weeklyTraining.date}">Date: </p>
+                        <p class="card-text" th:text="*{'Time of the training ' + weeklyTraining.time}">Time: 10:00 AM</p>
+                        <p class="card-text" th:text="*{'Day of week : ' + weeklyTraining.dayOfWeek}">Day of week</p>
+                        <form th:action="@{/my-workouts/delete-training/{trainingId}(trainingId=*{weeklyTraining.id})}" th:method="POST">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary btn-delete">Delete</button>
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary btn-delete">Delete</button>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card shadow-sm">
-                        <img src="https://via.placeholder.com/800x600" class="card-img-top" alt="Placeholder Image">
-                        <div class="card-body">
-                            <h5 class="card-title">Training Name</h5>
-                            <p class="card-text">Date: 2024-06-25</p>
-                            <p class="card-text">Time: 2:00 PM</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary btn-delete">Delete</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End of card blocks -->
             </div>
-
+            <!-- End of card blocks -->
         </div>
+
+        <!-- Message Card when no workouts -->
+        <!-- Message Card when no workouts -->
+        <div th:if="${#lists.isEmpty(currentWeeklyTrainings)}" class="col-md-4 mb-4 d-flex position-relative">
+            <div class="card shadow-sm text-center">
+                <div class="card-body">
+                    <h5 class="card-title">No workouts scheduled for this week.</h5>
+                    <p class="card-text">You can enroll in a workout to get started!</p>
+                    <a th:href="@{/schedule-for-the-week}" class="btn btn-primary">Enroll in a Workout</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 <footer th:replace="~{fragments/footer::footer}"></footer>
 </body>

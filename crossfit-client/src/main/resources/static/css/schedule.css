@@ -34,7 +34,11 @@ body::before {
 .card .unavailable{
     background: #6c757d;
 
-
+}
+.card-date {
+    font-size: 0.9em;
+    color: #b0b0b0; /* Muted gray color */
+    margin-left: 10px;
 }
 .details {
     display: flex;

@@ -7,6 +7,7 @@ import com.softuni.crossfitapp.domain.entity.User;
 import com.softuni.crossfitapp.domain.entity.enums.MembershipType;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
 public interface UserService {

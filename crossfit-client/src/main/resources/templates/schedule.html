@@ -13,177 +13,219 @@
 <nav th:replace="~{fragments/navbar::nav}"></nav>
 <div class="container">
     <h1 class="my-4 text-center">Weekly Training Schedule</h1>
-    <div class="row">
+    <div class="row" th:object="${timeForNewTrainigns}">
         <!-- Monday -->
         <div class="col-md-4">
             <h3 class="day-heading">Monday</h3>
-            <div class="card">
-                <div class="card-body unavailable">
-                    <span class="card-title">HYROX</span>
+            <div class="card" th:each="training : ${weeklyTrainingsMONDAY}">
+                <div class="card-body"  th:classappend="${training.participants.size() == 5} ? 'unavailable' : ''">
+                    <span class="card-title" th:text="${training.trainingType}">CARDIO</span>
+                    <span class="card-date" th:text="${training.getFormattedDate()}">Some date</span>
                     <div class="details">
-                        <span class="coach">Coach: John Doe</span>
-                        <span class="date">Date: 2024-06-24</span>
-                        <span class="time">Time: 10:00 AM</span>
-                        <span class="free-spots">Free Spots: 20/20</span>
+                        <span class="coach" th:text="${'Coach: ' + training.coachFirstName + ' ' + training.coachLastName}">Coach: Sophia Adams </span>
+                        <span class="time" th:text="'Starting time: ' + ${training.time}">Starting time: 9:00 AM</span>
+                        <span class="free-spots" th:text="'Free Spots: ' + ${training.participants.size()} + '/5'">Free Spots: 9/5</span>
                     </div>
-                    <button class="btn btn-dark btn-join">Full</button>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    <span class="card-title">WOD</span>
-                    <div class="details">
-                        <span class="coach">Coach: Emily Smith</span>
-                        <span class="date">Date: 2024-06-24</span>
-                        <span class="time">Time: 1:00 PM</span>
-                        <span class="free-spots">Free Spots: 5/20</span>
+                    <!-- Check if current user is a participant -->
+                    <!-- Check if current user is a participant -->
+                    <div th:if="${#lists.contains(training.getParticipantsUsernames(), #authentication.principal.username)}">
+                        <span class="text-dark">Already joined</span>
                     </div>
-                    <button class="btn btn-primary btn-join">Join</button>
+                    <!-- If not a participant and there are free spots, show join button -->
+                    <form th:action="@{/joinTraining/{trainingId}(trainingId=${training.id})}" th:method="POST"
+                          th:if="${training.participants.size() < 5 and not #lists.contains(training.getParticipantsUsernames(), #authentication.principal.username)
+ and  training.coachUsername != #authentication.principal.username}" >
+                        <button type="submit" class="btn btn-primary btn-join">Join</button>
+                    </form>
+                    <!-- Show full indicator if training is full -->
+                    <div th:if="${training.participants.size() == 5}">
+                        <span class="text-danger">Full</span>
+                    </div>
+
                 </div>
             </div>
         </div>
         <!-- Tuesday -->
         <div class="col-md-4">
             <h3 class="day-heading">Tuesday</h3>
-            <div class="card">
-                <div class="card-body">
-                    <span class="card-title">CARDIO</span>
+            <div class="card" th:each="training : ${weeklyTrainingsTUESDAY}">
+                <div class="card-body"  th:classappend="${training.participants.size() == 5} ? 'unavailable' : ''">
+                    <span class="card-title" th:text="${training.trainingType}">CARDIO</span>
+                    <span class="card-date" th:text="${training.getFormattedDate()}">Some date</span>
                     <div class="details">
-                        <span class="coach">Coach: Alice Johnson</span>
-                        <span class="date">Date: 2024-06-25</span>
-                        <span class="time">Time: 9:00 AM</span>
-                        <span class="free-spots">Free Spots: 2/20</span>
+                        <span class="coach" th:text="${'Coach: ' + training.coachFirstName + ' ' + training.coachLastName}">Coach: Sophia Adams </span>
+                        <span class="time" th:text="'Starting time: ' + ${training.time}">Starting time: 9:00 AM</span>
+                        <span class="free-spots" th:text="'Free Spots: ' + ${training.participants.size()} + '/5'">Free Spots: 9/5</span>
                     </div>
-                    <button class="btn btn-primary btn-join">Join</button>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    <span class="card-title">WEIGHTLIFTING</span>
-                    <div class="details">
-                        <span class="coach">Coach: Michael Brown</span>
-                        <span class="date">Date: 2024-06-25</span>
-                        <span class="time">Time: 4:00 PM</span>
-                        <span class="free-spots">Free Spots: 0/20</span>
+                    <!-- Check if current user is a participant -->
+                    <!-- Check if current user is a participant -->
+                    <div th:if="${#lists.contains(training.getParticipantsUsernames(), #authentication.principal.username)}">
+                        <span class="text-dark">Already joined</span>
                     </div>
-                    <button class="btn btn-secondary btn-join" disabled>Full</button>
+                    <!-- If not a participant and there are free spots, show join button -->
+                    <form th:action="@{/joinTraining/{trainingId}(trainingId=${training.id})}" th:method="POST"
+                          th:if="${training.participants.size() < 5 and not #lists.contains(training.getParticipantsUsernames(), #authentication.principal.username)
+ and  training.coachUsername != #authentication.principal.username}" >
+                        <button type="submit" class="btn btn-primary btn-join">Join</button>
+                    </form>
+                    <!-- Show full indicator if training is full -->
+                    <div th:if="${training.participants.size() == 5}">
+                        <span class="text-danger">Full</span>
+                    </div>
                 </div>
             </div>
         </div>
         <!-- Wednesday -->
         <div class="col-md-4">
             <h3 class="day-heading">Wednesday</h3>
-            <div class="card">
-                <div class="card-body">
-                    <span class="card-title">HYROX</span>
+            <div class="card" th:each="training : ${weeklyTrainingsWEDNESDAY}">
+                <div class="card-body"  th:classappend="${training.participants.size() == 5} ? 'unavailable' : ''">
+                    <span class="card-title" th:text="${training.trainingType}">CARDIO</span>
+                    <span class="card-date" th:text="${training.getFormattedDate()}">Some date</span>
                     <div class="details">
-                        <span class="coach">Coach: Sarah Miller</span>
-                        <span class="date">Date: 2024-06-26</span>
-                        <span class="time">Time: 10:00 AM</span>
-                        <span class="free-spots">Free Spots: 8/20</span>
+                        <span class="coach" th:text="${'Coach: ' + training.coachFirstName + ' ' + training.coachLastName}">Coach: Sophia Adams </span>
+                        <span class="time" th:text="'Starting time: ' + ${training.time}">Starting time: 9:00 AM</span>
+                        <span class="free-spots" th:text="'Free Spots: ' + ${training.participants.size()} + '/5'">Free Spots: 9/5</span>
                     </div>
-                    <button class="btn btn-primary btn-join">Join</button>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    <span class="card-title">WOD</span>
-                    <div class="details">
-                        <span class="coach">Coach: David Wilson</span>
-                        <span class="date">Date: 2024-06-26</span>
-                        <span class="time">Time: 1:00 PM</span>
-                        <span class="free-spots">Free Spots: 6/20</span>
+                    <!-- Check if current user is a participant -->
+                    <!-- Check if current user is a participant -->
+                    <div th:if="${#lists.contains(training.getParticipantsUsernames(), #authentication.principal.username)}">
+                        <span class="text-dark">Already joined</span>
                     </div>
-                    <button class="btn btn-primary btn-join">Join</button>
+                    <!-- If not a participant and there are free spots, show join button -->
+                    <form th:action="@{/joinTraining/{trainingId}(trainingId=${training.id})}" th:method="POST"
+                          th:if="${training.participants.size() < 5 and not #lists.contains(training.getParticipantsUsernames(), #authentication.principal.username)
+ and  training.coachUsername != #authentication.principal.username}" >
+                        <button type="submit" class="btn btn-primary btn-join">Join</button>
+                    </form>
+                    <!-- Show full indicator if training is full -->
+                    <div th:if="${training.participants.size() == 5}">
+                        <span class="text-danger">Full</span>
+                    </div>
                 </div>
             </div>
         </div>
         <!-- Thursday -->
         <div class="col-md-4">
             <h3 class="day-heading">Thursday</h3>
-            <div class="card">
-                <div class="card-body">
-                    <span class="card-title">CARDIO</span>
+            <div class="card" th:each="training : ${weeklyTrainingsTHURSDAY}">
+                <div class="card-body"  th:classappend="${training.participants.size() == 5} ? 'unavailable' : ''">
+                    <span class="card-title" th:text="${training.trainingType}">CARDIO</span>
+                    <span class="card-date" th:text="${training.getFormattedDate()}">Some date</span>
                     <div class="details">
-                        <span class="coach">Coach: Jessica Lee</span>
-                        <span class="date">Date: 2024-06-27</span>
-                        <span class="time">Time: 9:00 AM</span>
-                        <span class="free-spots">Free Spots: 15/20</span>
+                        <span class="coach" th:text="${'Coach: ' + training.coachFirstName + ' ' + training.coachLastName}">Coach: Sophia Adams </span>
+                        <span class="time" th:text="'Starting time: ' + ${training.time}">Starting time: 9:00 AM</span>
+                        <span class="free-spots" th:text="'Free Spots: ' + ${training.participants.size()} + '/5'">Free Spots: 9/5</span>
                     </div>
-                    <button class="btn btn-primary btn-join">Join</button>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    <span class="card-title">WEIGHTLIFTING</span>
-                    <div class="details">
-                        <span class="coach">Coach: Matthew Taylor</span>
-                        <span class="date">Date: 2024-06-27</span>
-                        <span class="time">Time: 4:00 PM</span>
-                        <span class="free-spots">Free Spots: 12/20</span>
+                    <!-- Check if current user is a participant -->
+                    <!-- Check if current user is a participant -->
+                    <div th:if="${#lists.contains(training.getParticipantsUsernames(), #authentication.principal.username)}">
+                        <span class="text-dark">Already joined</span>
                     </div>
-                    <button class="btn btn-primary btn-join">Join</button>
+                    <!-- If not a participant and there are free spots, show join button -->
+                    <form th:action="@{/joinTraining/{trainingId}(trainingId=${training.id})}" th:method="POST"
+                          th:if="${training.participants.size() < 5 and not #lists.contains(training.getParticipantsUsernames(), #authentication.principal.username)
+ and  training.coachUsername != #authentication.principal.username}" >
+                        <button type="submit" class="btn btn-primary btn-join">Join</button>
+                    </form>
+                    <!-- Show full indicator if training is full -->
+                    <div th:if="${training.participants.size() == 5}">
+                        <span class="text-danger">Full</span>
+                    </div>
                 </div>
             </div>
         </div>
         <!-- Friday -->
         <div class="col-md-4">
             <h3 class="day-heading">Friday</h3>
-            <div class="card">
-                <div class="card-body">
-                    <span class="card-title">HYROX</span>
+            <div class="card"  th:each="training : ${weeklyTrainingsFRIDAY}">
+                <div class="card-body"  th:classappend="${training.participants.size() == 5} ? 'unavailable' : ''">
+                    <span class="card-title" th:text="${training.trainingType}">CARDIO</span>
+                    <span class="card-date" th:text="${training.getFormattedDate()}">Some date</span>
                     <div class="details">
-                        <span class="coach">Coach: Olivia Clark</span>
-                        <span class="date">Date: 2024-06-28</span>
-                        <span class="time">Time: 10:00 AM</span>
-                        <span class="free-spots">Free Spots: 4/20</span>
+                        <span class="coach" th:text="${'Coach: ' + training.coachFirstName + ' ' + training.coachLastName}">Coach: Sophia Adams </span>
+                        <span class="time" th:text="'Starting time: ' + ${training.time}">Starting time: 9:00 AM</span>
+                        <span class="free-spots" th:text="'Free Spots: ' + ${training.participants.size()} + '/5'">Free Spots: 9/5</span>
                     </div>
-                    <button class="btn btn-primary btn-join">Join</button>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    <span class="card-title">WOD</span>
-                    <div class="details">
-                        <span class="coach">Coach: Daniel Martinez</span>
-                        <span class="date">Date: 2024-06-28</span>
-                        <span class="time">Time: 1:00 PM</span>
-                        <span class="free-spots">Free Spots: 0/20</span>
+                    <!-- Check if current user is a participant -->
+                    <!-- Check if current user is a participant -->
+                    <div th:if="${#lists.contains(training.getParticipantsUsernames(), #authentication.principal.username)}">
+                        <span class="text-dark">Already joined</span>
                     </div>
-                    <button class="btn btn-secondary btn-join" disabled>Full</button>
+                    <!-- If not a participant and there are free spots, show join button -->
+                    <form th:action="@{/joinTraining/{trainingId}(trainingId=${training.id})}" th:method="POST"
+                          th:if="${training.participants.size() < 5 and not #lists.contains(training.getParticipantsUsernames(), #authentication.principal.username)
+ and  training.coachUsername != #authentication.principal.username}" >
+                        <button type="submit" class="btn btn-primary btn-join">Join</button>
+                    </form>
+                    <!-- Show full indicator if training is full -->
+                    <div th:if="${training.participants.size() == 5}">
+                        <span class="text-danger">Full</span>
+                    </div>
                 </div>
             </div>
         </div>
         <!-- Saturday -->
-        <div class="col-md-4">
-            <h3 class="day-heading">Saturday</h3>
-            <div class="card">
-                <div class="card-body">
-                    <span class="card-title">CARDIO</span>
-                    <div class="details">
-                        <span class="coach">Coach: Sophia Adams</span>
-                        <span class="date">Date: 2024-06-29</span>
-                        <span class="time">Time: 9:00 AM</span>
-                        <span class="free-spots">Free Spots: 9/20</span>
+            <div class="col-md-4">
+                <h3 class="day-heading">Saturday</h3>
+                <div class="card" th:each="training : ${weeklyTrainingsSATURDAY}">
+                    <div class="card-body"  th:classappend="${training.participants.size() == 5} ? 'unavailable' : ''">
+                        <span class="card-title" th:text="${training.trainingType}">CARDIO</span>
+                        <span class="card-date" th:text="${training.getFormattedDate()}">Some date</span>
+                        <div class="details">
+                            <span class="coach" th:text="${'Coach: ' + training.coachFirstName + ' ' + training.coachLastName}">Coach: Sophia Adams </span>
+                            <span class="time" th:text="'Starting time: ' + ${training.time}">Starting time: 9:00 AM</span>
+                            <span class="free-spots" th:text="'Free Spots: ' + ${training.participants.size()} + '/5'">Free Spots: 9/5</span>
+                        </div>
+                        <!-- Check if current user is a participant -->
+                        <!-- Check if current user is a participant -->
+                        <div th:if="${#lists.contains(training.getParticipantsUsernames(), #authentication.principal.username)}">
+                            <span class="text-dark">Already joined</span>
+                        </div>
+                        <!-- If not a participant and there are free spots, show join button -->
+                        <form th:action="@{/joinTraining/{trainingId}(trainingId=${training.id})}" th:method="POST"
+                              th:if="${training.participants.size() < 5 and not #lists.contains(training.getParticipantsUsernames(), #authentication.principal.username)
+ and  training.coachUsername != #authentication.principal.username}" >
+                            <button type="submit" class="btn btn-primary btn-join">Join</button>
+                        </form>
+                        <!-- Show full indicator if training is full -->
+                        <div th:if="${training.participants.size() == 5}">
+                            <span class="text-danger">Full</span>
+                        </div>
                     </div>
-                    <button class="btn btn-primary btn-join">Join</button>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-body">
-                    <span class="card-title">WEIGHTLIFTING</span>
-                    <div class="details">
-                        <span class="coach">Coach: Ethan White</span>
-                        <span class="date">Date: 2024-06-29</span>
-                        <span class="time">Time: 4:00 PM</span>
-                        <span class="free-spots">Free Spots: 3/20</span>
-                    </div>
-                    <button class="btn btn-primary btn-join">Join</button>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
+<!-- JavaScript to mark past trainings as unavailable -->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    document.addEventListener('DOMContentLoaded', function() {
+        var now = new Date();
+        var cards = document.querySelectorAll('.card');
+
+        cards.forEach(function(card) {
+            var dateString = card.querySelector('.card-date').textContent.trim();
+            var trainingDate = new Date(dateString);
+
+            if (trainingDate < now) {
+                var cardBody = card.querySelector('.card-body');
+                cardBody.classList.add('unavailable'); // Example class to style past trainings
+                // Hide the join button or any other specific content for past trainings
+                var joinButton = card.querySelector('.btn-join');
+                if (joinButton) {
+                    joinButton.style.display = 'none';
+                }
+
+                var messageDiv = document.createElement('div');
+                messageDiv.className = 'text-danger mt-2'; // Add margin-top for spacing
+                messageDiv.innerHTML = '<span>This training is in the past</span>';
+                cardBody.appendChild(messageDiv);
+            }
+        });
+    });
+    /*]]>*/
+</script>
 <footer th:replace="~{fragments/footer::footer}"></footer>
 </body>
 </html>

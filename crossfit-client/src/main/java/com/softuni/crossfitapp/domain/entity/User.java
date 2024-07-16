@@ -56,13 +56,13 @@ public class User extends BaseEntity{
     @Column
     private String email;
 
-    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH},fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Membership membership;
 
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)
+    @ManyToMany(fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinTable(
             name = "participants_trainings",
             joinColumns = @JoinColumn(name = "participant_id"),
@@ -89,6 +89,10 @@ public class User extends BaseEntity{
         if (this.password != null) {
             this.password = new BCryptPasswordEncoder().encode(this.password);
         }
+    }
+
+    public String getFullName(){
+        return firstName + " " + lastName;
     }
 
     // Add a method to set membership duration based on selected membership type

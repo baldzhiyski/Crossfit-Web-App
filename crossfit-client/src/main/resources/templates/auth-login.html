@@ -14,6 +14,10 @@
         <div th:if="${successMessage}" class="alert alert-success" role="alert">
             <p th:text="${successMessage}"></p>
         </div>
+        <!-- Display bought membership message -->
+        <div th:if="${boughtMembership}" class="alert alert-warning text-orange" role="alert">
+            <p th:text="${boughtMembership}"></p>
+        </div>
 
         <!-- Display error message -->
         <div th:if="${badRequest}" class="alert alert-danger" role="alert">

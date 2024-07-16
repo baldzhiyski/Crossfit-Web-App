@@ -44,6 +44,8 @@ public class UserActivationServiceImpl implements UserActivationService {
                 activationCode,savedUser);
     }
 
+
+
     @Override
     public void cleanUpActivationLinks() {
         this.userActivationCodeRepository.deleteAll();
@@ -56,7 +58,7 @@ public class UserActivationServiceImpl implements UserActivationService {
         UserActivationLinkEntity userActivationCodeEntity = new UserActivationLinkEntity();
         userActivationCodeEntity.setActivationCode(activationCode);
         userActivationCodeEntity.setCreated(Instant.now());
-        userActivationCodeEntity.setUser(userRepository.findByEmail(email).orElseThrow(() -> new ObjectNotFoundException("User not found")));
+        userActivationCodeEntity.setUserEntity(userRepository.findByEmail(email).orElseThrow(() -> new ObjectNotFoundException("User not found")));
 
         userActivationCodeRepository.saveAndFlush(userActivationCodeEntity);
 

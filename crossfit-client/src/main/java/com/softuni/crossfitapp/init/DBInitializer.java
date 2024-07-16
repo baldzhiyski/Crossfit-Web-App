@@ -32,5 +32,7 @@ public class DBInitializer  implements CommandLineRunner {
         workoutsService.seedTrainings();
         seedService.seedAll();
         exchangeRateService.seedRates();
+
+
     }
 }

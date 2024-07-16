@@ -18,6 +18,9 @@
       },
       {
         "roleType": "USER"
+      },
+      {
+        "roleType": "MEMBER"
       }
     ],
     "membership": {
@@ -45,6 +48,9 @@
       },
       {
         "roleType": "USER"
+      },
+      {
+        "roleType": "MEMBER"
       }
     ],
     "membership": {
@@ -72,7 +78,11 @@
       },
       {
         "roleType": "USER"
+      },
+      {
+        "roleType": "MEMBER"
       }
+
     ],
     "membership": {
       "membershipType": "UNLIMITED"
@@ -99,6 +109,9 @@
       },
       {
         "roleType": "USER"
+      },
+      {
+        "roleType": "MEMBER"
       }
     ],
     "membership": {
@@ -126,6 +139,9 @@
       },
       {
         "roleType": "USER"
+      },
+      {
+        "roleType": "MEMBER"
       }
     ],
     "membership": {
@@ -153,6 +169,9 @@
       },
       {
         "roleType": "USER"
+      },
+      {
+        "roleType": "MEMBER"
       }
     ],
     "membership": {

@@ -2,17 +2,38 @@ package com.softuni.crossfitapp.service;
 
 import com.softuni.crossfitapp.domain.dto.trainings.SeedTrainingFromApiDto;
 import com.softuni.crossfitapp.domain.dto.trainings.TrainingDetailsDto;
+import com.softuni.crossfitapp.domain.dto.trainings.WeeklyTrainingDto;
+import com.softuni.crossfitapp.domain.entity.WeeklyTraining;
 import com.softuni.crossfitapp.domain.entity.enums.TrainingType;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 public interface WorkoutsService {
-
-    // TODO : Declare some methods for taking diff types of trainings from our rest api
-
     Set<SeedTrainingFromApiDto> getAllTrainings();
 
     void seedTrainings();
 
     TrainingDetailsDto getTrainingDto(TrainingType trainingType);
+
+    void deleteWeeklyTrainings();
+
+    void populateWeeklyTrainings();
+
+    List<WeeklyTrainingDto> getWeeklyTrainingsSpecificDay(DayOfWeek dayOfWeek);
+
+    void joinCurrentTraining(UUID trainingId, String loggedUserUsername);
+
+    List<WeeklyTrainingDto> getCurrentWeeklyTrainings(String loggedUserUsername);
+
+    void deleteFromCurrentTrainings(UUID trainingId, String loggedUserUsername);
+
+    List<WeeklyTrainingDto> getUpcomingTrainings(String usernameOfCoach);
+
+    List<WeeklyTraining> getTrainingsWithDateBefore(LocalDate currentDate);
+
+    void doDeletion(List<WeeklyTraining> pastTrainings);
 }

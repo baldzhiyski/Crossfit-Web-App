@@ -1,6 +1,8 @@
 package com.softuni.crossfitapp.web;
 
+import com.softuni.crossfitapp.exceptions.AccessOnlyForCoaches;
 import com.softuni.crossfitapp.exceptions.FileStorageException;
+import com.softuni.crossfitapp.exceptions.FullTrainingCapacityException;
 import com.softuni.crossfitapp.exceptions.ObjectNotFoundException;
 
 import org.springframework.http.HttpStatus;
@@ -24,5 +26,15 @@ public class GlobalExceptionController {
         ModelAndView modelAndView = new ModelAndView("error"); // Name of the error page view
         model.addAttribute("errorMessage", ex.getMessage());
         return modelAndView;
+    }
+
+    @ExceptionHandler(FullTrainingCapacityException.class)
+    public ModelAndView handleTryToJoinFullSession(){
+        return new ModelAndView("redirect:/access-denied");
+    }
+
+    @ExceptionHandler(AccessOnlyForCoaches.class)
+    public ModelAndView handleAccessOnlyForCoachesException(){
+        return new ModelAndView("redirect:/access-denied");
     }
 }

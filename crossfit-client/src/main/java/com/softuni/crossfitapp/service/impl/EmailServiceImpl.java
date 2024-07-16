@@ -1,6 +1,7 @@
 package com.softuni.crossfitapp.service.impl;
 
 import com.softuni.crossfitapp.domain.entity.User;
+import com.softuni.crossfitapp.domain.entity.WeeklyTraining;
 import com.softuni.crossfitapp.service.EmailService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -42,6 +43,38 @@ public class EmailServiceImpl implements EmailService {
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void sendCancelledTrainingEmail(String coachFullName, WeeklyTraining weeklyTraining, String userEmail, String userFullName) {
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
+
+        try {
+
+            mimeMessageHelper.setTo(userEmail);
+            mimeMessageHelper.setFrom(crossfitEmail);
+            mimeMessageHelper.setReplyTo(crossfitEmail);
+            mimeMessageHelper.setSubject("Cancelled Training from the coach !");
+            mimeMessageHelper.setText(generateCancelledTrainingBody(coachFullName,weeklyTraining,userFullName ), true);
+
+            javaMailSender.send(mimeMessageHelper.getMimeMessage());
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private String generateCancelledTrainingBody(String coachFullName, WeeklyTraining weeklyTraining, String userFullName) {
+        Context context = new Context();
+        context.setVariable("userFullName", userFullName);
+        context.setVariable("coachFullName", coachFullName);
+        context.setVariable("trainingDayOfWeek", weeklyTraining.getDayOfWeek());
+        context.setVariable("trainingTime", weeklyTraining.getTime());
+        context.setVariable("trainingDate", weeklyTraining.getDate());
+
+        return templateEngine.process("email/cancelled-training", context);
     }
 
     private String generateRegistrationEmailBody(String userName, String activationCode, User savedUser) {

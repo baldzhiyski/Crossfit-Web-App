@@ -54,7 +54,7 @@
                     <a class="nav-link" th:href="@{/profiles-dashboard/{id}(id=${#authentication.principal.id})}" th:text="#{nav_bar_all_user_profiles}">All User Profiles</a>
                 </li>
                 <li class="nav-item" sec:authorize="hasRole('COACH')">
-                    <a class="nav-link" th:href="@{/my-weekly-schedule/{id}(id=${#authentication.principal.id})}" th:text="#{nav_bar_upcoming_trainings}">Upcoming Trainings</a>
+                    <a class="nav-link" th:href="@{/my-weekly-schedule/{username}(username=${#authentication.principal.username})}" th:text="#{nav_bar_upcoming_trainings}">Upcoming Trainings</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
                     <form th:action="@{/logout}" th:method="POST">

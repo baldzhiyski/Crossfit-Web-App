@@ -5,6 +5,7 @@ import com.softuni.crossfitapp.domain.entity.enums.MembershipType;
 import com.softuni.crossfitapp.service.ExchangeRateService;
 import com.softuni.crossfitapp.service.MembershipService;
 import com.softuni.crossfitapp.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -79,7 +80,7 @@ public class MembershipController {
     }
 
     @PostMapping("/checkout/{membershipType}")
-    public ModelAndView buyMembership(@PathVariable MembershipType membershipType, @Valid PaymentDto paymentDto, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+    public ModelAndView buyMembership(@PathVariable MembershipType membershipType, @Valid PaymentDto paymentDto, BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView();
 
         if(bindingResult.hasErrors()){
@@ -91,8 +92,10 @@ public class MembershipController {
             return modelAndView;
         }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        modelAndView.setViewName("redirect:/users/profile/" + authentication.getName());
+        modelAndView.setViewName("redirect:/users/login");
+        redirectAttributes.addFlashAttribute("boughtMembership","Successfully bought " + membershipType + " Membership!");
         this.userService.buyMembership(authentication.getName(),membershipType);
+        request.getSession().invalidate();
         return modelAndView;
     }
 }

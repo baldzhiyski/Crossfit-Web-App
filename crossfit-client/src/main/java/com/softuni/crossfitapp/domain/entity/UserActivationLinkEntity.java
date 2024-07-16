@@ -1,5 +1,6 @@
 package com.softuni.crossfitapp.domain.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -21,6 +22,6 @@ public class UserActivationLinkEntity extends BaseEntity {
 
     private Instant created;
 
-    @ManyToOne
-    private User user;
+    @ManyToOne(cascade = CascadeType.MERGE)
+    private User userEntity;
 }

@@ -1,13 +1,12 @@
 package com.softuni.crossfitapp.domain.entity;
 
 import com.softuni.crossfitapp.domain.entity.enums.RoleType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "roles")

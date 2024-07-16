@@ -79,6 +79,7 @@ public class SeedServiceImpl implements SeedService {
                         Coach coach = new Coach();
                         coach.setFirstName(seedCoachDto.getFirstName());
                         coach.setLastName(seedCoachDto.getLastName());
+                        coach.setUsername(seedCoachDto.getUsername());
 
                         List<Certificate> certificates = seedCoachDto.getCertificates().stream().map(certificateDto -> {
                             Certificate certificate = new Certificate();

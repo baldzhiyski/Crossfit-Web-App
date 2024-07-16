@@ -12,5 +12,5 @@ import java.util.UUID;
 public interface UserActivationCodeRepository extends JpaRepository<UserActivationLinkEntity, UUID> {
     Optional<UserActivationLinkEntity> findByActivationCode(String code);
 
-    List<UserActivationLinkEntity> findAllByUser_Id(UUID uuid);
+    List<UserActivationLinkEntity> findAllByUserEntity_Id(UUID uuid);
 }

@@ -36,10 +36,6 @@ public class HomeController {
         return "about";
     }
 
-    @GetMapping("/schedule-for-the-week")
-    public String schedule(){
-        return "schedule";
-    }
 
     @GetMapping("/access-denied")
     public String accessDenied(){
