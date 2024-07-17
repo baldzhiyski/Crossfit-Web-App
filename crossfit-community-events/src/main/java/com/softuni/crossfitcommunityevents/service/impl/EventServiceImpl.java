@@ -5,7 +5,10 @@ import com.softuni.crossfitcommunityevents.model.Event;
 import com.softuni.crossfitcommunityevents.model.dto.EventDto;
 import com.softuni.crossfitcommunityevents.repository.EventRepository;
 import com.softuni.crossfitcommunityevents.service.EventService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,6 +28,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional
     public void createEvent(EventDto addEventDto) {
         Event event = mapToEntity(addEventDto);
         this.eventRepository.saveAndFlush(event);
@@ -38,8 +42,9 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<EventDto> findAllEvents() {
-        return this.eventRepository.findAll().stream().map(this::mapToDto).toList();
+    public Page<EventDto> findAllEvents(Pageable pageable) {
+        Page<Event> events = eventRepository.findAll(pageable);
+        return events.map(this::mapToDto);
     }
 
     private EventDto mapToDto(Event event) {

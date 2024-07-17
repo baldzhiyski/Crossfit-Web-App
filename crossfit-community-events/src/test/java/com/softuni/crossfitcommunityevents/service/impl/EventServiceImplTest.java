@@ -12,6 +12,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.*;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -42,6 +43,7 @@ class EventServiceImplTest {
         Long eventId = 1L;
         Event event = new Event();
         event.setEventName("Test Event");
+        event.setId(eventId);
         when(eventRepository.findById(eventId)).thenReturn(Optional.of(event));
 
         EventDto eventDto = eventService.getEventById(eventId);
@@ -105,19 +107,24 @@ class EventServiceImplTest {
 
     @Test
     void testFindAllEvents() {
+        // Create mock data
         Event event1 = new Event();
         event1.setEventName("Event 1");
         Event event2 = new Event();
         event2.setEventName("Event 2");
 
-        when(eventRepository.findAll()).thenReturn(List.of(event1, event2));
+        Page<Event> eventPage = new PageImpl<>(List.of(event1, event2));
 
-        List<EventDto> events = eventService.findAllEvents();
+        Pageable pageable = PageRequest.of(0, 3, Sort.by("date").ascending());
 
+        when(eventRepository.findAll(pageable)).thenReturn(eventPage);
+        Page<EventDto> events = eventService.findAllEvents(pageable);
+
+        // Assertions
         assertNotNull(events);
-        assertEquals(2, events.size());
-        assertEquals("Event 1", events.get(0).getEventName());
-        assertEquals("Event 2", events.get(1).getEventName());
+        assertEquals(2, events.getTotalElements());
+        assertEquals("Event 1", events.getContent().get(0).getEventName());
+        assertEquals("Event 2", events.getContent().get(1).getEventName());
     }
 
 
