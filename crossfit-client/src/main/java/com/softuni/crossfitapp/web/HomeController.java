@@ -3,6 +3,10 @@ package com.softuni.crossfitapp.web;
 import com.softuni.crossfitapp.domain.dto.events.EventDetailsDto;
 import com.softuni.crossfitapp.domain.user_details.CrossfitUserDetails;
 import com.softuni.crossfitapp.service.EventService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -30,8 +34,8 @@ public class HomeController {
 
 
     @GetMapping("/about-us")
-    public String about(Model model){
-        List<EventDetailsDto> topThreeEvents = this.eventService.getTopThreeEvents();
+    public String about(Model model,@PageableDefault(size = 3) Pageable pageable){
+        Page<EventDetailsDto> topThreeEvents = this.eventService.getAllEvents(pageable);
         model.addAttribute("events", topThreeEvents);
         return "about";
     }

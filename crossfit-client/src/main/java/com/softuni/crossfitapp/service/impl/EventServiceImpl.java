@@ -1,12 +1,16 @@
 package com.softuni.crossfitapp.service.impl;
 
 import com.softuni.crossfitapp.config.rest.EventsAPIConfig;
+import com.softuni.crossfitapp.domain.PageResponse;
 import com.softuni.crossfitapp.domain.dto.events.AddEventDto;
 import com.softuni.crossfitapp.domain.dto.events.EventDetailsDto;
 import com.softuni.crossfitapp.service.EventService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -46,14 +50,19 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<EventDetailsDto> getAllEvents() {
-        List<EventDetailsDto> body = restClient.get()
-                .uri(eventsAPIConfig.getAllEvents())
+    public Page<EventDetailsDto> getAllEvents(Pageable pageable) {
+        String uriString = eventsAPIConfig.getAllEvents();
+        PageResponse<EventDetailsDto> events = restClient.get()
+                .uri(uriString+ "?page={page}&size={size}&sort=id,asc",
+                        pageable.getPageNumber(),
+                        pageable.getPageSize(),
+                        pageable.getSort())
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .body(new ParameterizedTypeReference<>() {
                 });
-        return body;
+
+        return new PageImpl<>(events.getContent(), pageable, events.getPage().totalElements());
     }
 
     @Override

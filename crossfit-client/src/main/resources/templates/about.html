@@ -93,7 +93,7 @@
     <!-- Three columns of events -->
     <!-- Three columns of events -->
     <div class="row">
-      <div class="col-lg-4" th:each="event : ${events}">
+      <div class="col-lg-4" th:each="event : ${events.content}">
         <div class="single_event position-relative">
           <!-- Event Video -->
           <div class="event_video">
@@ -128,8 +128,21 @@
         </div>
       </div><!-- /.col-lg-4 -->
     </div><!-- /.row -->
+      <div class="d-flex justify-content-between mt-4">
+          <div th:if="${events.hasPrevious()}">
+              <a class="btn btn-primary mr-auto"
+                 th:attr="href=@{${events.previousPageable()?.pageNumber == 0} ? '/about-us?page=0' : '/about-us?page=' + ${events.previousPageable()?.pageNumber}}">
+                  Previous Page
+              </a>
+          </div>
 
-
+          <div th:if="${events.hasNext()}">
+              <a class="btn btn-primary ml-auto"
+                 th:attr="href=@{/about-us(page=${events.nextPageable()?.pageNumber})}">
+                  Next Page
+              </a>
+          </div>
+      </div>
     <!-- Some Quotes, Maybe we can display when each user add a quotes and display random three -->
 
     <hr class="featurette-divider">
