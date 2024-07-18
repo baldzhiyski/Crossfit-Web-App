@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public interface CommentService {
 
-    void addComment(AddCommentDto addCommentDto, TrainingType trainingType);
+    Comment addComment(AddCommentDto addCommentDto, TrainingType trainingType);
 
     List<DisplayCommentDto> getAllCommentsOnCurrentTrainingType(TrainingType trainingType);
 

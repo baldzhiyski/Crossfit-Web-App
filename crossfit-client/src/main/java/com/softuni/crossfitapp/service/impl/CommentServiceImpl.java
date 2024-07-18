@@ -38,7 +38,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional
-    public void addComment(AddCommentDto addCommentDto, TrainingType trainingType) {
+    public Comment addComment(AddCommentDto addCommentDto, TrainingType trainingType) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         User user = this.userRepository.findByUsername(username).get();
@@ -50,7 +50,7 @@ public class CommentServiceImpl implements CommentService {
         comment.setDate(LocalDate.now());
         comment.setLikes(0);
         comment.setDislikes(0);
-        this.commentRepository.save(comment);
+        return this.commentRepository.save(comment);
     }
 
     @Override
@@ -73,6 +73,9 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = this.commentRepository.findById(commentId).orElseThrow(() -> new ObjectNotFoundException("Invalid comment id !"));
         User user = this.userRepository.findByUsername(username).orElseThrow(() -> new ObjectNotFoundException("No such user in the db!"));
 
+
+        if(comment.getAuthor().equals(user)) return;
+
         if(!comment.getLikedBy().contains(user)){
 
             if (comment.getDislikedBy().contains(user)) {
@@ -93,6 +96,8 @@ public class CommentServiceImpl implements CommentService {
     public void dislike(UUID commentId, String username) {
         Comment comment = this.commentRepository.findById(commentId).orElseThrow(() -> new ObjectNotFoundException("Invalid comment id !"));
         User user = this.userRepository.findByUsername(username).orElseThrow(() -> new ObjectNotFoundException("No such user in the db!"));
+
+        if(comment.getAuthor().equals(user)) return;
 
         if(!comment.getDislikedBy().contains(user)){
 

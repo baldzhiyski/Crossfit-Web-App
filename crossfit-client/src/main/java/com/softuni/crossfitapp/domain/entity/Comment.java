@@ -36,7 +36,7 @@ public class Comment extends BaseEntity{
     @Column(nullable = false)
     private Integer dislikes ;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "comment_likes",
             joinColumns = @JoinColumn(name = "comment_id"),
@@ -44,7 +44,7 @@ public class Comment extends BaseEntity{
     )
     private Set<User> likedBy ;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "comment_dislikes",
             joinColumns = @JoinColumn(name = "comment_id"),
