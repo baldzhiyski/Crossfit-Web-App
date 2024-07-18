@@ -46,11 +46,17 @@
                                 <p class="small" th:text="${comment.date}"> Date of the comment</p>
                                 <p th:text="${comment.text}">
                                 </p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="d-flex align-items-center">
-                                        <a href="#!" class="link-muted me-2"><i class="fas fa-thumbs-up me-1"></i>132</a>
-                                        <a href="#!" class="link-muted"><i class="fas fa-thumbs-down me-1"></i>15</a>
-                                    </div>
+                                <div class="like-dislike-buttons">
+                                    <form th:action="@{/workouts/details/{trainingType}/comment/like/{commentId}(commentId=${comment.id},trainingType=${trainingType})}" method="post">
+                                        <button type="submit">
+                                            <i class="fas fa-thumbs-up me-1"></i><span class="likes" th:text="${comment.likes}">132</span>
+                                        </button>
+                                    </form>
+                                    <form th:action="@{/workouts/details/{trainingType}/comment/dislike/{commentId}(commentId=${comment.id},trainingType=${trainingType})}" method="post">
+                                        <button type="submit">
+                                            <i class="fas fa-thumbs-down me-1"></i><span class="dislikes" th:text="${comment.dislikes}">15</span>
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

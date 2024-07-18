@@ -2,6 +2,7 @@ package com.softuni.crossfitapp.web;
 
 import com.softuni.crossfitapp.domain.dto.comments.AddCommentDto;
 import com.softuni.crossfitapp.domain.dto.trainings.WeeklyTrainingDto;
+import com.softuni.crossfitapp.domain.entity.Training;
 import com.softuni.crossfitapp.domain.entity.enums.TrainingType;
 import com.softuni.crossfitapp.service.CommentService;
 import com.softuni.crossfitapp.service.WorkoutsService;
@@ -61,9 +62,20 @@ public class WorkoutController {
         this.commentService.addComment(addCommentDto, TrainingType.valueOf(trainingType));
         return "redirect:/workouts/explore-current/" + trainingType;
     }
+    @PostMapping("/workouts/details/{trainingType}/comment/like/{commentId}")
+    public String likeComment(@PathVariable UUID commentId, @PathVariable TrainingType trainingType, Model model, @AuthenticationPrincipal UserDetails userDetails){
+        this.commentService.likeComment(commentId,userDetails.getUsername());
 
-    // TODO : Add and Dislike comment each user can do one of both just one time;
+        return "redirect:/workouts/explore-current/" + trainingType;
 
+    }
+
+    @PostMapping("/workouts/details/{trainingType}/comment/dislike/{commentId}")
+    public String dislikeComment(@PathVariable UUID commentId, @PathVariable TrainingType trainingType, Model model, @AuthenticationPrincipal UserDetails userDetails){
+        this.commentService.dislike(commentId,userDetails.getUsername());
+
+        return "redirect:/workouts/explore-current/" + trainingType;
+    }
     @GetMapping("/schedule-for-the-week")
     public String schedule(Model model) {
         for (DayOfWeek dayOfWeek : DayOfWeek.values()) {

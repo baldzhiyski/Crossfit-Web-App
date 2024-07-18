@@ -18,6 +18,30 @@ body{
     margin-bottom: 15px;
     font-family: 'Conv_helveticaneuecyr-bold';
 }
+.like-dislike-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.like-dislike-buttons button {
+    border: none;
+    background: none;
+    color: #007bff;
+    cursor: pointer;
+    font-size: 16px;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.like-dislike-buttons button:hover {
+    color: #0056b3;
+    transform: scale(1.1);
+}
+
+.like-dislike-buttons .likes,
+.like-dislike-buttons .dislikes {
+    margin-left: 5px;
+}
 
 .be-img-comment {
     width: 60px;
