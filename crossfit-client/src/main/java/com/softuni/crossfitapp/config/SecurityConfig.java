@@ -44,6 +44,7 @@ public class SecurityConfig {
                         .requestMatchers("/", "/users/login", "/users/register", "/users/login-error", "/coaches","/access-denied","/nutrition-blog","/users/activate/{activation_code}","/users/last-register-step").permitAll()
                         .requestMatchers("/memberships/explore").hasRole("USER")
                         .requestMatchers("/workouts/details/{trainingType}/comment/dislike/{commentId}").hasRole("USER")
+                        .requestMatchers("/workouts/details/{trainingType}/comment/like/{commentId}").hasRole("USER")
                         .requestMatchers("/joinTraining/{trainingId}").hasRole("MEMBER")
                         .requestMatchers("/memberships/checkout/{membershipType}").hasRole("USER")
                         .requestMatchers("/users/profile/{username}").hasRole("USER")

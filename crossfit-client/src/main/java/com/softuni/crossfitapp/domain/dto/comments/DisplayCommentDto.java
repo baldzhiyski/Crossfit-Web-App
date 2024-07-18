@@ -14,7 +14,8 @@ import java.util.UUID;
 @Getter
 @Setter
 public class DisplayCommentDto {
-    private User author;
+    private String authorFirstName;
+    private String authorLastName;
     private String text;
     private LocalDate date;
     private  int likes;

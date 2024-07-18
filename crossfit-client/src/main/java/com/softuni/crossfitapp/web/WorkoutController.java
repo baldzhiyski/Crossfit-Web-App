@@ -57,25 +57,6 @@ public class WorkoutController {
         return "workout-details";
     }
 
-    @PostMapping("/workouts/details/comment/{trainingType}")
-    public String postComment(@PathVariable String trainingType, AddCommentDto addCommentDto) {
-        this.commentService.addComment(addCommentDto, TrainingType.valueOf(trainingType));
-        return "redirect:/workouts/explore-current/" + trainingType;
-    }
-    @PostMapping("/workouts/details/{trainingType}/comment/like/{commentId}")
-    public String likeComment(@PathVariable UUID commentId, @PathVariable TrainingType trainingType, Model model, @AuthenticationPrincipal UserDetails userDetails){
-        this.commentService.likeComment(commentId,userDetails.getUsername());
-
-        return "redirect:/workouts/explore-current/" + trainingType;
-
-    }
-
-    @PostMapping("/workouts/details/{trainingType}/comment/dislike/{commentId}")
-    public String dislikeComment(@PathVariable UUID commentId, @PathVariable TrainingType trainingType, Model model, @AuthenticationPrincipal UserDetails userDetails){
-        this.commentService.dislike(commentId,userDetails.getUsername());
-
-        return "redirect:/workouts/explore-current/" + trainingType;
-    }
     @GetMapping("/schedule-for-the-week")
     public String schedule(Model model) {
         for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
