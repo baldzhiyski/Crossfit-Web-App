@@ -22,4 +22,6 @@ public interface CommentService {
     void dislike(UUID commentId, String username);
 
     Comment getById(UUID commentId);
+
+    void deleteComment(UUID commentId, String username);
 }

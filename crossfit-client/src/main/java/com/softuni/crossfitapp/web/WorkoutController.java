@@ -51,9 +51,10 @@ public class WorkoutController {
             model.addAttribute("currentTrainingDto", workoutsService.getTrainingDto(TrainingType.valueOf(trainingType)));
         }
         model.addAttribute("displayedCommentsForTheSectionDtos", this.commentService.getAllCommentsOnCurrentTrainingType(TrainingType.valueOf(trainingType)));
-        boolean isAuthenticated = currentUser != null;
         model.addAttribute("trainingType", trainingType);
-        model.addAttribute("isAuthenticated", isAuthenticated);
+        String username = currentUser.getUsername() != null ? currentUser.getUsername() : "";
+        model.addAttribute("loggedUserUsername",username);
+        model.addAttribute("isAuthenticated", true);
         return "workout-details";
     }
 

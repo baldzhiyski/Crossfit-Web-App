@@ -72,6 +72,10 @@
                                     <button class="dislike-button" th:data-comment-id="${comment.id}" th:data-training-type="${trainingType}">
                                         <i class="fas fa-thumbs-down me-1"></i><span class="dislikes" th:text="${comment.dislikes}">15</span>
                                     </button>
+
+                                    <button class="delete-button" th:if="${comment.authorUsername} == ${loggedUserUsername}" th:data-comment-id="${comment.id}">
+                                        <i class="fas fa-trash-alt me-1"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>

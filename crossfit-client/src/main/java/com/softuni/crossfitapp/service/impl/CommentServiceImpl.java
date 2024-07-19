@@ -6,6 +6,7 @@ import com.softuni.crossfitapp.domain.entity.Comment;
 import com.softuni.crossfitapp.domain.entity.Training;
 import com.softuni.crossfitapp.domain.entity.User;
 import com.softuni.crossfitapp.domain.entity.enums.TrainingType;
+import com.softuni.crossfitapp.exceptions.AccessOnlyForCoaches;
 import com.softuni.crossfitapp.exceptions.ObjectNotFoundException;
 import com.softuni.crossfitapp.repository.CommentRepository;
 import com.softuni.crossfitapp.repository.TrainingRepository;
@@ -50,7 +51,7 @@ public class CommentServiceImpl implements CommentService {
         comment.setDate(LocalDate.now());
         comment.setLikes(0);
         comment.setDislikes(0);
-        return this.commentRepository.save(comment);
+        return this.commentRepository.saveAndFlush(comment);
     }
 
     @Override
@@ -77,45 +78,60 @@ public class CommentServiceImpl implements CommentService {
         if(comment.getAuthor().equals(user)) return;
 
         if(!comment.getLikedBy().contains(user)){
+            comment.setLikes(comment.getLikes() + 1);
+            comment.getLikedBy().add(user);
 
             if (comment.getDislikedBy().contains(user)) {
                 comment.setDislikes(comment.getDislikes() - 1);
                 comment.getDislikedBy().remove(user);
             }
-
-            comment.setLikes(comment.getLikes() + 1);
-            comment.getLikedBy().add(user);
-
-
-            this.commentRepository.saveAndFlush(comment);
         }
+        this.commentRepository.saveAndFlush(comment);
     }
 
     @Override
     @Transactional
     public void dislike(UUID commentId, String username) {
-        Comment comment = this.commentRepository.findById(commentId).orElseThrow(() -> new ObjectNotFoundException("Invalid comment id !"));
-        User user = this.userRepository.findByUsername(username).orElseThrow(() -> new ObjectNotFoundException("No such user in the db!"));
+        Comment comment = this.commentRepository.findById(commentId)
+                .orElseThrow(() -> new ObjectNotFoundException("Invalid comment id !"));
+        User user = this.userRepository.findByUsername(username)
+                .orElseThrow(() -> new ObjectNotFoundException("No such user in the db!"));
 
         if(comment.getAuthor().equals(user)) return;
 
-        if(!comment.getDislikedBy().contains(user)){
+        if (!comment.getDislikedBy().contains(user)) {
+            comment.getDislikedBy().add(user);
+            comment.setDislikes(comment.getDislikes() + 1);
 
             if (comment.getLikedBy().contains(user)) {
-                comment.setLikes(comment.getLikes() - 1);
                 comment.getLikedBy().remove(user);
+                comment.setLikes(comment.getLikes() - 1);
             }
-
-            comment.setDislikes((comment.getDislikes() + 1));
-            comment.getDislikedBy().add(user);
-
-            this.commentRepository.saveAndFlush(comment);
         }
+
+        this.commentRepository.saveAndFlush(comment);
     }
 
     @Override
     public Comment getById(UUID commentId) {
         return this.commentRepository.findById(commentId).orElseThrow(()->new ObjectNotFoundException("Invalid commend id"));
+    }
+
+    @Override
+    @Transactional
+    public void deleteComment(UUID commentId, String username) {
+        Comment comment = this.commentRepository.findById(commentId).orElseThrow(() -> new ObjectNotFoundException("Invalid comment id !"));
+        User user = this.userRepository.findByUsername(username).orElseThrow(() -> new ObjectNotFoundException("No such user in the db!"));
+        if(comment.getAuthor().equals(user)){
+            comment.getLikedBy().clear();
+            comment.getDislikedBy().clear();
+            comment.setAuthor(null);
+            comment.setTraining(null);
+           this.commentRepository.saveAndFlush(comment);
+           this.commentRepository.delete(comment);
+        }else{
+            throw new AccessOnlyForCoaches("Not acceptable move !");
+        }
     }
 
 

@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -27,7 +28,7 @@ public class Comment extends BaseEntity{
     @NotNull
     private LocalDate date;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.ALL})
     private Training training;
 
     @Column(nullable = false)
@@ -36,13 +37,13 @@ public class Comment extends BaseEntity{
     @Column(nullable = false)
     private Integer dislikes ;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(
             name = "comment_likes",
             joinColumns = @JoinColumn(name = "comment_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
-    private Set<User> likedBy ;
+    private List<User> likedBy ;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
@@ -50,6 +51,6 @@ public class Comment extends BaseEntity{
             joinColumns = @JoinColumn(name = "comment_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
-    private Set<User> dislikedBy;
+    private List<User> dislikedBy;
 
 }
