@@ -41,7 +41,7 @@ public class HomeControllerTestIT {
 
     @Test
     public void testIndex() throws Exception {
-        UserDetails userDetails = new CrossfitUserDetails("username", "user", Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")),"Ivo","Kamenov", UUID.randomUUID());
+        UserDetails userDetails = new CrossfitUserDetails("username", "user", Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")),"Ivo","Kamenov", UUID.randomUUID(),1L);
         mockMvc.perform(MockMvcRequestBuilders.get("/").with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user(userDetails)))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("index"));

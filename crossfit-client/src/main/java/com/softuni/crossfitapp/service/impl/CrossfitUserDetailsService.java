@@ -39,7 +39,8 @@ public class CrossfitUserDetailsService implements UserDetailsService {
               mapAuthorities(userEntity.getRoles()),
               userEntity.getFirstName(),
               userEntity.getLastName(),
-              userEntity.getUuid()
+              userEntity.getUuid(),
+              userEntity.getId()
       );
     }
 

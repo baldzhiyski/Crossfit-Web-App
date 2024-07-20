@@ -29,4 +29,8 @@ public class Role  extends BaseEntity{
     @JdbcTypeCode(VARCHAR)
     private UUID uuid;
 
+    public Role(RoleType roleType){
+        this.roleType = roleType;
+    }
+
 }

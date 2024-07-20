@@ -11,15 +11,17 @@ import java.util.UUID;
 @Getter
 @Setter
 public class CrossfitUserDetails extends User {
-    private UUID id;
+    private UUID uuid;
+    private Long id;
     private final String lastName;
     private final String firstName;
 
-    public CrossfitUserDetails(String username, String password, Collection<? extends GrantedAuthority> authorities, String firstName,String lastName,UUID id) {
+    public CrossfitUserDetails(String username, String password, Collection<? extends GrantedAuthority> authorities, String firstName,String lastName,UUID uuid,Long id) {
         super(username, password, authorities);
         this.firstName = firstName;
         this.lastName = lastName;
-        this.id = id;
+        this.uuid = uuid;
+        this.id =id;
     }
 
     public String getFullName(){

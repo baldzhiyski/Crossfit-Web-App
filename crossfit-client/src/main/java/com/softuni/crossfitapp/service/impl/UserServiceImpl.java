@@ -10,13 +10,14 @@ import com.softuni.crossfitapp.domain.entity.*;
 import com.softuni.crossfitapp.domain.entity.enums.MembershipType;
 import com.softuni.crossfitapp.domain.entity.enums.RoleType;
 import com.softuni.crossfitapp.domain.events.UserRegisteredEvent;
+import com.softuni.crossfitapp.domain.user_details.CrossfitUserDetails;
 import com.softuni.crossfitapp.exceptions.ObjectNotFoundException;
 import com.softuni.crossfitapp.repository.*;
 import com.softuni.crossfitapp.service.CloudinaryService;
 import com.softuni.crossfitapp.service.UserService;
-import com.softuni.crossfitapp.util.CopyImageFileSaverUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,10 +29,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -225,5 +223,15 @@ public class UserServiceImpl implements UserService {
         user.setMembershipEndDate(null);
         user.getRoles().remove(this.roleRepository.findByRoleType(RoleType.MEMBER));
         this.userRepository.saveAndFlush(user);
+    }
+
+    @Override
+    public Optional<CrossfitUserDetails> getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null &&
+                authentication.getPrincipal() instanceof CrossfitUserDetails crossfitUserDetailsService) {
+            return Optional.of(crossfitUserDetailsService);
+        }
+        return Optional.empty();
     }
 }
