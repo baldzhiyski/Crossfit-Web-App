@@ -7,6 +7,7 @@ import com.softuni.crossfitapp.domain.entity.enums.TrainingType;
 import com.softuni.crossfitapp.service.CommentService;
 import com.softuni.crossfitapp.service.WorkoutsService;
 import com.softuni.crossfitapp.service.schedulers.CreationWeeklyTrainings;
+import com.softuni.crossfitapp.web.aop.WarnIfExecutionExceeds;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -58,15 +59,17 @@ public class WorkoutController {
         return "workout-details";
     }
 
+    @WarnIfExecutionExceeds(
+            threshold = 800
+    )
     @GetMapping("/schedule-for-the-week")
-    public String schedule(Model model) {
+    public String schedule(Model model) throws InterruptedException {
         for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
             if (dayOfWeek == DayOfWeek.SUNDAY) break;
             String attributeName = "weeklyTrainings" + dayOfWeek.name();
             List<WeeklyTrainingDto> trainings = this.workoutsService.getWeeklyTrainingsSpecificDay(dayOfWeek);
             model.addAttribute(attributeName, trainings);
 
-            // Logging the attribute name and size of the list
             logger.info("Added attribute '{}' with {} trainings", attributeName, trainings.size());
         }
 
