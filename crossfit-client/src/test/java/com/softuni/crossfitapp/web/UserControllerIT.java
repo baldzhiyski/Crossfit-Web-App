@@ -55,14 +55,21 @@ public class UserControllerIT {
     @MockBean
     private UserService userService;
 
+    @BeforeEach
+    public void setUp(){
+        data.createUser("testuser", "Ivo", "Ivov", "email@gmail.com", "08991612383", "DE", "Deutschland");
 
+    }
     @AfterEach
     public void tearDown(){
-        this.userRepository.deleteAll();
+        this.data.deleteUsers();
+        this.data.deleteAllTrainings();
+        this.data.deleteRoles();
+
     }
     @Test
     public void testGetEditProfilePage() throws Exception {
-        UserDetails userDetails = new CrossfitUserDetails("username", "user", Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")),"Ivo","Kamenov", UUID.randomUUID());
+        UserDetails userDetails = new CrossfitUserDetails("testuser", "user", Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")),"Ivo","Kamenov", UUID.randomUUID());
         mockMvc.perform(MockMvcRequestBuilders.get("/users/profile/{username}/edit","testuser").with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user(userDetails)))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("updateProfilePage"))
@@ -71,7 +78,6 @@ public class UserControllerIT {
     @Test
     @WithMockUser(username = "testuser", roles = {"USER"})
     public void testGetProfilePage() throws Exception {
-        data.createUser();
         // Create a mock UserProfileDto
         MembershipProfilePageDto membershipDto = new MembershipProfilePageDto();
         UserProfileDto mockUserProfileDto = new UserProfileDto(
@@ -101,7 +107,6 @@ public class UserControllerIT {
     @Test
     @WithMockUser(username = "testuser", roles = {"USER"})
     public void testDeleteProfile() throws Exception {
-        data.createUser();
         mockMvc.perform(MockMvcRequestBuilders.delete("/users/profile/{username}/edit/delete-profile", "testuser")
                         .with(csrf()))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())

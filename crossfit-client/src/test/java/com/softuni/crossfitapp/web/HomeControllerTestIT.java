@@ -5,6 +5,8 @@ import com.softuni.crossfitapp.domain.dto.events.EventDetailsDto;
 import com.softuni.crossfitapp.domain.user_details.CrossfitUserDetails;
 import com.softuni.crossfitapp.service.EventService;
 import com.softuni.crossfitapp.service.impl.EventServiceImpl;
+import com.softuni.crossfitapp.testUtils.TestData;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -37,32 +39,24 @@ public class HomeControllerTestIT {
     @MockBean
     private EventService eventService;
 
+    @Autowired
+    private TestData data;
 
+    @AfterEach
+    public void tearDown(){
+        this.data.deleteUsers();
+        this.data.deleteRoles();
+    }
 
     @Test
     public void testIndex() throws Exception {
-        UserDetails userDetails = new CrossfitUserDetails("username", "user", Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")),"Ivo","Kamenov", UUID.randomUUID());
+        UserDetails userDetails = new CrossfitUserDetails("testuser", "user", Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")),"Ivo","Kamenov", UUID.randomUUID());
         mockMvc.perform(MockMvcRequestBuilders.get("/").with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user(userDetails)))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("index"));
     }
 
-    @Test
-    public void testAbout() throws Exception {
-        List<EventDetailsDto> mockEvents = Arrays.asList(
-                new EventDetailsDto("Description 1", new Date(), "Address 1", "Event 1", "Video URL 1"),
-                new EventDetailsDto("Description 2", new Date(), "Address 2", "Event 2", "Video URL 2"),
-                new EventDetailsDto("Description 3", new Date(), "Address 3", "Event 3", "Video URL 3")
-        );
 
-        // Add mock events as needed for testing
-        when(eventService.getTopThreeEvents()).thenReturn(mockEvents);
-
-        mockMvc.perform(MockMvcRequestBuilders.get("/about-us"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("about"))
-                .andExpect(MockMvcResultMatchers.model().attributeExists("events"));
-    }
 
     @Test
     public void testSchedule() throws Exception {

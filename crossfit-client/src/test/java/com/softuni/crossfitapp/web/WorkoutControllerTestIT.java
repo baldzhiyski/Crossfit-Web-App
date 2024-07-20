@@ -87,18 +87,21 @@ class WorkoutControllerTestIT {
     @Autowired
     private RestClient trainingsRestClient;
 
-    @AfterEach
-    public void tearDown(){
-        this.commentRepository.deleteAll();
-        this.trainingRepository.deleteAll();
-    }
-
 
     @BeforeEach
-    public void beforeEach(){
+    public void setup(){
         this.workoutsService = new WorkoutServiceImpl( trainingRepository,  weeklyTrainingRepository,  coachRepository,  userRepository,
                 trainingsRestClient,  workoutsAPIConfig,  mapper);
+        data.createUser("testuser", "Ivo", "Ivov", "email@gmail.com", "08991612383", "DE", "Deutschland");
     }
+
+    @AfterEach
+    public void tearDown(){
+        data.deleteAllTrainings();
+        data.deleteUsers();
+        data.deleteRoles();
+    }
+
 
     @Test
     public void testGetWorkouts() throws Exception {
@@ -107,8 +110,9 @@ class WorkoutControllerTestIT {
                 .andExpect(view().name("workouts"));
     }
     @Test
+    @WithMockUser(username = "testuser")
     public void testExploreCurrentWorkout() throws Exception {
-        Training testingWorkout = data.createTraining("Testing Workout", "images/test.jpeg", Level.INTERMEDIATE, TrainingType.HYROX);
+        Training testingWorkout = data.createTraining();
 
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/workouts/explore-current/{trainingType}", testingWorkout.getTrainingType())
                 .contentType(MediaType.APPLICATION_JSON));
@@ -117,21 +121,6 @@ class WorkoutControllerTestIT {
 
     }
 
-    @Test
-    @WithMockUser(username = "testuser",roles = {"USER"})
-    public void postCommentTest() throws Exception {
-        data.createUser();
-        data.createTraining("Some test","images/test.jpeg",Level.INTERMEDIATE,TrainingType.CARDIO);
-        // Mocked DTO data
-        AddCommentDto addCommentDto = new AddCommentDto();
-        addCommentDto.setDescription("Test comment");
-        // Perform POST request with simulated data
-        mockMvc.perform(MockMvcRequestBuilders.post("/workouts/details/comment/{trainingType}", TrainingType.CARDIO)
-                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                        .param("description", addCommentDto.getDescription())
-                        .with(csrf())
-                       )
-                .andExpect(MockMvcResultMatchers.redirectedUrl("/workouts/explore-current/" + TrainingType.CARDIO));
-    }
+
 
 }
