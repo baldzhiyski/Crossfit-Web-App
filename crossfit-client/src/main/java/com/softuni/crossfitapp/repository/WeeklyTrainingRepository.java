@@ -6,10 +6,13 @@ import org.springframework.stereotype.Repository;
 
 import java.time.DayOfWeek;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface WeeklyTrainingRepository extends JpaRepository<WeeklyTraining, UUID> {
+public interface WeeklyTrainingRepository extends JpaRepository<WeeklyTraining, Long> {
+
+    Optional<WeeklyTraining> findByUuid(UUID uuid);
 
     List<WeeklyTraining> findAllByDayOfWeek(DayOfWeek dayOfWeek);
 }

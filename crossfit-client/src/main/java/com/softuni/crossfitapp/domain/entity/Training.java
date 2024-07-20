@@ -6,9 +6,13 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.Set;
+import java.util.UUID;
+
+import static java.sql.Types.VARCHAR;
 
 @Entity
 @Table(name = "trainings")
@@ -26,6 +30,11 @@ public class Training extends BaseEntity{
     @Column
     @NotBlank
     private String imageUrl;
+
+    @UUIDSequence
+    @JdbcTypeCode(VARCHAR)
+    private UUID uuid;
+
 
     @Enumerated(EnumType.STRING)
     @NotNull

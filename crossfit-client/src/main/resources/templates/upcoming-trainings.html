@@ -30,7 +30,7 @@
                             </div>
                         </div>
                         <div class="widget-49-meeting-action">
-                            <form th:method="POST" th:action="@{/my-weekly-schedule/{username}/cancel-training/{weeklyTrainingId}(username=${#authentication.principal.username}, weeklyTrainingId=${upcomingTraining.id})}">
+                            <form th:method="POST" th:action="@{/my-weekly-schedule/{username}/cancel-training/{weeklyTrainingId}(username=${#authentication.principal.username}, weeklyTrainingId=${upcomingTraining.uuid})}">
                                 <button type="submit" class="btn btn-dark btn-outline-secondary" style="color: white">Cancel Participation</button>
                             </form>
                         </div>

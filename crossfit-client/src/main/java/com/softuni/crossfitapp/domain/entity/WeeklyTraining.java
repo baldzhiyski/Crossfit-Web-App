@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcTypeCode;
 
 import java.sql.Time;
 import java.time.DayOfWeek;
@@ -16,6 +17,9 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
+
+import static java.sql.Types.VARCHAR;
 
 @Entity
 @Table(name = "weekly_trainings")
@@ -35,6 +39,10 @@ public class WeeklyTraining extends BaseEntity{
 
     @Column
     private LocalTime time;
+    @UUIDSequence
+    @JdbcTypeCode(VARCHAR)
+    private UUID uuid;
+
 
     @Column
     private LocalDate date;

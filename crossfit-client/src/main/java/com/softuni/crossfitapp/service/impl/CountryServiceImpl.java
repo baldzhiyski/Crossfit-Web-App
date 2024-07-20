@@ -84,6 +84,6 @@ public class CountryServiceImpl implements CountryService {
                 countriesToUpdate.add(newCountry);
             }
         }
-        countryRepository.saveAll(countriesToUpdate);
+        countryRepository.saveAllAndFlush(countriesToUpdate);
     }
 }

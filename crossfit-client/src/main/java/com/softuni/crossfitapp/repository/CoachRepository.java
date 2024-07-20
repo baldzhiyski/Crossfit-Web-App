@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface CoachRepository extends JpaRepository<Coach, UUID> {
+public interface CoachRepository extends JpaRepository<Coach, Long> {
 
     Coach findByFirstName(String firstName);
 

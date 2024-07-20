@@ -32,7 +32,7 @@
                         <span class="text-dark">Already joined</span>
                     </div>
                     <!-- If not a participant and there are free spots, show join button -->
-                    <form th:action="@{/joinTraining/{trainingId}(trainingId=${training.id})}" th:method="POST"
+                    <form th:action="@{/joinTraining/{trainingId}(trainingId=${training.uuid})}" th:method="POST"
                           th:if="${training.participants.size() < 5 and not #lists.contains(training.getParticipantsUsernames(), #authentication.principal.username)
  and  training.coachUsername != #authentication.principal.username}" >
                         <button type="submit" class="btn btn-primary btn-join">Join</button>
@@ -63,7 +63,7 @@
                         <span class="text-dark">Already joined</span>
                     </div>
                     <!-- If not a participant and there are free spots, show join button -->
-                    <form th:action="@{/joinTraining/{trainingId}(trainingId=${training.id})}" th:method="POST"
+                    <form th:action="@{/joinTraining/{trainingId}(trainingId=${training.uuid})}" th:method="POST"
                           th:if="${training.participants.size() < 5 and not #lists.contains(training.getParticipantsUsernames(), #authentication.principal.username)
  and  training.coachUsername != #authentication.principal.username}" >
                         <button type="submit" class="btn btn-primary btn-join">Join</button>
@@ -93,7 +93,7 @@
                         <span class="text-dark">Already joined</span>
                     </div>
                     <!-- If not a participant and there are free spots, show join button -->
-                    <form th:action="@{/joinTraining/{trainingId}(trainingId=${training.id})}" th:method="POST"
+                    <form th:action="@{/joinTraining/{trainingId}(trainingId=${training.uuid})}" th:method="POST"
                           th:if="${training.participants.size() < 5 and not #lists.contains(training.getParticipantsUsernames(), #authentication.principal.username)
  and  training.coachUsername != #authentication.principal.username}" >
                         <button type="submit" class="btn btn-primary btn-join">Join</button>
@@ -123,7 +123,7 @@
                         <span class="text-dark">Already joined</span>
                     </div>
                     <!-- If not a participant and there are free spots, show join button -->
-                    <form th:action="@{/joinTraining/{trainingId}(trainingId=${training.id})}" th:method="POST"
+                    <form th:action="@{/joinTraining/{trainingId}(trainingId=${training.uuid})}" th:method="POST"
                           th:if="${training.participants.size() < 5 and not #lists.contains(training.getParticipantsUsernames(), #authentication.principal.username)
  and  training.coachUsername != #authentication.principal.username}" >
                         <button type="submit" class="btn btn-primary btn-join">Join</button>
@@ -153,7 +153,7 @@
                         <span class="text-dark">Already joined</span>
                     </div>
                     <!-- If not a participant and there are free spots, show join button -->
-                    <form th:action="@{/joinTraining/{trainingId}(trainingId=${training.id})}" th:method="POST"
+                    <form th:action="@{/joinTraining/{trainingId}(trainingId=${training.uuid})}" th:method="POST"
                           th:if="${training.participants.size() < 5 and not #lists.contains(training.getParticipantsUsernames(), #authentication.principal.username)
  and  training.coachUsername != #authentication.principal.username}" >
                         <button type="submit" class="btn btn-primary btn-join">Join</button>
@@ -183,7 +183,7 @@
                             <span class="text-dark">Already joined</span>
                         </div>
                         <!-- If not a participant and there are free spots, show join button -->
-                        <form th:action="@{/joinTraining/{trainingId}(trainingId=${training.id})}" th:method="POST"
+                        <form th:action="@{/joinTraining/{trainingId}(trainingId=${training.uuid})}" th:method="POST"
                               th:if="${training.participants.size() < 5 and not #lists.contains(training.getParticipantsUsernames(), #authentication.principal.username)
  and  training.coachUsername != #authentication.principal.username}" >
                             <button type="submit" class="btn btn-primary btn-join">Join</button>
@@ -206,7 +206,11 @@
 
         cards.forEach(function(card) {
             var dateString = card.querySelector('.card-date').textContent.trim();
-            var trainingDate = new Date(dateString);
+            var timeString = card.querySelector('.time').textContent.trim().substring(14); // Extracting only HH:mm
+            var dateTimeString = dateString + ' ' + timeString;
+            console.log(dateTimeString);
+            var trainingDate = new Date(dateTimeString);
+
 
             if (trainingDate < now) {
                 var cardBody = card.querySelector('.card-body');

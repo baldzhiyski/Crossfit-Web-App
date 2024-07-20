@@ -9,8 +9,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface UserActivationCodeRepository extends JpaRepository<UserActivationLinkEntity, UUID> {
+public interface UserActivationCodeRepository extends JpaRepository<UserActivationLinkEntity, Long> {
     Optional<UserActivationLinkEntity> findByActivationCode(String code);
 
-    List<UserActivationLinkEntity> findAllByUserEntity_Id(UUID uuid);
+    List<UserActivationLinkEntity> findAllByUserEntity_Id(Long id);
 }

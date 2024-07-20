@@ -24,7 +24,7 @@ public class CancelTrainingServiceImpl implements CancelTrainingService {
     @Override
     @EventListener(CancelledTrainingEvent.class)
     public void cancelTraining(CancelledTrainingEvent cancelledTrainingEvent) {
-        WeeklyTraining weeklyTraining = this.weeklyTrainingRepository.findById(cancelledTrainingEvent.getWeeklyTrainingId()).orElseThrow(() -> new ObjectNotFoundException("No such weekly training !"));
+        WeeklyTraining weeklyTraining = this.weeklyTrainingRepository.findByUuid(cancelledTrainingEvent.getWeeklyTrainingId()).orElseThrow(() -> new ObjectNotFoundException("No such weekly training !"));
         emailService.sendCancelledTrainingEmail(cancelledTrainingEvent.getCoachFullName(),weeklyTraining,cancelledTrainingEvent.getUserEmail(),cancelledTrainingEvent.getUserFullName() );
     }
 }

@@ -4,7 +4,6 @@ import com.softuni.crossfitapp.domain.dto.coaches.CoachDisplayDto;
 import com.softuni.crossfitapp.domain.entity.*;
 import com.softuni.crossfitapp.domain.entity.enums.RoleType;
 import com.softuni.crossfitapp.domain.events.CancelledTrainingEvent;
-import com.softuni.crossfitapp.domain.events.UserRegisteredEvent;
 import com.softuni.crossfitapp.exceptions.AccessOnlyForCoaches;
 import com.softuni.crossfitapp.exceptions.ObjectNotFoundException;
 import com.softuni.crossfitapp.repository.CoachRepository;
@@ -59,7 +58,7 @@ public class CoachServiceImpl implements CoachService {
     @Transactional
     public void closeTrainingSession(String coachUsername, UUID weeklyTrainingId) {
         Optional<Coach> byUsername = this.coachRepository.findByUsername(coachUsername);
-        WeeklyTraining weeklyTraining = this.weeklyTrainingRepository.findById(weeklyTrainingId).orElseThrow(() -> new ObjectNotFoundException("Ïnvalid weekly training id!"));
+        WeeklyTraining weeklyTraining = this.weeklyTrainingRepository.findByUuid(weeklyTrainingId).orElseThrow(() -> new ObjectNotFoundException("Ïnvalid weekly training id!"));
 
 
 

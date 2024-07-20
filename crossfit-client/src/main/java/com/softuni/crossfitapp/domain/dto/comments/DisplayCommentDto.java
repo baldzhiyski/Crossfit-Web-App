@@ -23,5 +23,7 @@ public class DisplayCommentDto {
 
     private int dislikes;
 
-    private UUID id;
+    private UUID uuid;
+
+    private Long id;
 }

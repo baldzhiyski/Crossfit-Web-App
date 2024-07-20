@@ -6,13 +6,13 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
+
+import static java.sql.Types.VARCHAR;
 
 @Entity
 @Builder
@@ -32,6 +32,11 @@ public class User extends BaseEntity{
     @Column
     @NotBlank
     private String lastName;
+
+
+    @UUIDSequence
+    @JdbcTypeCode(VARCHAR)
+    private UUID uuid;
 
     @Column
     @NotNull
@@ -57,10 +62,10 @@ public class User extends BaseEntity{
     @Column
     private String email;
 
-    @ManyToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH},fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Membership membership;
 
     @ManyToMany(fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})

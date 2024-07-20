@@ -81,7 +81,7 @@ public class WorkoutServiceImpl implements WorkoutsService {
                 Training mapped = this.mapper.map(seedTrainingFromApiDto, Training.class);
                 setSpecificPictureUrl(mapped);
                 return mapped;
-            }).forEach(this.trainingRepository::save);
+            }).forEach(this.trainingRepository::saveAndFlush);
         }
 
     }
@@ -110,15 +110,6 @@ public class WorkoutServiceImpl implements WorkoutsService {
 
         LocalDate today = LocalDate.now();
 
-        // TODO ; Delete before deploying
-
-        // For testing purposes leave it for now like this :
-//        LocalDate nextMonday = today;
-
-//        // Find the next Monday
-//        while (nextMonday.getDayOfWeek() != DayOfWeek.MONDAY) {
-//            nextMonday = nextMonday.plusDays(1);
-//        }
 
         // Iterate over each day of the week starting from today
         for (int i = 0; i < 6; i++) {
@@ -167,7 +158,7 @@ public class WorkoutServiceImpl implements WorkoutsService {
     @Override
     @Transactional
     public void joinCurrentTraining(UUID trainingId, String loggedUserUsername) {
-        WeeklyTraining weeklyTraining = this.weeklyTrainingRepository.findById(trainingId).orElseThrow(() -> new ObjectNotFoundException("Ïnvalid weekly training id!"));
+        WeeklyTraining weeklyTraining = this.weeklyTrainingRepository.findByUuid(trainingId).orElseThrow(() -> new ObjectNotFoundException("Ïnvalid weekly training id!"));
         User currentUser = this.userRepository.findByUsername(loggedUserUsername).orElseThrow(() -> new ObjectNotFoundException("Invalid logged user credentials !"));
 
 
@@ -191,7 +182,7 @@ public class WorkoutServiceImpl implements WorkoutsService {
     @Transactional
     public void deleteFromCurrentTrainings(UUID trainingId, String loggedUserUsername) {
         User currentUser = this.userRepository.findByUsername(loggedUserUsername).orElseThrow(() -> new ObjectNotFoundException("Invalid logged user credentials !"));
-        WeeklyTraining weeklyTraining = this.weeklyTrainingRepository.findById(trainingId).orElseThrow(() -> new ObjectNotFoundException("Ïnvalid weekly training id!"));
+        WeeklyTraining weeklyTraining = this.weeklyTrainingRepository.findByUuid(trainingId).orElseThrow(() -> new ObjectNotFoundException("Ïnvalid weekly training id!"));
 
         currentUser.getTrainingsPerWeekList().remove(weeklyTraining);
         this.userRepository.saveAndFlush(currentUser);

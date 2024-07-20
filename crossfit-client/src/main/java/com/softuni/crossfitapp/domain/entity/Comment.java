@@ -6,11 +6,15 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcTypeCode;
 
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
+
+import static java.sql.Types.VARCHAR;
 
 @Entity
 @Table(name = "comments")
@@ -36,6 +40,11 @@ public class Comment extends BaseEntity{
 
     @Column(nullable = false)
     private Integer dislikes ;
+
+    @UUIDSequence
+    @JdbcTypeCode(VARCHAR)
+    private UUID uuid;
+
 
     @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(

@@ -4,8 +4,12 @@ import com.softuni.crossfitapp.vallidation.annotations.UniqueUsername;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
 
 import java.util.List;
+import java.util.UUID;
+
+import static java.sql.Types.VARCHAR;
 
 @Entity
 @Table(name = "coaches")
@@ -17,12 +21,16 @@ import java.util.List;
 public class Coach extends BaseEntity{
 
     @Column
-    @UniqueUsername
     private String username;
 
     @Column
     @NotBlank
     private String firstName;
+
+    @UUIDSequence
+    @JdbcTypeCode(VARCHAR)
+    private UUID uuid;
+
 
     @Column
     @NotBlank

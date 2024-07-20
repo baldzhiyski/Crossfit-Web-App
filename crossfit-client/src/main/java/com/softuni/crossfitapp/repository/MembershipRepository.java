@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface MembershipRepository extends JpaRepository<Membership, UUID> {
+public interface MembershipRepository extends JpaRepository<Membership, Long> {
     Membership findByMembershipType(MembershipType membershipType);
 }

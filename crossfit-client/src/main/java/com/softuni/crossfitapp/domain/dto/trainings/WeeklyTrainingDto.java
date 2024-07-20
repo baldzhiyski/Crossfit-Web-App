@@ -27,7 +27,7 @@ public class WeeklyTrainingDto {
 
     private List<User> participants;
 
-    private UUID id;
+    private UUID uuid;
 
     private TrainingType trainingType;
 

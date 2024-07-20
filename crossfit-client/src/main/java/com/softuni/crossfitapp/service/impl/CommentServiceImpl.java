@@ -71,7 +71,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     public void likeComment(UUID commentId, String username) {
-        Comment comment = this.commentRepository.findById(commentId).orElseThrow(() -> new ObjectNotFoundException("Invalid comment id !"));
+        Comment comment = this.commentRepository.findByUuid(commentId).orElseThrow(() -> new ObjectNotFoundException("Invalid comment id !"));
         User user = this.userRepository.findByUsername(username).orElseThrow(() -> new ObjectNotFoundException("No such user in the db!"));
 
 
@@ -92,7 +92,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     public void dislike(UUID commentId, String username) {
-        Comment comment = this.commentRepository.findById(commentId)
+        Comment comment = this.commentRepository.findByUuid(commentId)
                 .orElseThrow(() -> new ObjectNotFoundException("Invalid comment id !"));
         User user = this.userRepository.findByUsername(username)
                 .orElseThrow(() -> new ObjectNotFoundException("No such user in the db!"));
@@ -114,13 +114,13 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comment getById(UUID commentId) {
-        return this.commentRepository.findById(commentId).orElseThrow(()->new ObjectNotFoundException("Invalid commend id"));
+        return this.commentRepository.findByUuid(commentId).orElseThrow(()->new ObjectNotFoundException("Invalid commend id"));
     }
 
     @Override
     @Transactional
     public void deleteComment(UUID commentId, String username) {
-        Comment comment = this.commentRepository.findById(commentId).orElseThrow(() -> new ObjectNotFoundException("Invalid comment id !"));
+        Comment comment = this.commentRepository.findByUuid(commentId).orElseThrow(() -> new ObjectNotFoundException("Invalid comment id !"));
         User user = this.userRepository.findByUsername(username).orElseThrow(() -> new ObjectNotFoundException("No such user in the db!"));
         if(comment.getAuthor().equals(user)){
             comment.getLikedBy().clear();

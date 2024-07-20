@@ -9,6 +9,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcTypeCode;
+
+import java.util.UUID;
+
+import static java.sql.Types.VARCHAR;
 
 @Entity
 @Table(name = "events")
@@ -24,6 +29,10 @@ public class Event extends BaseEntity{
     @Lob
     @NotBlank
     private String description;
+
+    @UUIDSequence
+    @JdbcTypeCode(VARCHAR)
+    private UUID uuid;
 
     @NotBlank
     private String address;

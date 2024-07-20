@@ -16,7 +16,7 @@ public record UserProfileDto(String fullName,
                              String username,
 
                              String imageUrl,
-                             UUID id,
+                             UUID uuid,
                              String email,
                              String address,
                              Set<RoleType> roles,

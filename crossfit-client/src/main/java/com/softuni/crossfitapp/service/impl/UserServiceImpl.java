@@ -127,7 +127,7 @@ public class UserServiceImpl implements UserService {
         }).collect(Collectors.toSet());
 
         return new UserProfileDto(
-                fullName,user.getUsername(),user.getImageUrl(),user.getId(),user.getEmail(),user.getAddress(),roles,mapped,events, enrolledTrainingsNames
+                fullName,user.getUsername(),user.getImageUrl(),user.getUuid(),user.getEmail(),user.getAddress(),roles,mapped,events, enrolledTrainingsNames
         );
     }
 
