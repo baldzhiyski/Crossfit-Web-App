@@ -114,16 +114,8 @@
                   <span th:text="${event.address}"></span></p>
               </div>
             </div>
-            <!-- Display number of participants -->
-            <p>Current participants: <span id="currentParticipants">10</span></p>
             <!-- Event Description -->
             <p th:text="${event.description}"></p>
-            <!-- Enroll form button -->
-            <form th:action="@{/about-us/enroll-event}" th:method="POST">
-              <button type="submit" class="btn btn-primary rounded-0 mt-3"
-                      sec:authorize="hasRole('MEMBER')">Enroll
-              </button>
-            </form>
           </div>
         </div>
       </div><!-- /.col-lg-4 -->

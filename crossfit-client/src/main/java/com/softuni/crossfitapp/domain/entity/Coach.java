@@ -40,7 +40,7 @@ public class Coach extends BaseEntity{
     @OneToMany(mappedBy = "owner",fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
     private List<Certificate> certificates;
 
-    @OneToMany(mappedBy = "coach", cascade = {CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "coach", cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE},fetch = FetchType.EAGER)
     private List<WeeklyTraining> trainingsPerWeek;
 
 }

@@ -2,6 +2,7 @@ package com.softuni.crossfitapp.testUtils;
 
 import com.softuni.crossfitapp.domain.entity.*;
 import com.softuni.crossfitapp.domain.entity.enums.Level;
+import com.softuni.crossfitapp.domain.entity.enums.MembershipType;
 import com.softuni.crossfitapp.domain.entity.enums.RoleType;
 import com.softuni.crossfitapp.domain.entity.enums.TrainingType;
 import com.softuni.crossfitapp.repository.*;
@@ -10,7 +11,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 
 @Component
@@ -32,6 +35,16 @@ public class TestData {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private MembershipRepository membershipRepository;
+
+
+    @Autowired
+    private CoachRepository coachRepository;
+
+    @Autowired
+    private WeeklyTrainingRepository weeklyTrainingRepository;
+
 
     @Autowired
     private RoleRepository roleRepository;
@@ -50,6 +63,10 @@ public class TestData {
         return countryRepository.saveAndFlush(Country.builder().name(fullName).code(code).build());
     }
 
+    public Membership createMembership(){
+         return this.membershipRepository.saveAndFlush(Membership.builder().membershipType(MembershipType.ELITE).duration(3L).price(200L).build());
+    }
+
     public void cleanAllTestData() {
         exchangeRateRepository.deleteAll();
     }
@@ -58,9 +75,12 @@ public class TestData {
     public User createUser(String username, String firstName, String lastName, String email, String telephoneNumber, String countryCode, String countryName) {
         Country country = createCountry(countryCode, countryName);
         if(this.roleRepository.count()==0) {
-            creteRole();
+            createRole();
         }
         Role userRole = this.roleRepository.findByRoleType(RoleType.USER);
+
+        Set<Role> roles = new HashSet<>();
+        roles.add(userRole);
 
         User user = new User();
         user.setUsername(username);
@@ -74,7 +94,7 @@ public class TestData {
         user.setTelephoneNumber(telephoneNumber);
         user.setEmail(email);
         user.setUuid(UUID.randomUUID());
-        user.setRoles(Set.of(userRole));
+        user.setRoles(roles);
         user.setTrainingsPerWeekList(new ArrayList<>());
         user.setMembershipStartDate(LocalDate.now());
         user.setMembershipEndDate(LocalDate.now());
@@ -84,8 +104,12 @@ public class TestData {
         return userRepository.saveAndFlush(user);
     }
 
-    public Role creteRole() {
+    public Role createRole() {
         return this.roleRepository.saveAndFlush(new Role(RoleType.USER));
+    }
+
+    public Role createSecondRole() {
+        return this.roleRepository.saveAndFlush(new Role(RoleType.MEMBER));
     }
 
     @Transactional
@@ -130,5 +154,62 @@ public class TestData {
         comment.setUuid(UUID.randomUUID());
         comment.setTraining(training);
         return this.commentRepository.saveAndFlush(comment).getUuid();
+    }
+
+    @Transactional
+    public void deleteMemberships() {
+        this.membershipRepository.deleteAll();
+    }
+
+    @Transactional
+    public void deleteWeeklyTrainingAndCoach() {
+        this.weeklyTrainingRepository.deleteAll();
+        this.coachRepository.deleteAll();
+    }
+    @Transactional
+    public WeeklyTraining createWeeklyTraining() {
+        Training training = createTraining();
+
+        Coach coach = createCoachWithUserAcc();
+
+        WeeklyTraining weeklyTraining = new WeeklyTraining();
+
+        weeklyTraining.setTime(LocalTime.MIDNIGHT);
+        weeklyTraining.setDate(LocalDate.now());
+        weeklyTraining.setCoach(coach);
+        weeklyTraining.setImageUrl("imag.jpeg");
+        weeklyTraining.setParticipants(new ArrayList<>());
+        weeklyTraining.setTrainingType(training.getTrainingType());
+        weeklyTraining.setLevel(training.getLevel());
+        weeklyTraining.setDayOfWeek(DayOfWeek.SUNDAY);
+
+        this.coachRepository.saveAndFlush(coach);
+        this.weeklyTrainingRepository.saveAndFlush(weeklyTraining);
+
+        return weeklyTraining;
+    }
+
+    public Coach createCoachWithUserAcc() {
+        Coach coach = new Coach();
+        coach.setUsername("coach");
+        coach.setFirstName("Peter");
+        coach.setLastName("Ivanov");
+        coach.setTrainingsPerWeek(new ArrayList<>());
+
+        User userAcc = createUser("coach", "Petar", "Ivanov", "petar@abv.bg", "0899163112", "DE", "Deutschland");
+        Role role = this.roleRepository.saveAndFlush(new Role(RoleType.COACH));
+        Role byRoleType = this.roleRepository.findByRoleType(RoleType.USER);
+        Set<Role> roles = new HashSet<>();
+        roles.add(role);
+        roles.add(byRoleType);
+        userAcc.setRoles(roles);
+        this.userRepository.saveAndFlush(userAcc);
+        this.coachRepository.saveAndFlush(coach);
+        return coach;
+    }
+
+    @Transactional
+    public void deleteCoaches() {
+        this.coachRepository.deleteAll();
     }
 }

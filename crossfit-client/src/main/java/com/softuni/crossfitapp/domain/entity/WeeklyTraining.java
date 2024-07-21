@@ -55,7 +55,7 @@ public class WeeklyTraining extends BaseEntity{
     private TrainingType trainingType;
 
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Coach coach;
 
     public WeeklyTraining(){

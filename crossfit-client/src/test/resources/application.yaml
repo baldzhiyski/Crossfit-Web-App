@@ -42,8 +42,8 @@ mail:
 
 workouts:
     api:
-      allTrainingsUrl: "http://localhost:8081/crossfit-api/get-all-trainings"
-      baseUrl: "http://localhost:8081/crossfit-api"
+      allTrainingsUrl: "http://sometest"
+      baseUrl: "http://sometest-second"
 
 crossfit:
   api:

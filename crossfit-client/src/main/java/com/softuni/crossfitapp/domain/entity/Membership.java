@@ -3,9 +3,7 @@ package com.softuni.crossfitapp.domain.entity;
 import com.softuni.crossfitapp.domain.entity.enums.MembershipType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 
 import java.util.UUID;
@@ -17,6 +15,8 @@ import static java.sql.Types.VARCHAR;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Membership extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private MembershipType membershipType;

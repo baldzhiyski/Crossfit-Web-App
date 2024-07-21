@@ -1,6 +1,7 @@
 package com.softuni.crossfitapp.service.impl;
 
 import com.softuni.crossfitapp.domain.dto.coaches.CoachDisplayDto;
+import com.softuni.crossfitapp.domain.dto.trainings.WeeklyTrainingDto;
 import com.softuni.crossfitapp.domain.entity.*;
 import com.softuni.crossfitapp.domain.entity.enums.RoleType;
 import com.softuni.crossfitapp.domain.events.CancelledTrainingEvent;
@@ -11,6 +12,7 @@ import com.softuni.crossfitapp.repository.RoleRepository;
 import com.softuni.crossfitapp.repository.UserRepository;
 import com.softuni.crossfitapp.repository.WeeklyTrainingRepository;
 import com.softuni.crossfitapp.service.CoachService;
+import org.modelmapper.ModelMapper;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class CoachServiceImpl implements CoachService {
@@ -33,12 +36,15 @@ public class CoachServiceImpl implements CoachService {
 
     private WeeklyTrainingRepository weeklyTrainingRepository;
 
-    public CoachServiceImpl(ApplicationEventPublisher applicationEventPublisher, UserRepository userRepository, RoleRepository roleRepository, CoachRepository coachRepository, WeeklyTrainingRepository weeklyTrainingRepository) {
+    private ModelMapper mapper;
+
+    public CoachServiceImpl(ApplicationEventPublisher applicationEventPublisher, UserRepository userRepository, RoleRepository roleRepository, CoachRepository coachRepository, WeeklyTrainingRepository weeklyTrainingRepository, ModelMapper mapper) {
         this.applicationEventPublisher = applicationEventPublisher;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.coachRepository = coachRepository;
         this.weeklyTrainingRepository = weeklyTrainingRepository;
+        this.mapper = mapper;
     }
 
     @Override
@@ -84,6 +90,21 @@ public class CoachServiceImpl implements CoachService {
         weeklyTraining.getParticipants().clear();
         this.weeklyTrainingRepository.delete(weeklyTraining);
         this.coachRepository.save(byUsername.get());
+    }
+
+    @Override
+    public List<WeeklyTrainingDto> getUpcomingTrainings(String usernameOfCoach) {
+
+        Optional<Coach> byUsername = this.coachRepository.findByUsername(usernameOfCoach);
+
+        if(byUsername.isEmpty()){
+            throw  new AccessOnlyForCoaches("This functionality is only for coaches available !");
+        }
+
+        return byUsername.get().getTrainingsPerWeek()
+                .stream()
+                .map(weeklyTraining -> this.mapper.map(weeklyTraining,WeeklyTrainingDto.class))
+                .collect(Collectors.toList());
     }
 
 }

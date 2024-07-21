@@ -14,11 +14,8 @@ import java.util.UUID;
 public class CoachController {
     private CoachService coachService;
 
-    private WorkoutsService workoutsService;
-
-    public CoachController(CoachService coachService, WorkoutsService workoutsService) {
+    public CoachController(CoachService coachService) {
         this.coachService = coachService;
-        this.workoutsService = workoutsService;
     }
 
     @GetMapping("/coaches")
@@ -31,7 +28,7 @@ public class CoachController {
     @GetMapping("/my-weekly-schedule/{username}")
     public String getMyWeeklyTrainingsSchedule(@PathVariable String username, Model model){
         if(!model.containsAttribute("upcomingTrainings")){
-            model.addAttribute("upcomingTrainings",this.workoutsService.getUpcomingTrainings(username));
+            model.addAttribute("upcomingTrainings",this.coachService.getUpcomingTrainings(username));
         }
         return "upcoming-trainings";
     }
