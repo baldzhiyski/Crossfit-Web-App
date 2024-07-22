@@ -4,6 +4,7 @@ import com.softuni.crossfitapp.domain.dto.exrates.ExRatesDTO;
 import com.softuni.crossfitapp.domain.dto.memberships.MembershipDto;
 import com.softuni.crossfitapp.domain.dto.memberships.MembershipDtoWrapper;
 import com.softuni.crossfitapp.domain.entity.enums.MembershipType;
+import com.softuni.crossfitapp.exceptions.ObjectNotFoundException;
 import com.softuni.crossfitapp.repository.MembershipRepository;
 import com.softuni.crossfitapp.service.ExchangeRateService;
 import com.softuni.crossfitapp.service.MembershipService;
@@ -37,6 +38,6 @@ public class MembershipServiceImpl implements MembershipService {
 
     @Override
     public MembershipDto getMembershipDto(MembershipType membershipType) {
-        return  MembershipDto.fromEntity(this.membershipRepository.findByMembershipType(membershipType));
+        return  MembershipDto.fromEntity(this.membershipRepository.findByMembershipType(membershipType).orElseThrow(()->new ObjectNotFoundException("No such membership !")));
     }
 }

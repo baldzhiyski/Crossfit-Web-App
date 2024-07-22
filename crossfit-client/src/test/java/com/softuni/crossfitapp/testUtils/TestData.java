@@ -98,7 +98,6 @@ public class TestData {
         user.setTrainingsPerWeekList(new ArrayList<>());
         user.setMembershipStartDate(LocalDate.now());
         user.setMembershipEndDate(LocalDate.now());
-        user.setEvents(new HashSet<>());
         user.setActive(true);
 
         return userRepository.saveAndFlush(user);
@@ -211,5 +210,14 @@ public class TestData {
     @Transactional
     public void deleteCoaches() {
         this.coachRepository.deleteAll();
+    }
+
+    public void createUsersWithExpiredMembership() {
+        User userAcc1 = createUser("user1", "Petar", "Ivanov", "petar1@abv.bg", "0899163113", "DE", "Deutschland");
+        User userAcc2 = createUser("user2", "Petar", "Ivanov", "petar2@abv.bg", "0899163114", "DE", "Deutschland");
+        User userAcc3 = createUser("user3", "Petar", "Ivanov", "petar3@abv.bg", "0899163115", "DE", "Deutschland");
+
+
+
     }
 }

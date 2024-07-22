@@ -22,9 +22,6 @@ public class CreationWeeklyTrainings {
     @Transactional
     @CacheEvict(value = "weeklyTrainings", allEntries = true)
     public void createAndDeleteWeeklyTrainings() {
-
-        // Delete previous week's trainings
-        workoutsService.deleteWeeklyTrainings();
         // Populate new weekly trainings
         workoutsService.populateWeeklyTrainings();
 

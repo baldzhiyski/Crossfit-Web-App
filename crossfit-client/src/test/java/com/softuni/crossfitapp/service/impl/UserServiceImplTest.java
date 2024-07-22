@@ -6,6 +6,7 @@ import com.softuni.crossfitapp.domain.entity.Role;
 import com.softuni.crossfitapp.domain.entity.User;
 import com.softuni.crossfitapp.domain.entity.UserActivationLinkEntity;
 import com.softuni.crossfitapp.domain.entity.enums.RoleType;
+import com.softuni.crossfitapp.exceptions.ObjectNotFoundException;
 import com.softuni.crossfitapp.repository.*;
 import com.softuni.crossfitapp.service.CloudinaryService;
 import com.softuni.crossfitapp.service.UserService;
@@ -80,7 +81,6 @@ class UserServiceImplTest {
                 () -> serviceToTest.loadUserByUsername("pesho@softuni.bg")
         );
     }
-
     @Test
     void testUserFoundException() {
         // Arrange

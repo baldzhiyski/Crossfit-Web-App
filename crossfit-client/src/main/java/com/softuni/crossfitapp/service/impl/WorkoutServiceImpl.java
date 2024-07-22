@@ -94,19 +94,10 @@ public class WorkoutServiceImpl implements WorkoutsService {
 
         return mapper.map(training, TrainingDetailsDto.class);
     }
-
-    @Override
-    @Transactional
-    public void deleteWeeklyTrainings() {
-        List<WeeklyTraining> all = this.weeklyTrainingRepository.findAll();
-        this.weeklyTrainingRepository.deleteAll(all);
-    }
-
-
     @Override
     @Transactional
     public void populateWeeklyTrainings() {
-        if(this.weeklyTrainingRepository.count()>0) return;
+        if(this.weeklyTrainingRepository.count()>0) this.weeklyTrainingRepository.deleteAll();
 
         LocalDate today = LocalDate.now();
 

@@ -14,7 +14,6 @@ import com.softuni.crossfitapp.exceptions.ObjectNotFoundException;
 import com.softuni.crossfitapp.repository.*;
 import com.softuni.crossfitapp.service.CloudinaryService;
 import com.softuni.crossfitapp.service.UserService;
-import com.softuni.crossfitapp.util.CopyImageFileSaverUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,7 +29,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -64,6 +62,7 @@ public class UserServiceImpl implements UserService {
         this.cloudinaryService = cloudinaryService;
         this.mapper = mapper;
     }
+
     @Override
     public User registerNewUser(UserRegisterDto userRegisterDto) throws IOException {
         User toBeRegisteredUser = this.mapper.map(userRegisterDto, User.class);
@@ -104,30 +103,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserProfileDto getProfilePageDto(String username) {
         User user = this.userRepository.findByUsername(username).orElseThrow(() -> new ObjectNotFoundException("No such user existing !"));
-        String fullName = user.getFirstName()+ " " + user.getLastName();
+        String fullName = user.getFirstName() + " " + user.getLastName();
         Set<RoleType> roles = user.getRoles().stream().map(Role::getRoleType).collect(Collectors.toSet());
         MembershipProfilePageDto mapped;
-        if(user.getMembership()!=null) {
-             mapped = this.mapper.map(user.getMembership(), MembershipProfilePageDto.class);
+        if (user.getMembership() != null) {
+            mapped = this.mapper.map(user.getMembership(), MembershipProfilePageDto.class);
 
             long daysLeft = ChronoUnit.DAYS.between(user.getMembershipStartDate(), user.getMembershipEndDate());
             mapped.setTimeLeft(daysLeft);
 
-        }else{
-            mapped= new MembershipProfilePageDto();
+        } else {
+            mapped = new MembershipProfilePageDto();
             mapped.setTimeLeft(0L);
             mapped.setMembershipType(MembershipType.NONE);
         }
-        Set<EventDto> events = user.getEvents().stream().map(event -> {
-            return this.mapper.map(event, EventDto.class);
-        }).collect(Collectors.toSet());
-
         Set<TrainingDto> enrolledTrainingsNames = user.getTrainingsPerWeekList().stream().map(weeklyTraining -> {
             return this.mapper.map(weeklyTraining, TrainingDto.class);
         }).collect(Collectors.toSet());
 
         return new UserProfileDto(
-                fullName,user.getUsername(),user.getImageUrl(),user.getUuid(),user.getEmail(),user.getAddress(),roles,mapped,events, enrolledTrainingsNames
+                fullName, user.getUsername(), user.getImageUrl(), user.getUuid(), user.getEmail(), user.getAddress(), roles, mapped, enrolledTrainingsNames
         );
     }
 
@@ -138,19 +133,19 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new ObjectNotFoundException("User not found with username: " + username));
 
         // Update only the fields that are not null or not empty in the DTO
-        if (!userProfileUpdateDto.getFirstName().isBlank()) {
+        if (userProfileUpdateDto.getUsername()!=null && !userProfileUpdateDto.getFirstName().isBlank()) {
             user.setFirstName(userProfileUpdateDto.getFirstName());
         }
-        if (!userProfileUpdateDto.getLastName().isBlank()) {
+        if (userProfileUpdateDto.getLastName()!=null && !userProfileUpdateDto.getLastName().isBlank()) {
             user.setLastName(userProfileUpdateDto.getLastName());
         }
-        if (!userProfileUpdateDto.getEmail().isBlank()) {
+        if ( userProfileUpdateDto.getEmail()!=null && !userProfileUpdateDto.getEmail().isBlank()) {
             user.setEmail(userProfileUpdateDto.getEmail());
         }
-        if (!userProfileUpdateDto.getAddress().isBlank()) {
+        if (userProfileUpdateDto.getAddress()!=null && !userProfileUpdateDto.getAddress().isBlank()) {
             user.setAddress(userProfileUpdateDto.getAddress());
         }
-        if (!userProfileUpdateDto.getDateOfBirth().isBlank()) {
+        if (userProfileUpdateDto.getDateOfBirth()!=null && !userProfileUpdateDto.getDateOfBirth().isBlank()) {
 
             LocalDate dateOfBirth = LocalDate.parse(userProfileUpdateDto.getDateOfBirth(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             // Convert LocalDate to Instant
@@ -162,27 +157,25 @@ public class UserServiceImpl implements UserService {
             user.setBornOn(dateOfBirthDate);
         }
 
-        if(!userProfileUpdateDto.getPicture().isEmpty()){
-            if (!userProfileUpdateDto.getPicture().isEmpty()) {
-                // Delete old photo from Cloudinary
-                String oldImageUrl = user.getImageUrl();
-                if (oldImageUrl != null) {
-                    String publicId = oldImageUrl.substring(oldImageUrl.lastIndexOf("/") + 1);
-                    cloudinaryService.deletePhoto(publicId);
-                }
-
-                // Upload new photo to Cloudinary
-                String imageUrl = cloudinaryService.uploadPhoto(userProfileUpdateDto.getPicture(), "users-accounts-photos");
-                user.setImageUrl(imageUrl);
+        if ( userProfileUpdateDto.getPicture()!=null && !userProfileUpdateDto.getPicture().isEmpty()) {
+            // Delete old photo from Cloudinary
+            String oldImageUrl = user.getImageUrl();
+            if (oldImageUrl != null) {
+                String publicId = oldImageUrl.substring(oldImageUrl.lastIndexOf("/") + 1);
+                cloudinaryService.deletePhoto(publicId);
             }
 
+            // Upload new photo to Cloudinary
+            String imageUrl = cloudinaryService.uploadPhoto(userProfileUpdateDto.getPicture(), "users-accounts-photos");
+            user.setImageUrl(imageUrl);
         }
 
-        if(!userProfileUpdateDto.getPassword().isBlank() && !userProfileUpdateDto.getConfirmPassword().isBlank()){
+
+        if ( userProfileUpdateDto.getPassword()!=null &&  !userProfileUpdateDto.getPassword().isBlank() && !userProfileUpdateDto.getConfirmPassword().isBlank()) {
             user.setPassword(this.passwordEncoder.encode(userProfileUpdateDto.getPassword()));
         }
 
-        if(!userProfileUpdateDto.getUsername().isBlank()){
+        if ( userProfileUpdateDto.getUsername()!=null && !userProfileUpdateDto.getUsername().isBlank()) {
             user.setUsername(userProfileUpdateDto.getUsername());
         }
         this.userRepository.saveAndFlush(user);
@@ -201,7 +194,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void buyMembership(String loggedUserName, MembershipType membershipType) {
-        Membership byMembershipType = this.membershipRepository.findByMembershipType(membershipType);
+        Membership byMembershipType = this.membershipRepository.findByMembershipType(membershipType).orElseThrow();
         User user = this.userRepository.findByUsername(loggedUserName).orElseThrow(() -> new ObjectNotFoundException("Something went wrong with the logged user !"));
 
         user.setMembership(byMembershipType);
@@ -223,7 +216,7 @@ public class UserServiceImpl implements UserService {
         user.setMembership(null);
         user.setMembershipStartDate(null);
         user.setMembershipEndDate(null);
-        user.getRoles().remove(this.roleRepository.findByRoleType(RoleType.MEMBER));
+        user.setRoles(Set.of(this.roleRepository.findByRoleType(RoleType.USER)));
         this.userRepository.saveAndFlush(user);
     }
 }
