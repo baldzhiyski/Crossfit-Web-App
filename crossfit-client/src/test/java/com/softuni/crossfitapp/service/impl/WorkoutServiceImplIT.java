@@ -59,6 +59,8 @@ public class WorkoutServiceImplIT {
     public void tearDown(){
         this.testData.deleteWeeklyTrainingAndCoach();
         this.testData.deleteUsers();
+        this.testData.deleteMemberships();
+        this.testData.deleteCoaches();
     }
 
     @Test

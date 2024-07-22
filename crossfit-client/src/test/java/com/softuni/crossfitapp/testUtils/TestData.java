@@ -163,7 +163,6 @@ public class TestData {
     @Transactional
     public void deleteWeeklyTrainingAndCoach() {
         this.weeklyTrainingRepository.deleteAll();
-        this.coachRepository.deleteAll();
     }
     @Transactional
     public WeeklyTraining createWeeklyTraining() {

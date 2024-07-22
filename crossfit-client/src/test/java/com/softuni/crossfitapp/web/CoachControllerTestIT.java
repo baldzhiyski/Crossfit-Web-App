@@ -99,6 +99,7 @@ public class CoachControllerTestIT {
     public void tearDown(){
         data.deleteUsers();
         data.deleteWeeklyTrainingAndCoach();
+        data.deleteCoaches();
         greenMail.stop();
     }
 

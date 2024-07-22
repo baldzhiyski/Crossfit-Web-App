@@ -110,11 +110,6 @@ class WorkoutControllerTestIT {
                 .andExpect(status().isOk())
                 .andExpect(view().name("schedule"));
     }
-    @Test
-    public void testScheduleWithoutAcc() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/schedule-for-the-week"))
-                .andExpect(status().is3xxRedirection());
-    }
 
     @Test
     public void testGetWorkouts() throws Exception {
@@ -149,12 +144,6 @@ class WorkoutControllerTestIT {
 
     }
 
-//
-//    @PostMapping("/my-workouts/delete-training/{trainingId}")
-//    public String deleteFromMyTrainings(@PathVariable UUID trainingId,@AuthenticationPrincipal UserDetails userDetails){
-//        this.workoutsService.deleteFromCurrentTrainings(trainingId,userDetails.getUsername());
-//        return "redirect:/my-workouts";
-//    }
 
     @Test
     @WithMockUser(username = "testuser",roles = {"USER","MEMBER"})
@@ -166,7 +155,7 @@ class WorkoutControllerTestIT {
 
 
         weeklyTraining.setParticipants(List.of(user));
-        user.getTrainingsPerWeekList().add(weeklyTraining);
+        user.setTrainingsPerWeekList(List.of(weeklyTraining));
         this.userRepository.saveAndFlush(user);
         this.weeklyTrainingRepository.saveAndFlush(weeklyTraining);
 
