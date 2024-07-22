@@ -60,6 +60,7 @@ public class UserRegistrationControllerTest {
         Mockito.when(cloudinaryService.uploadPhoto(any(org.springframework.web.multipart.MultipartFile.class), anyString())).thenReturn("http://mockurl.com/mockimage.jpg");
     }
 
+
     @AfterEach
     void tearDown() {
         greenMail.stop();

@@ -17,6 +17,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.modelmapper.ModelMapper;
 import org.springframework.context.ApplicationEventPublisher;
 
 import java.util.*;
@@ -39,6 +40,9 @@ class CoachServiceImplTest {
     @Mock
     private WeeklyTrainingRepository weeklyTrainingRepository;
 
+    @Mock
+    private ModelMapper mapper;
+
 
     private CoachService coachService;
 
@@ -46,7 +50,7 @@ class CoachServiceImplTest {
 
     @BeforeEach
     public void setUp(){
-        this.coachService = new CoachServiceImpl( applicationEventPublisher, userRepository,  roleRepository,  coachRepository, weeklyTrainingRepository);
+        this.coachService = new CoachServiceImpl( applicationEventPublisher, userRepository,  roleRepository,  coachRepository, weeklyTrainingRepository,mapper);
         coachDisplayDtos = getSomeCoachesDtos();
     }
 

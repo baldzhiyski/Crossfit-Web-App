@@ -30,7 +30,6 @@ public class Role  extends BaseEntity{
     private UUID uuid;
 
     public Role(RoleType roleType){
-        this.roleType = roleType;
+        this.roleType=roleType;
     }
-
 }

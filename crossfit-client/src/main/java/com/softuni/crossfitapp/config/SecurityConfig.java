@@ -51,7 +51,7 @@ public class SecurityConfig {
                         .requestMatchers("/workouts").permitAll()
                         .requestMatchers("/users/my-workouts").hasRole("USER")
                         .requestMatchers("/profiles-dashboard/{id}").hasRole("ADMIN")
-                        .requestMatchers("/weekly-schedule").hasRole("COACH")
+                        .requestMatchers("/weekly-schedule/{username}").hasRole("COACH")
                         .requestMatchers("/about-us").permitAll()
                         .requestMatchers("/users/updateAcc").hasRole("USER")
                         .requestMatchers("/users/add-event").hasRole("USER")

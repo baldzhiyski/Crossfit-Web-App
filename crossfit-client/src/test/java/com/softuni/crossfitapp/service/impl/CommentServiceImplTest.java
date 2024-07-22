@@ -82,7 +82,7 @@ class CommentServiceImplTest {
         commentService.addComment(addCommentDto, trainingType);
 
         // Assert
-        Mockito.verify(commentRepository).save(any(Comment.class));
+        Mockito.verify(commentRepository).saveAndFlush(any(Comment.class));
 
     }
 

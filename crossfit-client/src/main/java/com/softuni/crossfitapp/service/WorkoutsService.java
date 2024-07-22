@@ -31,7 +31,6 @@ public interface WorkoutsService {
 
     void deleteFromCurrentTrainings(UUID trainingId, String loggedUserUsername);
 
-    List<WeeklyTrainingDto> getUpcomingTrainings(String usernameOfCoach);
 
     List<WeeklyTraining> getTrainingsWithDateBefore(LocalDate currentDate);
 

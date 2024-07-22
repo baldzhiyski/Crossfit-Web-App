@@ -190,21 +190,6 @@ public class WorkoutServiceImpl implements WorkoutsService {
     }
 
     @Override
-    public List<WeeklyTrainingDto> getUpcomingTrainings(String usernameOfCoach) {
-
-        Optional<Coach> byUsername = this.coachRepository.findByUsername(usernameOfCoach);
-
-        if(byUsername.isEmpty()){
-            throw  new AccessOnlyForCoaches("This functionality is only for coaches available !");
-        }
-
-        return byUsername.get().getTrainingsPerWeek()
-                .stream()
-                .map(weeklyTraining -> this.mapper.map(weeklyTraining,WeeklyTrainingDto.class))
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public List<WeeklyTraining> getTrainingsWithDateBefore(LocalDate currentDate) {
         return weeklyTrainingRepository.findAll().stream()
                 .filter(training -> training.getDate().isBefore(currentDate))
