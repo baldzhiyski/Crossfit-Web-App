@@ -19,6 +19,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/crossfit-community")
+@CrossOrigin(origins = "http://localhost:8080")
 public class EventsController {
     private static final Logger LOGGER = LoggerFactory.getLogger(EventsController.class);
 
