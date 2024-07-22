@@ -5,6 +5,7 @@ import com.softuni.crossfitapp.domain.dto.trainings.WeeklyTrainingDto;
 import com.softuni.crossfitapp.domain.entity.Training;
 import com.softuni.crossfitapp.domain.entity.enums.TrainingType;
 import com.softuni.crossfitapp.service.CommentService;
+import com.softuni.crossfitapp.service.UserService;
 import com.softuni.crossfitapp.service.WorkoutsService;
 import com.softuni.crossfitapp.service.schedulers.CreationWeeklyTrainings;
 import com.softuni.crossfitapp.web.aop.WarnIfExecutionExceeds;
@@ -35,10 +36,13 @@ public class WorkoutController {
 
     private CreationWeeklyTrainings creationWeeklyTrainings;
 
-    public WorkoutController(WorkoutsService workoutsService, CommentService commentService, CreationWeeklyTrainings creationWeeklyTrainings) {
+    private UserService userService;
+
+    public WorkoutController(WorkoutsService workoutsService, CommentService commentService, CreationWeeklyTrainings creationWeeklyTrainings, UserService userService) {
         this.workoutsService = workoutsService;
         this.commentService = commentService;
         this.creationWeeklyTrainings = creationWeeklyTrainings;
+        this.userService = userService;
     }
 
     @GetMapping("/workouts")
@@ -51,10 +55,12 @@ public class WorkoutController {
         if (!model.containsAttribute("currentTrainingDto")) {
             model.addAttribute("currentTrainingDto", workoutsService.getTrainingDto(TrainingType.valueOf(trainingType)));
         }
-        model.addAttribute("displayedCommentsForTheSectionDtos", this.commentService.getAllCommentsOnCurrentTrainingType(TrainingType.valueOf(trainingType)));
+
+//        model.addAttribute("displayedCommentsForTheSectionDtos", this.commentService.getAllCommentsOnCurrentTrainingType(TrainingType.valueOf(trainingType)));
         model.addAttribute("trainingType", trainingType);
         String username = currentUser.getUsername() != null ? currentUser.getUsername() : "";
         model.addAttribute("loggedUserUsername",username);
+        model.addAttribute("userAccDisabled",userService.getLoggedUserCommentPermission(currentUser.getUsername()));
         model.addAttribute("isAuthenticated", true);
         return "workout-details";
     }

@@ -41,14 +41,14 @@ function createCommentElement(data, trainingType) {
 
     const avatar = document.createElement('img');
     avatar.classList.add('rounded-circle', 'shadow-1-strong', 'me-3');
-    avatar.src = 'https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(32).webp';
+    avatar.src = data.authorImageUrl;
     avatar.alt = 'avatar';
     avatar.width = 65;
     avatar.height = 65;
 
     let commentsTitle = document.querySelector(".comments-title");
     let commentCount = parseInt(commentsTitle.textContent.match(/\d+/)[0]) +1;
-    commentsTitle.textContent = `Comments: ${commentCount}`;
+    commentsTitle.textContent = `Recent comments: ${commentCount}`;
 
 
     const card = document.createElement('div');
@@ -70,13 +70,13 @@ function createCommentElement(data, trainingType) {
     const likeDislikeButtons = document.createElement('div');
     likeDislikeButtons.classList.add('like-dislike-buttons');
 
-    const likeButton = createLikeDislikeButton('like-button', data.id, trainingType, data.likes, 'thumbs-up');
-    const dislikeButton = createLikeDislikeButton('dislike-button', data.id, trainingType, data.dislikes, 'thumbs-down');
+    const likeButton = createLikeDislikeButton('like-button', data.uuid, trainingType, data.likes, 'thumbs-up');
+    const dislikeButton = createLikeDislikeButton('dislike-button', data.uuid, trainingType, data.dislikes, 'thumbs-down');
 
     // Add delete button
     const deleteButton = document.createElement('button');
     deleteButton.classList.add('delete-button');
-    deleteButton.dataset.commentId = data.id;
+    deleteButton.dataset.commentId = data.uuid;
     deleteButton.dataset.trainingType = trainingType;
     deleteButton.innerHTML = '<i class="fas fa-trash-alt me-1"></i>';
 
@@ -121,6 +121,10 @@ function attachDeleteListeners() {
             const commentId = this.dataset.commentId;
             const trainingType = this.dataset.trainingType;
 
+            // Debugging logs
+            console.log('Deleting comment with ID:', commentId);
+            console.log('Training Type:', trainingType);
+
             fetch(`http://localhost:8080/workouts/details/${trainingType}/comment/${commentId}`, {
                 method: 'DELETE',
                 headers: {
@@ -136,6 +140,7 @@ function attachDeleteListeners() {
 
                         // Remove the comment element from the DOM
                         this.closest('.d-flex').remove();
+                        location.reload();
                     } else {
                         console.error('Error deleting comment:', response);
                     }
@@ -191,7 +196,30 @@ function updateCommentUI(commentId, data) {
         console.log('Comment element not found for ID:', commentId);
     }
 }
+function fetchComments() {
+    const trainingType = document.querySelector('meta[name="trainingType"]').getAttribute('content');
+
+    fetch(`http://localhost:8080/workouts/details/${trainingType}/comments`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="_csrf"]').getAttribute('content')
+        }
+    })
+        .then(response => response.json())
+        .then(comments => {
+            comments.forEach(comment => {
+                const commentElement = createCommentElement(comment, trainingType);
+                document.querySelector('.be-comment-block').appendChild(commentElement);
+            });
+            attachDeleteListeners();
+            attachLikeDislikeListeners();
+        })
+        .catch(error => console.error('Error:', error));
+}
+
 
 // Initial call to set up event listeners for existing comments
+fetchComments();
 attachDeleteListeners();
 attachLikeDislikeListeners();

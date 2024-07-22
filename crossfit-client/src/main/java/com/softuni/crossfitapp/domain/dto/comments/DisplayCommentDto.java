@@ -17,6 +17,7 @@ public class DisplayCommentDto {
     private String authorFirstName;
     private String authorLastName;
     private String authorUsername;
+    private String authorImageUrl;
     private String text;
     private LocalDate date;
     private  int likes;

@@ -12,6 +12,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -25,10 +26,18 @@ public class CommentController {
         this.mapper = mapper;
     }
 
+    @GetMapping("/workouts/details/{trainingType}/comments")
+    public ResponseEntity<List<DisplayCommentDto>> getAllComments(@PathVariable TrainingType trainingType){
+        List<DisplayCommentDto> allCommentsOnCurrentTrainingType = commentService.getAllCommentsOnCurrentTrainingType(trainingType);
+
+        return ResponseEntity.ok(allCommentsOnCurrentTrainingType);
+    }
+
     @PostMapping("/workouts/details/{trainingType}/comment/like/{commentId}")
     public ResponseEntity<DisplayCommentDto> likeComment(
+            @PathVariable TrainingType trainingType,
             @PathVariable UUID commentId,
-            @PathVariable String trainingType, // Changed to String if `TrainingType` is an enum
+            // Changed to String if `TrainingType` is an enum
             @AuthenticationPrincipal UserDetails userDetails) {
             // Call the service method to like the comment
            commentService.likeComment(commentId, userDetails.getUsername());
@@ -40,8 +49,8 @@ public class CommentController {
 
     @PostMapping("/workouts/details/{trainingType}/comment/dislike/{commentId}")
     public ResponseEntity<DisplayCommentDto> dislikeComment(
+            @PathVariable String trainingType,
             @PathVariable UUID commentId,
-            @PathVariable String trainingType, // Changed to String if `TrainingType` is an enum
             @AuthenticationPrincipal UserDetails userDetails) {
         // Call the service method to like the comment
         commentService.dislike(commentId, userDetails.getUsername());
@@ -53,10 +62,10 @@ public class CommentController {
 
     @PostMapping("/workouts/details/comment/{trainingType}")
     public ResponseEntity<DisplayCommentDto> postComment(
-            @PathVariable String trainingType,
+            @PathVariable TrainingType trainingType,
             @RequestBody AddCommentDto addCommentDto) {
         // Add the comment using the service
-        Comment newComment = this.commentService.addComment(addCommentDto, TrainingType.valueOf(trainingType));
+        Comment newComment = this.commentService.addComment(addCommentDto, trainingType);
 
         // Map the new comment to a DTO
         DisplayCommentDto response = mapper.map(newComment, DisplayCommentDto.class);
@@ -67,6 +76,7 @@ public class CommentController {
 
     @DeleteMapping("/workouts/details/{trainingType}/comment/{commentId}")
     public ResponseEntity<Void> deleteComment(
+            @PathVariable TrainingType trainingType,
             @PathVariable UUID commentId,
             @AuthenticationPrincipal UserDetails userDetails) {
         commentService.deleteComment(commentId, userDetails.getUsername());

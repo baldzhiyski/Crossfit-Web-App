@@ -141,6 +141,11 @@ public class SeedServiceImpl implements SeedService {
     @Override
     @Transactional
     public void seedAdmins() throws FileNotFoundException {
+        if (this.userRepository.findAll().stream()
+                .anyMatch(user -> user.getRoles().stream()
+                        .anyMatch(role -> role.getRoleType().equals(RoleType.ADMIN)))) {
+            return;
+        }
         FileReader fileReader = new FileReader(PATH_TO_ADMINS);
         List<User> admins = Arrays.stream(this.converter.fromJson(fileReader, SeedAdminDto[].class))
                 .map(seedAdminDto -> {
