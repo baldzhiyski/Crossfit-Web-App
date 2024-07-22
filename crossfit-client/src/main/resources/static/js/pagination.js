@@ -53,6 +53,7 @@ function updateEvents(data) {
                             <p><span class="ti-location-pin mr-2"></span><span>${event.address}</span></p>
                         </div>
                     </div>
+                    <p>${event.eventName}</p>
                     <p>${event.description}</p>
                 </div>
             </div>
