@@ -86,10 +86,6 @@ public class User extends BaseEntity{
     @Column
     private boolean isActive;
 
-
-    @OneToMany(mappedBy = "creator",fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)
-    private Set<Event> events;
-
     @PrePersist
     public void encodePassword() {
         if (this.password != null) {

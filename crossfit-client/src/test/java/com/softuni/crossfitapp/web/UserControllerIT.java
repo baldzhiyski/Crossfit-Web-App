@@ -90,7 +90,6 @@ public class UserControllerIT {
                 "Test Address",
                 Set.of(RoleType.USER),
                 membershipDto, // membership details if needed
-                null, // events if needed
                 null  // enrolled trainings for the week if needed
         );
 

@@ -43,14 +43,9 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="profile-work">
-                    <p>Most visited types of trainings :</p>
+                    <p>Currently enrolled for :</p>
                     <div th:each="training : *{enrolledTrainingsForTheWeek()}">
-                        <a th:text="${training.trainingType}">Training Type</a><br/>
-                    </div>
-
-                    <p>Enrolled in following events : </p>
-                    <div th:each="event : *{events()}">
-                        <a th:text="${event.eventName}">Event Name</a><br/>
+                        <a th:text="${'Type of training: ' + training.trainingType + ',  Date: ' + training.date}">Training Type</a><br/>
                     </div>
                 </div>
             </div>

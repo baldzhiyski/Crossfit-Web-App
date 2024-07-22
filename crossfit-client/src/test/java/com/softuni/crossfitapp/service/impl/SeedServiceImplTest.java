@@ -74,15 +74,15 @@ class SeedServiceImplTest {
         assertThat(membershipRepository.count()).isGreaterThan(0);
 
         // Example: Assert a specific membership is present
-        Membership membership = membershipRepository.findByMembershipType(MembershipType.ELITE);
+        Membership membership = membershipRepository.findByMembershipType(MembershipType.ELITE).orElseThrow();
         assertThat(membership).isNotNull();
         assertThat(membership.getPrice()).isEqualTo(130L); // Adjust based on your data
 
-        Membership membership2 = membershipRepository.findByMembershipType(MembershipType.PREMIUM);
+        Membership membership2 = membershipRepository.findByMembershipType(MembershipType.PREMIUM).orElseThrow();
         assertThat(membership2).isNotNull();
         assertThat(membership2.getPrice()).isEqualTo(100L); // Adjust based on your data
 
-        Membership membership3 = membershipRepository.findByMembershipType(MembershipType.UNLIMITED);
+        Membership membership3 = membershipRepository.findByMembershipType(MembershipType.UNLIMITED).orElseThrow();
         assertThat(membership3).isNotNull();
         assertThat(membership3.getPrice()).isEqualTo(400L); // Adjust based on your data
     }

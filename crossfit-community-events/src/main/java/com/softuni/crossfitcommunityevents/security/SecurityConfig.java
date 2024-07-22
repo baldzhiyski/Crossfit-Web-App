@@ -18,7 +18,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         authorize ->
-                                authorize.requestMatchers(HttpMethod.GET, "/offers/**").permitAll()
+                                authorize.requestMatchers(HttpMethod.GET, "/crossfit-community/**").permitAll()
+                                        .requestMatchers(HttpMethod.PUT,"/crossfit-community/events/publish").permitAll()
                                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

@@ -128,7 +128,7 @@ public class SeedServiceImpl implements SeedService {
                         Set<Role> roles = getRoles(seedCoachesUserProfileDto.getRoles());
                         user.setCountry(countryRepository.findByCode(seedCoachesUserProfileDto.getNationality()).orElseThrow(()-> new ObjectNotFoundException("No such country in the db !")));
                         user.setRoles(roles);
-                        Membership byMembershipType = this.membershipRepository.findByMembershipType(seedCoachesUserProfileDto.getMembership().getMembershipType());
+                        Membership byMembershipType = this.membershipRepository.findByMembershipType(seedCoachesUserProfileDto.getMembership().getMembershipType()).orElseThrow();
                         user.setMembership(byMembershipType);
                         return user;
                     }).collect(Collectors.toList());

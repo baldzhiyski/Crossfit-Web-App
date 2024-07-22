@@ -50,22 +50,6 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Page<EventDetailsDto> getAllEvents(Pageable pageable) {
-        String uriString = eventsAPIConfig.getAllEvents();
-        PageResponse<EventDetailsDto> events = restClient.get()
-                .uri(uriString+ "?page={page}&size={size}&sort=id,asc",
-                        pageable.getPageNumber(),
-                        pageable.getPageSize(),
-                        pageable.getSort())
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .body(new ParameterizedTypeReference<>() {
-                });
-
-        return new PageImpl<>(events.getContent(), pageable, events.getPage().totalElements());
-    }
-
-    @Override
     public EventDetailsDto getEventDetails(UUID id) {
 
         return restClient

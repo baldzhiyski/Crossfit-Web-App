@@ -18,9 +18,6 @@ public interface WorkoutsService {
     void seedTrainings();
 
     TrainingDetailsDto getTrainingDto(TrainingType trainingType);
-
-    void deleteWeeklyTrainings();
-
     void populateWeeklyTrainings();
 
     List<WeeklyTrainingDto> getWeeklyTrainingsSpecificDay(DayOfWeek dayOfWeek);

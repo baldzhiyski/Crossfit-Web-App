@@ -21,7 +21,7 @@ public record UserProfileDto(String fullName,
                              String address,
                              Set<RoleType> roles,
                              MembershipProfilePageDto membership
-                             , Set<EventDto> events ,
+                             ,
                              Set<TrainingDto> enrolledTrainingsForTheWeek)
 {
 }

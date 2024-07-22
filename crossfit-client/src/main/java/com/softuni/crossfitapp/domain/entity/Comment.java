@@ -22,7 +22,7 @@ import static java.sql.Types.VARCHAR;
 @Setter
 @NoArgsConstructor
 public class Comment extends BaseEntity{
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
     private User author;
 
     @Column
@@ -54,7 +54,7 @@ public class Comment extends BaseEntity{
     )
     private List<User> likedBy ;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(
             name = "comment_dislikes",
             joinColumns = @JoinColumn(name = "comment_id"),
