@@ -13,7 +13,5 @@ public interface EventService {
     void addEvent(AddEventDto eventDetailsDto);
 
     List<EventDetailsDto> getTopThreeEvents();
-    Page<EventDetailsDto> getAllEvents(Pageable pageable);
-
     EventDetailsDto getEventDetails(UUID id);
 }

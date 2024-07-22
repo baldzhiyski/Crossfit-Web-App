@@ -8,12 +8,20 @@ body{
     border-radius: 0.5rem;
     background: #D9DDDC;
 }
-.profile-img{
-    text-align: center;
+.profile-img {
+    width: 300px; /* Adjust size as needed */
+    height: 300px; /* Must be the same as width for a perfect circle */
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-.profile-img img{
-    width: 70%;
-    height: 100%;
+
+.profile-img img {
+    width: 100%; /* Ensure the image covers the container */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover; /* Cover the container without stretching */
 }
 .profile-img .file {
     position: relative;

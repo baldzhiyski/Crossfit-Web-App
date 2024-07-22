@@ -92,49 +92,13 @@
     <!-- Three columns of events -->
     <!-- Three columns of events -->
     <!-- Three columns of events -->
-    <div class="row">
-      <div class="col-lg-4" th:each="event : ${events.content}">
-        <div class="single_event position-relative">
-          <!-- Event Video -->
-          <div class="event_video">
-            <iframe th:src="@{'https://www.youtube.com/embed/' + ${event.videoUrl}}"
-                    frameborder="0" allowfullscreen></iframe>
-          </div>
-          <!-- Event Details -->
-          <div class="event_details">
-            <div class="d-flex mb-4">
-              <div class="date"><span th:text="${#dates.format(event.date, 'd')}"
-                                      class="font-weight-bold"></span>
-                <span th:text="${#dates.format(event.date, 'MMM')}"
-                      class="text-uppercase"></span></div>
-              <div class="time-location">
-                <p><span class="ti-time mr-2"></span>
-                  <span th:text="${#dates.format(event.date, 'hh:mm a')}"></span></p>
-                <p><span class="ti-location-pin mr-2"></span>
-                  <span th:text="${event.address}"></span></p>
-              </div>
-            </div>
-            <!-- Event Description -->
-            <p th:text="${event.description}"></p>
-          </div>
-        </div>
-      </div><!-- /.col-lg-4 -->
-    </div><!-- /.row -->
-      <div class="d-flex justify-content-between mt-4">
-          <div th:if="${events.hasPrevious()}">
-              <a class="btn btn-primary mr-auto"
-                 th:attr="href=@{${events.previousPageable()?.pageNumber == 0} ? '/about-us?page=0' : '/about-us?page=' + ${events.previousPageable()?.pageNumber}}">
-                  Previous Page
-              </a>
-          </div>
 
-          <div th:if="${events.hasNext()}">
-              <a class="btn btn-primary ml-auto"
-                 th:attr="href=@{/about-us(page=${events.nextPageable()?.pageNumber})}">
-                  Next Page
-              </a>
-          </div>
-      </div>
+    <div id="events-container" class="row"></div>
+
+    <div class="d-flex justify-content-between mt-4">
+      <button id="prev-page" class="btn btn-primary" onclick="loadPage(currentPage - 1)">Previous Page</button>
+      <button id="next-page" class="btn btn-primary" onclick="loadPage(currentPage + 1)">Next Page</button>
+    </div>
     <!-- Some Quotes, Maybe we can display when each user add a quotes and display random three -->
 
     <hr class="featurette-divider">
@@ -184,5 +148,6 @@
   </footer>
 </main>
 <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/js/pagination.js}"></script>
   </body>
 </html>

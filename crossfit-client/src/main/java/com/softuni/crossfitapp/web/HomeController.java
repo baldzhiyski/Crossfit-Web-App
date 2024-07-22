@@ -34,9 +34,7 @@ public class HomeController {
 
 
     @GetMapping("/about-us")
-    public String about(Model model,@PageableDefault(size = 3) Pageable pageable){
-        Page<EventDetailsDto> topThreeEvents = this.eventService.getAllEvents(pageable);
-        model.addAttribute("events", topThreeEvents);
+    public String about(Model model){
         return "about";
     }
 
