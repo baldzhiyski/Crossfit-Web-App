@@ -135,6 +135,7 @@ class WorkoutControllerTestIT {
 
         User user = this.userRepository.findByUsername("testuser").orElseThrow();
         user.setMembership(data.createMembership());
+        user.setWeeklyTrainingsCount(7);
         this.userRepository.saveAndFlush(user);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/joinTraining/{trainingId}",weeklyTraining.getUuid())

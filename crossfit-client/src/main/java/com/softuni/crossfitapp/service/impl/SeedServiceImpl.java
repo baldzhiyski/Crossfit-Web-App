@@ -130,6 +130,7 @@ public class SeedServiceImpl implements SeedService {
                         user.setRoles(roles);
                         Membership byMembershipType = this.membershipRepository.findByMembershipType(seedCoachesUserProfileDto.getMembership().getMembershipType()).orElseThrow();
                         user.setMembership(byMembershipType);
+                        user.setWeeklyTrainingsCount(24);
                         return user;
                     }).collect(Collectors.toList());
 

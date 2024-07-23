@@ -28,35 +28,36 @@ public class RestConfig {
     }
 
     @Bean("eventsRestClient")
-    public RestClient eventsRestClient(EventsAPIConfig eventsAPIConfig, ClientHttpRequestInterceptor requestInterceptor) {
+    public RestClient eventsRestClient(EventsAPIConfig eventsAPIConfig) {
+//        , ClientHttpRequestInterceptor requestInterceptor
         return RestClient
                 .builder()
                 .defaultHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
-                .requestInterceptor(requestInterceptor)
+//                .requestInterceptor(requestInterceptor)
                 .build();
     }
 
-    @Bean
-    public ClientHttpRequestInterceptor requestInterceptor(UserService userService,
-                                                           JwtService jwtService) {
-        return (r, b, e) -> {
-            // put the logged user details into bearer token
-            userService
-                    .getCurrentUser()
-                    .ifPresent(cud -> {
-                        String bearerToken = jwtService.generateToken(
-                                cud.getUuid().toString(),//
-                                Map.of(
-                                        "roles",
-                                        cud.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList(),
-                                        "user",
-                                        cud.getUuid().toString()
-                                )
-                        );
-                        r.getHeaders().setBearerAuth(bearerToken);
-                    });
-
-            return e.execute(r, b);
-        };
-    }
+//    @Bean
+//    public ClientHttpRequestInterceptor requestInterceptor(UserService userService,
+//                                                           JwtService jwtService) {
+//        return (r, b, e) -> {
+//            // put the logged user details into bearer token
+//            userService
+//                    .getCurrentUser()
+//                    .ifPresent(cud -> {
+//                        String bearerToken = jwtService.generateToken(
+//                                cud.getUuid().toString(),//
+//                                Map.of(
+//                                        "roles",
+//                                        cud.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList(),
+//                                        "user",
+//                                        cud.getUuid().toString()
+//                                )
+//                        );
+//                        r.getHeaders().setBearerAuth(bearerToken);
+//                    });
+//
+//            return e.execute(r, b);
+//        };
+//    }
 }

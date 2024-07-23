@@ -24,6 +24,37 @@ body {
     background-color: #222;
 
 }
+/* Basic styling for the boxes */
+.box {
+    background-color: #f8f9fa; /* Light background color */
+    border: 1px solid #ddd; /* Border color */
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px;
+    transition: all 0.3s ease; /* Smooth transition effect */
+}
+
+/* Hover effect */
+.box:hover {
+    background-color: #e9ecef; /* Slightly darker background color */
+    border-color: #ccc; /* Darker border color */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+    transform: scale(1.05); /* Slightly increase the size of the box */
+}
+
+/* Hover effect for the icon */
+.box i {
+    transition: color 0.3s ease;
+}
+
+.box:hover i {
+    color: #007bff; /* Change icon color on hover */
+}
+
+/* Optional: Hover effect for the link */
+a:hover {
+    text-decoration: none; /* Remove underline on hover */
+}
+
 
 .title {
     color: #fff;

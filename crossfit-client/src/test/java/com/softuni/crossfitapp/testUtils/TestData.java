@@ -98,6 +98,7 @@ public class TestData {
         user.setTrainingsPerWeekList(new ArrayList<>());
         user.setMembershipStartDate(LocalDate.now());
         user.setMembershipEndDate(LocalDate.now());
+        user.setWeeklyTrainingsCount(0);
         user.setActive(true);
 
         return userRepository.saveAndFlush(user);
@@ -173,7 +174,7 @@ public class TestData {
         WeeklyTraining weeklyTraining = new WeeklyTraining();
 
         weeklyTraining.setTime(LocalTime.MIDNIGHT);
-        weeklyTraining.setDate(LocalDate.now());
+        weeklyTraining.setDate(LocalDate.now().plusDays(2));
         weeklyTraining.setCoach(coach);
         weeklyTraining.setImageUrl("imag.jpeg");
         weeklyTraining.setParticipants(new ArrayList<>());
@@ -219,4 +220,5 @@ public class TestData {
 
 
     }
+
 }

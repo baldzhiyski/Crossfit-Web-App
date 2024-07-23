@@ -40,4 +40,6 @@ public interface UserService {
     boolean getLoggedUserCommentPermission(String username);
 
     void enableOrDisableAcc(UUID accountUUID,String action);
+
+    void resetAllowedTrainingsPerWeek();
 }

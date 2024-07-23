@@ -28,7 +28,7 @@ import static java.sql.Types.VARCHAR;
 @AllArgsConstructor
 public class WeeklyTraining extends BaseEntity{
 
-    @ManyToMany(mappedBy = "trainingsPerWeekList",fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
+    @ManyToMany(mappedBy = "trainingsPerWeekList",fetch = FetchType.EAGER,cascade = {CascadeType.MERGE,CascadeType.REMOVE})
     private List<User> participants;
 
     @Column

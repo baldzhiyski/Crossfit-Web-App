@@ -7,9 +7,7 @@ import com.softuni.crossfitapp.domain.dto.trainings.WeeklyTrainingDto;
 import com.softuni.crossfitapp.domain.entity.*;
 import com.softuni.crossfitapp.domain.entity.enums.RoleType;
 import com.softuni.crossfitapp.domain.entity.enums.TrainingType;
-import com.softuni.crossfitapp.exceptions.AccessOnlyForCoaches;
-import com.softuni.crossfitapp.exceptions.FullTrainingCapacityException;
-import com.softuni.crossfitapp.exceptions.ObjectNotFoundException;
+import com.softuni.crossfitapp.exceptions.*;
 import com.softuni.crossfitapp.repository.*;
 import com.softuni.crossfitapp.service.WorkoutsService;
 import org.modelmapper.ModelMapper;
@@ -155,6 +153,7 @@ public class WorkoutServiceImpl implements WorkoutsService {
 
         validate(currentUser, weeklyTraining);
         currentUser.getTrainingsPerWeekList().add(weeklyTraining);
+        currentUser.setWeeklyTrainingsCount(currentUser.getWeeklyTrainingsCount()-1);
 
         this.userRepository.saveAndFlush(currentUser);
     }
@@ -175,9 +174,25 @@ public class WorkoutServiceImpl implements WorkoutsService {
         User currentUser = this.userRepository.findByUsername(loggedUserUsername).orElseThrow(() -> new ObjectNotFoundException("Invalid logged user credentials !"));
         WeeklyTraining weeklyTraining = this.weeklyTrainingRepository.findByUuid(trainingId).orElseThrow(() -> new ObjectNotFoundException("Ïnvalid weekly training id!"));
 
+        // If we want do delete 3 hours before the training , we cannot !!!
+        if (isWithinThreeHours(weeklyTraining.getDate(),weeklyTraining.getTime())) {
+            throw new CannotDeleteTrainingException("You cannot delete a training session within 3 hours of its start time!");
+        }
+
+        currentUser.setWeeklyTrainingsCount(currentUser.getWeeklyTrainingsCount() + 1);
         currentUser.getTrainingsPerWeekList().remove(weeklyTraining);
         this.userRepository.saveAndFlush(currentUser);
 
+    }
+
+
+    // If a user tries to delete training that will start in 3 or less hours , an exception will be thrown
+    private boolean isWithinThreeHours(LocalDate date, LocalTime startTime) {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime trainingStartDateTime = LocalDateTime.of(date, startTime);
+
+        // Check if the current time is within 3 hours of the training start time
+        return now.isAfter(trainingStartDateTime.minusHours(3));
     }
 
     @Override
@@ -240,20 +255,10 @@ public class WorkoutServiceImpl implements WorkoutsService {
         }
     }
 
-    private static void validate(User currentUser, WeeklyTraining weeklyTraining) {
-        Membership membership = currentUser.getMembership();
-        Integer maxTrainingSessionsPerWeek;
-        switch (membership.getMembershipType()){
-            case BASIC -> maxTrainingSessionsPerWeek = 3;
-            case ELITE -> maxTrainingSessionsPerWeek = 7;
-            case PREMIUM -> maxTrainingSessionsPerWeek =5;
-            case UNLIMITED -> maxTrainingSessionsPerWeek = 24;
-            default -> throw new ObjectNotFoundException("Invalid membership type when trying to enroll for training");
-        }
-
+    private static void validate(User currentUser,WeeklyTraining weeklyTraining) {
         // If the plan is not supporting more trainings than the user wants , go to the access denied page
-        if(currentUser.getTrainingsPerWeekList().size() == maxTrainingSessionsPerWeek){
-            throw new FullTrainingCapacityException("There are no more spots available in the training !");
+        if(currentUser.getWeeklyTrainingsCount() == 0){
+            throw new WeeklyTrainingsExhaustedException("You have used all your trainings for this week!");
         }
 
         if(weeklyTraining.getParticipants().size() ==5){

@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserService {
     public List<UserAdminPageDto> displayAllUsersAcc() {
         return this.userRepository.findAll()
                 .stream()
-                .map(user -> this.mapper.map(user,UserAdminPageDto.class))
+                .map(user -> this.mapper.map(user, UserAdminPageDto.class))
                 .collect(Collectors.toList());
     }
 
@@ -143,19 +143,19 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new ObjectNotFoundException("User not found with username: " + username));
 
         // Update only the fields that are not null or not empty in the DTO
-        if (userProfileUpdateDto.getUsername()!=null && !userProfileUpdateDto.getFirstName().isBlank()) {
+        if (userProfileUpdateDto.getUsername() != null && !userProfileUpdateDto.getFirstName().isBlank()) {
             user.setFirstName(userProfileUpdateDto.getFirstName());
         }
-        if (userProfileUpdateDto.getLastName()!=null && !userProfileUpdateDto.getLastName().isBlank()) {
+        if (userProfileUpdateDto.getLastName() != null && !userProfileUpdateDto.getLastName().isBlank()) {
             user.setLastName(userProfileUpdateDto.getLastName());
         }
-        if ( userProfileUpdateDto.getEmail()!=null && !userProfileUpdateDto.getEmail().isBlank()) {
+        if (userProfileUpdateDto.getEmail() != null && !userProfileUpdateDto.getEmail().isBlank()) {
             user.setEmail(userProfileUpdateDto.getEmail());
         }
-        if (userProfileUpdateDto.getAddress()!=null && !userProfileUpdateDto.getAddress().isBlank()) {
+        if (userProfileUpdateDto.getAddress() != null && !userProfileUpdateDto.getAddress().isBlank()) {
             user.setAddress(userProfileUpdateDto.getAddress());
         }
-        if (userProfileUpdateDto.getDateOfBirth()!=null && !userProfileUpdateDto.getDateOfBirth().isBlank()) {
+        if (userProfileUpdateDto.getDateOfBirth() != null && !userProfileUpdateDto.getDateOfBirth().isBlank()) {
 
             LocalDate dateOfBirth = LocalDate.parse(userProfileUpdateDto.getDateOfBirth(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             // Convert LocalDate to Instant
@@ -167,7 +167,7 @@ public class UserServiceImpl implements UserService {
             user.setBornOn(dateOfBirthDate);
         }
 
-        if ( userProfileUpdateDto.getPicture()!=null && !userProfileUpdateDto.getPicture().isEmpty()) {
+        if (userProfileUpdateDto.getPicture() != null && !userProfileUpdateDto.getPicture().isEmpty()) {
             // Delete old photo from Cloudinary
             String oldImageUrl = user.getImageUrl();
             if (oldImageUrl != null) {
@@ -181,11 +181,11 @@ public class UserServiceImpl implements UserService {
         }
 
 
-        if ( userProfileUpdateDto.getPassword()!=null &&  !userProfileUpdateDto.getPassword().isBlank() && !userProfileUpdateDto.getConfirmPassword().isBlank()) {
+        if (userProfileUpdateDto.getPassword() != null && !userProfileUpdateDto.getPassword().isBlank() && !userProfileUpdateDto.getConfirmPassword().isBlank()) {
             user.setPassword(this.passwordEncoder.encode(userProfileUpdateDto.getPassword()));
         }
 
-        if ( userProfileUpdateDto.getUsername()!=null && !userProfileUpdateDto.getUsername().isBlank()) {
+        if (userProfileUpdateDto.getUsername() != null && !userProfileUpdateDto.getUsername().isBlank()) {
             user.setUsername(userProfileUpdateDto.getUsername());
         }
         this.userRepository.saveAndFlush(user);
@@ -211,9 +211,13 @@ public class UserServiceImpl implements UserService {
         user.setMembershipDuration(membershipType);
         Role byRoleType = this.roleRepository.findByRoleType(RoleType.MEMBER);
         user.getRoles().add(byRoleType);
+
+        int maxTrainingSessionsPerWeek = getMaxTrainingSessionsPerWeekDependinOnMembershipType(byMembershipType);
+        user.setWeeklyTrainingsCount(maxTrainingSessionsPerWeek);
         this.userRepository.saveAndFlush(user);
 
     }
+
 
     @Override
     public Set<User> findAllUsersWithExpiredMembership() {
@@ -248,9 +252,9 @@ public class UserServiceImpl implements UserService {
 
     // TODO : Add event
     @Override
-    public void enableOrDisableAcc(UUID accountUUID,String action) {
+    public void enableOrDisableAcc(UUID accountUUID, String action) {
         User user = this.userRepository.findByUuid(accountUUID).orElseThrow(() -> new ObjectNotFoundException("Something went wrong with the logged user !"));
-        switch (action){
+        switch (action) {
             case "enable" -> user.setDisabled(false);
             case "disable" -> user.setDisabled(true);
             default -> throw new ObjectNotFoundException("Invalid action");
@@ -258,4 +262,29 @@ public class UserServiceImpl implements UserService {
         this.userRepository.saveAndFlush(user);
     }
 
+    @Override
+    @Transactional
+    public void resetAllowedTrainingsPerWeek() {
+        List<User> allUsers = this.userRepository.findAll().stream().toList();
+        for (User user : allUsers) {
+            Membership membership = user.getMembership();
+            int maxTrainingSessionsPerWeekDependinOnMembershipType = getMaxTrainingSessionsPerWeekDependinOnMembershipType(membership);
+            if (user.getWeeklyTrainingsCount() != maxTrainingSessionsPerWeekDependinOnMembershipType) {
+                user.setWeeklyTrainingsCount(maxTrainingSessionsPerWeekDependinOnMembershipType);
+                this.userRepository.saveAndFlush(user);
+            }
+        }
+    }
+
+    private static int getMaxTrainingSessionsPerWeekDependinOnMembershipType(Membership byMembershipType) {
+        int maxTrainingSessionsPerWeek;
+        switch (byMembershipType.getMembershipType()) {
+            case BASIC -> maxTrainingSessionsPerWeek = 3;
+            case ELITE -> maxTrainingSessionsPerWeek = 7;
+            case PREMIUM -> maxTrainingSessionsPerWeek = 5;
+            case UNLIMITED -> maxTrainingSessionsPerWeek = 24;
+            default -> throw new ObjectNotFoundException("Invalid membership type when trying to enroll for training");
+        }
+        return maxTrainingSessionsPerWeek;
+    }
 }

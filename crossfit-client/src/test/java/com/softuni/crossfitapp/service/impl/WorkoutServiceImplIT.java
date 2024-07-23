@@ -4,7 +4,9 @@ import com.softuni.crossfitapp.domain.dto.trainings.WeeklyTrainingDto;
 import com.softuni.crossfitapp.domain.entity.*;
 import com.softuni.crossfitapp.domain.entity.enums.Level;
 import com.softuni.crossfitapp.domain.entity.enums.TrainingType;
+import com.softuni.crossfitapp.exceptions.CannotDeleteTrainingException;
 import com.softuni.crossfitapp.exceptions.ObjectNotFoundException;
+import com.softuni.crossfitapp.exceptions.WeeklyTrainingsExhaustedException;
 import com.softuni.crossfitapp.repository.CoachRepository;
 import com.softuni.crossfitapp.repository.TrainingRepository;
 import com.softuni.crossfitapp.repository.UserRepository;
@@ -80,7 +82,7 @@ public class WorkoutServiceImplIT {
         User user = testData.createUser("testuser", "Ivo", "Ivov", "email123@gmail.com", "08991612383", "DE", "Deutschland");
         Membership membership = testData.createMembership();
         user.setMembership(membership);
-
+        user.setWeeklyTrainingsCount(7);
         userRepository.save(user);
 
         WeeklyTraining weeklyTraining = testData.createWeeklyTraining();
@@ -92,25 +94,65 @@ public class WorkoutServiceImplIT {
         User updatedUser = userRepository.findByUsername(user.getUsername()).orElseThrow();
         assertTrue(updatedUser.getTrainingsPerWeekList().contains(weeklyTraining), "User should be joined to the training");
     }
-
     @Test
     @Transactional
-    public void testDeleteFromCurrentTrainings() {
+    public void testJoinTrainingShouldFail() {
         User user = testData.createUser("testuser", "Ivo", "Ivov", "email123@gmail.com", "08991612383", "DE", "Deutschland");
         Membership membership = testData.createMembership();
         user.setMembership(membership);
+        user.setWeeklyTrainingsCount(0);
+        userRepository.save(user);
 
+        WeeklyTraining weeklyTraining = testData.createWeeklyTraining();
+
+        assertThrows(WeeklyTrainingsExhaustedException.class, ()->{
+            workoutService.joinCurrentTraining(weeklyTraining.getUuid(), user.getUsername());
+        });
+
+    }
+    @Test
+    @Transactional
+    public void testDeleteFromCurrentTrainingsShouldSucceed() {
+        User user = testData.createUser("testuser", "Ivo", "Ivov", "email123@gmail.com", "08991612383", "DE", "Deutschland");
+        Membership membership = testData.createMembership();
+        user.setMembership(membership);
+        user.setWeeklyTrainingsCount(7);
         userRepository.save(user);
 
         WeeklyTraining weeklyTraining = testData.createWeeklyTraining();
 
         workoutService.joinCurrentTraining(weeklyTraining.getUuid(), user.getUsername());
+        List<WeeklyTrainingDto> currentWeeklyTrainingsBefore = workoutService.getCurrentWeeklyTrainings(user.getUsername());
+        assertEquals(1,currentWeeklyTrainingsBefore.size());
         // Perform action
+
+
         workoutService.deleteFromCurrentTrainings(weeklyTraining.getUuid(), user.getUsername());
-        // Verify
-        User updatedUser = userRepository.findByUsername(user.getUsername()).orElseThrow();
-        assertFalse(updatedUser.getTrainingsPerWeekList().contains(weeklyTraining), "User should be removed from the training");
+        List<WeeklyTrainingDto> currentWeeklyTrainingsAfter = workoutService.getCurrentWeeklyTrainings(user.getUsername());
+        assertEquals(0,currentWeeklyTrainingsAfter.size());
     }
+
+
+    @Test
+    @Transactional
+    public void testDeleteFromCurrentTrainingsShouldFails() {
+        User user = testData.createUser("testuser", "Ivo", "Ivov", "email123@gmail.com", "08991612383", "DE", "Deutschland");
+        Membership membership = testData.createMembership();
+        user.setMembership(membership);
+        user.setWeeklyTrainingsCount(7);
+        userRepository.save(user);
+
+        WeeklyTraining weeklyTraining = testData.createWeeklyTraining();
+        weeklyTraining.setDate(LocalDate.now());
+
+        workoutService.joinCurrentTraining(weeklyTraining.getUuid(), user.getUsername());
+        // Perform action
+
+        assertThrows(CannotDeleteTrainingException.class,()->{
+        workoutService.deleteFromCurrentTrainings(weeklyTraining.getUuid(), user.getUsername());
+        });
+    }
+
 
     @Test
     @Transactional
@@ -139,6 +181,7 @@ public class WorkoutServiceImplIT {
         User user = testData.createUser("testuser", "Ivo", "Ivov", "email123@gmail.com", "08991612383", "DE", "Deutschland");
         Membership membership = testData.createMembership();
         user.setMembership(membership);
+        user.setWeeklyTrainingsCount(7);
 
         userRepository.save(user);
 

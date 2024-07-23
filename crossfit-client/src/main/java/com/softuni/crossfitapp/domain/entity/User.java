@@ -35,6 +35,9 @@ public class User extends BaseEntity{
 
 
     @Column
+    private int weeklyTrainingsCount;
+
+    @Column
     private boolean isDisabled;
 
 
