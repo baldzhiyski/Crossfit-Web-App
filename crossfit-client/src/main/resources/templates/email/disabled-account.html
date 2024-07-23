@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Disabled Notification</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet"/>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f1f1f1;
+            margin-top: 50px;
+            padding: 0;
+        }
+        .email-wrapper {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background-color: #dc3545;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .content {
+            padding: 20px;
+        }
+        .content p {
+            margin: 0 0 15px;
+        }
+        .content ul {
+            padding-left: 20px;
+        }
+        .content li {
+            margin-bottom: 10px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            text-decoration: none;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        .footer {
+            background-color: #f8f9fa;
+            color: #6c757d;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<div class="email-wrapper">
+    <div class="header">
+        Account Disabled
+    </div>
+    <div class="content">
+        <p th:text="${'Hello, ' + userFullName}">Hello,</p>
+        <p th:text="${'Your account with uuid ' + authorUUID + ' and username '+ username+' has been disabled. Please see the details below:'}"></p>
+        <ul>
+            <li><strong>Action:</strong> Your account has been disabled. You won't be able to post any comments until further notice !</li>
+            <li><strong>Reason:</strong> Inappropriate language used in the comments !</li>
+        </ul>
+        <p>If you believe this was done in error or have any questions, please contact support.</p>
+        <a href="#" class="btn btn-primary">Contact Support</a>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 Crossfit Stuttgart. All rights reserved.</p>
+    </div>
+</div>
+</body>
+</html>

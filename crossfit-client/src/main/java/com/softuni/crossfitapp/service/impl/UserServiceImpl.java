@@ -10,6 +10,8 @@ import com.softuni.crossfitapp.domain.dto.users.UserRegisterDto;
 import com.softuni.crossfitapp.domain.entity.*;
 import com.softuni.crossfitapp.domain.entity.enums.MembershipType;
 import com.softuni.crossfitapp.domain.entity.enums.RoleType;
+import com.softuni.crossfitapp.domain.events.DisabledAccountEvent;
+import com.softuni.crossfitapp.domain.events.EnabledAccountEvent;
 import com.softuni.crossfitapp.domain.events.UserRegisteredEvent;
 import com.softuni.crossfitapp.domain.user_details.CrossfitUserDetails;
 import com.softuni.crossfitapp.exceptions.ObjectNotFoundException;
@@ -255,8 +257,19 @@ public class UserServiceImpl implements UserService {
     public void enableOrDisableAcc(UUID accountUUID, String action) {
         User user = this.userRepository.findByUuid(accountUUID).orElseThrow(() -> new ObjectNotFoundException("Something went wrong with the logged user !"));
         switch (action) {
-            case "enable" -> user.setDisabled(false);
-            case "disable" -> user.setDisabled(true);
+            case "enable" ->{
+                user.setDisabled(false);
+                applicationEventPublisher.publishEvent(new EnabledAccountEvent(
+                        "UserService",accountUUID,user.getUsername(),user.getFullName(),user.getEmail()
+                ));
+
+            }
+            case "disable" ->{
+                user.setDisabled(true);
+                applicationEventPublisher.publishEvent(new DisabledAccountEvent(
+                        "UserService",accountUUID,user.getUsername(),user.getFullName(),user.getEmail()
+                ));
+            }
             default -> throw new ObjectNotFoundException("Invalid action");
         }
         this.userRepository.saveAndFlush(user);

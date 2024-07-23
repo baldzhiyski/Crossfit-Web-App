@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import java.util.UUID;
+
 @Service
 public class EmailServiceImpl implements EmailService {
     private final TemplateEngine templateEngine;
@@ -64,6 +66,68 @@ public class EmailServiceImpl implements EmailService {
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void sendDisabledAccountEmail(UUID authorUUID, String username, String fullName, String email) {
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
+
+        try {
+
+            mimeMessageHelper.setTo(email);
+            mimeMessageHelper.setFrom(crossfitEmail);
+            mimeMessageHelper.setReplyTo(crossfitEmail);
+            mimeMessageHelper.setSubject("Your account has been suspended !");
+            mimeMessageHelper.setText(generateDisabledAccountBody(authorUUID,username,fullName ), true);
+
+            javaMailSender.send(mimeMessageHelper.getMimeMessage());
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void sendEnabledAccount(UUID authorUUID, String username, String fullName, String email) {
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
+
+        try {
+
+            mimeMessageHelper.setTo(email);
+            mimeMessageHelper.setFrom(crossfitEmail);
+            mimeMessageHelper.setReplyTo(crossfitEmail);
+            mimeMessageHelper.setSubject("You are free to post comments again !");
+            mimeMessageHelper.setText(generateEnableAccount(authorUUID,username,fullName ), true);
+
+            javaMailSender.send(mimeMessageHelper.getMimeMessage());
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    private String generateEnableAccount(UUID authorUUID, String username, String fullName) {
+        Context context = new Context();
+        context.setVariable("userFullName", fullName);
+        context.setVariable("username", username);
+        context.setVariable("authorUUID",authorUUID);
+
+        return templateEngine.process("email/enable-account", context);
+    }
+
+
+    private String generateDisabledAccountBody(UUID authorUUID, String username, String fullName) {
+        Context context = new Context();
+        context.setVariable("userFullName", fullName);
+        context.setVariable("username", username);
+        context.setVariable("authorUUID",authorUUID);
+
+        return templateEngine.process("email/disabled-account", context);
     }
 
     private String generateCancelledTrainingBody(String coachFullName, WeeklyTraining weeklyTraining, String userFullName) {

@@ -2,12 +2,17 @@ package com.softuni.crossfitapp.service.impl;
 
 import com.softuni.crossfitapp.domain.entity.User;
 import com.softuni.crossfitapp.domain.entity.UserActivationLinkEntity;
+import com.softuni.crossfitapp.domain.entity.WeeklyTraining;
+import com.softuni.crossfitapp.domain.events.CancelledTrainingEvent;
+import com.softuni.crossfitapp.domain.events.DisabledAccountEvent;
+import com.softuni.crossfitapp.domain.events.EnabledAccountEvent;
 import com.softuni.crossfitapp.domain.events.UserRegisteredEvent;
 import com.softuni.crossfitapp.exceptions.ObjectNotFoundException;
 import com.softuni.crossfitapp.repository.UserActivationCodeRepository;
 import com.softuni.crossfitapp.repository.UserRepository;
+import com.softuni.crossfitapp.repository.WeeklyTrainingRepository;
 import com.softuni.crossfitapp.service.EmailService;
-import com.softuni.crossfitapp.service.UserActivationService;
+import com.softuni.crossfitapp.service.SendNotificationsService;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
@@ -16,20 +21,42 @@ import java.time.Instant;
 import java.util.Random;
 
 @Service
-public class UserActivationServiceImpl implements UserActivationService {
-
+public class SendNotificationsServiceImpl implements SendNotificationsService {
     private static final String ACTIVATION_CODE_SYMBOLS = "abcdefghijklmnopqrstuvwxyzABCDEFGJKLMNPRSTUVWXYZ0123456789";
     private static final int ACTIVATION_CODE_LENGTH = 20;
+
+    private UserRepository userRepository;
+
+    private UserActivationCodeRepository userActivationCodeRepository;
+
+    private WeeklyTrainingRepository weeklyTrainingRepository;
     private EmailService emailService;
 
-
-    private final UserRepository userRepository;
-    private final UserActivationCodeRepository userActivationCodeRepository;
-
-    public UserActivationServiceImpl(EmailService emailService, UserRepository userRepository, UserActivationCodeRepository userActivationCodeRepository) {
-        this.emailService = emailService;
+    public SendNotificationsServiceImpl(UserRepository userRepository, UserActivationCodeRepository userActivationCodeRepository, WeeklyTrainingRepository weeklyTrainingRepository, EmailService emailService) {
         this.userRepository = userRepository;
         this.userActivationCodeRepository = userActivationCodeRepository;
+        this.weeklyTrainingRepository = weeklyTrainingRepository;
+        this.emailService = emailService;
+    }
+
+    @Override
+    @EventListener(CancelledTrainingEvent.class)
+    public void cancelTraining(CancelledTrainingEvent cancelledTrainingEvent) {
+        WeeklyTraining weeklyTraining = this.weeklyTrainingRepository.findByUuid(cancelledTrainingEvent.getWeeklyTrainingId()).orElseThrow(() -> new ObjectNotFoundException("No such weekly training !"));
+        emailService.sendCancelledTrainingEmail(cancelledTrainingEvent.getCoachFullName(),weeklyTraining,cancelledTrainingEvent.getUserEmail(),cancelledTrainingEvent.getUserFullName() );
+    }
+
+    @Override
+    @EventListener(DisabledAccountEvent.class)
+    public void disableAccount(DisabledAccountEvent disabledAccountEvent) {
+        this.emailService.sendDisabledAccountEmail(disabledAccountEvent.getUuid(),disabledAccountEvent.getUsername(),disabledAccountEvent.getFullName(),disabledAccountEvent.getEmail());
+
+    }
+
+    @Override
+    @EventListener(EnabledAccountEvent.class)
+    public void enableAccount(EnabledAccountEvent enabledAccountEvent) {
+        this.emailService.sendEnabledAccount(enabledAccountEvent.getUuid(),enabledAccountEvent.getUsername(),enabledAccountEvent.getFullName(),enabledAccountEvent.getEmail());
     }
 
     @Override
@@ -44,14 +71,6 @@ public class UserActivationServiceImpl implements UserActivationService {
                 activationCode,savedUser);
     }
 
-
-
-    @Override
-    public void cleanUpActivationLinks() {
-        this.userActivationCodeRepository.deleteAll();
-    }
-
-    @Override
     public String activationCode(String email) {
         String activationCode = generateActivationCode();
 
