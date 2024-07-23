@@ -34,6 +34,10 @@ public class User extends BaseEntity{
     private String lastName;
 
 
+    @Column
+    private boolean isDisabled;
+
+
     @UUIDSequence
     @JdbcTypeCode(VARCHAR)
     private UUID uuid;

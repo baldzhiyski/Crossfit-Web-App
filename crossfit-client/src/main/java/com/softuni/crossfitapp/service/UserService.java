@@ -1,5 +1,6 @@
 package com.softuni.crossfitapp.service;
 
+import com.softuni.crossfitapp.domain.dto.users.UserAdminPageDto;
 import com.softuni.crossfitapp.domain.dto.users.UserProfileDto;
 import com.softuni.crossfitapp.domain.dto.users.UserProfileUpdateDto;
 import com.softuni.crossfitapp.domain.dto.users.UserRegisterDto;
@@ -12,11 +13,13 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 public interface UserService {
 
     User registerNewUser(UserRegisterDto userRegisterDto) throws IOException;
 
+    List<UserAdminPageDto> displayAllUsersAcc();
 
     void activateAccount(String activationCode);
 
@@ -33,4 +36,8 @@ public interface UserService {
     void removeExpiredMembership(User user);
 
     Optional<CrossfitUserDetails> getCurrentUser();
+
+    boolean getLoggedUserCommentPermission(String username);
+
+    void enableOrDisableAcc(UUID accountUUID,String action);
 }

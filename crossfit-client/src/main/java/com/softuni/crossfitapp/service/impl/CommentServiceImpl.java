@@ -1,6 +1,7 @@
 package com.softuni.crossfitapp.service.impl;
 
 import com.softuni.crossfitapp.domain.dto.comments.AddCommentDto;
+import com.softuni.crossfitapp.domain.dto.comments.CommentAdminPageDto;
 import com.softuni.crossfitapp.domain.dto.comments.DisplayCommentDto;
 import com.softuni.crossfitapp.domain.entity.Comment;
 import com.softuni.crossfitapp.domain.entity.Training;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -132,6 +134,29 @@ public class CommentServiceImpl implements CommentService {
         }else{
             throw new AccessOnlyForCoaches("Not acceptable move !");
         }
+    }
+
+    @Override
+    public List<CommentAdminPageDto> displayAllComments() {
+        return this.commentRepository.findAll()
+                .stream()
+                .map(comment -> this.mapper.map(comment,CommentAdminPageDto.class))
+                .collect(Collectors.toList());
+    }
+
+
+    // TODO : Add also an email here
+    @Override
+    public void deleteCommentAdmin(UUID commentUUID, String authorUsername) {
+        Comment comment = this.commentRepository.findByUuid(commentUUID).orElseThrow(() -> new ObjectNotFoundException("Invalid comment id !"));
+        User user = this.userRepository.findByUsername(authorUsername).orElseThrow(() -> new ObjectNotFoundException("No such user in the db!"));
+
+        comment.getLikedBy().clear();
+        comment.getDislikedBy().clear();
+        comment.setAuthor(null);
+        comment.setTraining(null);
+        this.commentRepository.saveAndFlush(comment);
+        this.commentRepository.delete(comment);
     }
 
 

@@ -3,6 +3,7 @@ package com.softuni.crossfitapp.service.impl;
 import com.softuni.crossfitapp.domain.dto.events.EventDto;
 import com.softuni.crossfitapp.domain.dto.memberships.MembershipProfilePageDto;
 import com.softuni.crossfitapp.domain.dto.trainings.TrainingDto;
+import com.softuni.crossfitapp.domain.dto.users.UserAdminPageDto;
 import com.softuni.crossfitapp.domain.dto.users.UserProfileDto;
 import com.softuni.crossfitapp.domain.dto.users.UserProfileUpdateDto;
 import com.softuni.crossfitapp.domain.dto.users.UserRegisterDto;
@@ -10,13 +11,16 @@ import com.softuni.crossfitapp.domain.entity.*;
 import com.softuni.crossfitapp.domain.entity.enums.MembershipType;
 import com.softuni.crossfitapp.domain.entity.enums.RoleType;
 import com.softuni.crossfitapp.domain.events.UserRegisteredEvent;
+import com.softuni.crossfitapp.domain.user_details.CrossfitUserDetails;
 import com.softuni.crossfitapp.exceptions.ObjectNotFoundException;
 import com.softuni.crossfitapp.repository.*;
 import com.softuni.crossfitapp.service.CloudinaryService;
 import com.softuni.crossfitapp.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,9 +31,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -82,6 +84,14 @@ public class UserServiceImpl implements UserService {
                 userRegisterDto.getFullName()
         ));
         return toBeRegisteredUser;
+    }
+
+    @Override
+    public List<UserAdminPageDto> displayAllUsersAcc() {
+        return this.userRepository.findAll()
+                .stream()
+                .map(user -> this.mapper.map(user,UserAdminPageDto.class))
+                .collect(Collectors.toList());
     }
 
 
@@ -219,4 +229,33 @@ public class UserServiceImpl implements UserService {
         user.setRoles(Set.of(this.roleRepository.findByRoleType(RoleType.USER)));
         this.userRepository.saveAndFlush(user);
     }
+
+    @Override
+    public Optional<CrossfitUserDetails> getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            CrossfitUserDetails userDetails = (CrossfitUserDetails) authentication.getPrincipal();
+            return Optional.of(userDetails);
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public boolean getLoggedUserCommentPermission(String username) {
+        return this.userRepository.findByUsername(username).orElseThrow(() -> new ObjectNotFoundException("Something went wrong with the logged user !")).isDisabled();
+    }
+
+
+    // TODO : Add event
+    @Override
+    public void enableOrDisableAcc(UUID accountUUID,String action) {
+        User user = this.userRepository.findByUuid(accountUUID).orElseThrow(() -> new ObjectNotFoundException("Something went wrong with the logged user !"));
+        switch (action){
+            case "enable" -> user.setDisabled(false);
+            case "disable" -> user.setDisabled(true);
+            default -> throw new ObjectNotFoundException("Invalid action");
+        }
+        this.userRepository.saveAndFlush(user);
+    }
+
 }

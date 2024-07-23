@@ -18,14 +18,24 @@
             margin-bottom: 20px;
         }
 
-        .btn-danger {
-            margin-left: 10px;
+        .btn-dark:hover {
+            background-color: red;
+            border-color: red;
+        }
+
+        .btn-success:hover{
+            background-color: blue;
+            color: white;
+        }
+
+        .text-danger {
+            color: red;
         }
     </style>
 </head>
 
 <body>
-<nav th:replace = "~{fragments/navbar::nav}"></nav>
+<nav th:replace="~{fragments/navbar::nav}"></nav>
 <div class="container">
     <h1 class="mb-4">Admin Dashboard</h1>
 
@@ -49,36 +59,60 @@
     </div>
 
     <div class="card">
-        <div class="card-header">User Management</div>
+        <div class="card-header">User Accounts Management</div>
         <div class="card-body">
             <table class="table">
                 <thead>
                 <tr>
+                    <th>UUID</th>
                     <th>Username</th>
                     <th>Email</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>john_doe</td>
+                <tr th:each="user: ${users}">
+                    <td th:text="*{user.uuid}">john_doe</td>
+                    <td th:text="*{user.username}">john_doe</td>
+                    <td th:text="*{user.email}">john_doe</td>
                     <td>john@example.com</td>
                     <td>
-                        <button class="btn btn-danger" data-id="1" onclick="disableAccount(this)">Disable Account</button>
+                        <form th:unless="*{user.disabled}" th:method="PATCH" th:action="@{/disableAcc/{accountUUID}(accountUUID = *{user.uuid})}">
+                            <button class="btn btn-dark" data-id="1" type="submit">Disable Account</button>
+                        </form>
+                        <form th:if="*{user.disabled}" th:method="PATCH" th:action="@{/enableAcc/{accountUUID}(accountUUID = *{user.uuid})}">
+                            <button class="btn btn-success" data-id="1" type="submit">Enable Account</button>
+                        </form>
                     </td>
                 </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">Users Comments Management</div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
                 <tr>
-                    <td>jane_doe</td>
-                    <td>jane@example.com</td>
-                    <td>
-                        <button class="btn btn-danger" data-id="2" onclick="disableAccount(this)">Disable Account</button>
-                    </td>
+                    <th>UUID</th>
+                    <th>Author</th>
+                    <th>Description</th>
+                    <th>Training Type</th>
+                    <th>Actions</th>
                 </tr>
-                <tr>
-                    <td>admin_user</td>
-                    <td>admin@example.com</td>
+                </thead>
+                <tbody>
+                <tr th:each="comment : ${comments}">
+                    <td th:text="*{comment.uuid}">john_doe</td>
+                    <td th:text="*{comment.authorUsername}">john_doe</td>
+                    <td th:text="*{comment.text}">john_doe</td>
+                    <td th:text="*{comment.trainingTrainingType}">john_doe</td>
                     <td>
-                        <button class="btn btn-danger" data-id="3" onclick="disableAccount(this)">Disable Account</button>
+                        <form  th:method="DELETE" th:action="@{/deleteComment/{commentUUID}/{authorUsername}(authorUsername = *{comment.authorUsername},commentUUID = *{comment.uuid})}">
+                            <button class="btn btn-danger" data-id="1" type="submit">Delete Comment</button>
+                        </form>
                     </td>
                 </tr>
                 </tbody>
@@ -120,5 +154,4 @@
     });
 </script>
 </body>
-
 </html>

@@ -46,7 +46,7 @@ public class Comment extends BaseEntity{
     private UUID uuid;
 
 
-    @ManyToMany(cascade = CascadeType.REMOVE)
+    @ManyToMany(cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
     @JoinTable(
             name = "comment_likes",
             joinColumns = @JoinColumn(name = "comment_id"),
@@ -54,7 +54,7 @@ public class Comment extends BaseEntity{
     )
     private List<User> likedBy ;
 
-    @ManyToMany(cascade = CascadeType.REMOVE)
+    @ManyToMany(cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
     @JoinTable(
             name = "comment_dislikes",
             joinColumns = @JoinColumn(name = "comment_id"),
