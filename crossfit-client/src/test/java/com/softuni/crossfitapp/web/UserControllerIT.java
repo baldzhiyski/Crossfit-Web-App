@@ -15,7 +15,9 @@ import com.softuni.crossfitapp.domain.entity.enums.RoleType;
 import com.softuni.crossfitapp.domain.user_details.CrossfitUserDetails;
 import com.softuni.crossfitapp.repository.*;
 import com.softuni.crossfitapp.service.CloudinaryService;
+import com.softuni.crossfitapp.service.CommentService;
 import com.softuni.crossfitapp.service.UserService;
+import com.softuni.crossfitapp.service.impl.CommentServiceImpl;
 import com.softuni.crossfitapp.service.impl.UserServiceImpl;
 import com.softuni.crossfitapp.testUtils.TestData;
 import jakarta.mail.internet.MimeMessage;
@@ -103,11 +105,19 @@ public class UserControllerIT {
 
     @Autowired
     private ModelMapper mapper;
+
+    @Autowired
+    private CommentRepository commentRepository;
+
+    @Autowired
+    private TrainingRepository trainingRepository;
     private UserService userService;
+    private CommentService commentService;
 
 
     @BeforeEach
     public void setUp(){
+        commentService = new CommentServiceImpl(commentRepository,trainingRepository,userRepository,mapper);
         userService = new UserServiceImpl( applicationEventPublisher,  userRepository,  roleRepository,  membershipRepository,  countryRepository,
                  activationCodeRepository,  passwordEncoder,  cloudinaryService,  mapper);
         greenMail = new GreenMail(new ServerSetup(port, host,"smtp"));
@@ -281,5 +291,20 @@ public class UserControllerIT {
         Assertions.assertEquals(1, registrationMessage.getAllRecipients().length);
         Assertions.assertEquals("petrov2147@gmail.com", registrationMessage.getAllRecipients()[0].toString());
 
+    }
+
+    @Test
+    @WithMockUser(username = "secondUser",roles = {"USER","ADMIN"})
+    public void deleteComment() throws Exception {
+        UUID commentUUID = this.data.createComment();
+
+        // See the createComment() method
+        User user = this.userRepository.findByUsername("testSecondUser").get();
+
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/deleteComment/{commentUUID}/{authorUsername}",commentUUID,user.getUsername())
+                        .with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/profiles-dashboard"));
     }
 }
