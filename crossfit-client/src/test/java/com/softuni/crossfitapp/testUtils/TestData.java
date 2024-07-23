@@ -28,6 +28,9 @@ public class TestData {
     @Autowired
     private TrainingRepository trainingRepository;
 
+    @Autowired
+    private UserActivationCodeRepository activationCodeRepository;
+
 
     @Autowired
     private CommentRepository commentRepository;
@@ -95,6 +98,7 @@ public class TestData {
         user.setEmail(email);
         user.setUuid(UUID.randomUUID());
         user.setRoles(roles);
+        user.setDisabled(false);
         user.setTrainingsPerWeekList(new ArrayList<>());
         user.setMembershipStartDate(LocalDate.now());
         user.setMembershipEndDate(LocalDate.now());
@@ -124,6 +128,7 @@ public class TestData {
 
     @Transactional
     public void deleteUsers() {
+        this.activationCodeRepository.deleteAll();
         this.userRepository.deleteAll();
     }
 
@@ -221,4 +226,8 @@ public class TestData {
 
     }
 
+    @Transactional
+    public void deleteCountries() {
+        this.countryRepository.deleteAll();
+    }
 }

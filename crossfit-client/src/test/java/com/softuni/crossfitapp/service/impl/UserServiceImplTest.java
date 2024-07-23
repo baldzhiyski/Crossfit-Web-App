@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
@@ -162,6 +163,44 @@ class UserServiceImplTest {
         assertTrue(user.getRoles().stream().anyMatch(role -> role.getRoleType() == RoleType.USER));
 
     }
+    @Test
+    public void disableAcc(){
+        User userAcc = createTestUser();
+        when(userRepository.findByUuid(userAcc.getUuid())).thenReturn(Optional.of(userAcc));
+        assertFalse(this.userRepository.findByUuid(userAcc.getUuid()).get().isDisabled());
+
+        this.userService.enableOrDisableAcc(userAcc.getUuid(),"disable");
+
+        assertTrue(this.userRepository.findByUuid(userAcc.getUuid()).get().isDisabled());
+
+    }
+
+    @Test
+    public void enableAcc(){
+        User userAcc = createTestUser();
+        when(userRepository.findByUuid(userAcc.getUuid())).thenReturn(Optional.of(userAcc));
+        assertFalse(this.userRepository.findByUuid(userAcc.getUuid()).get().isDisabled());
+
+        this.userService.enableOrDisableAcc(userAcc.getUuid(),"disable");
+
+        assertTrue(this.userRepository.findByUuid(userAcc.getUuid()).get().isDisabled());
+
+        this.userService.enableOrDisableAcc(userAcc.getUuid(),"enable");
+        assertFalse(this.userRepository.findByUuid(userAcc.getUuid()).get().isDisabled());
+    }
+
+    @Test
+    public void enableDisableAccShouldThrows(){
+        User userAcc = createTestUser();
+        when(userRepository.findByUuid(userAcc.getUuid())).thenReturn(Optional.of(userAcc));
+        assertFalse(this.userRepository.findByUuid(userAcc.getUuid()).get().isDisabled());
+
+        assertThrows(ObjectNotFoundException.class,()->{
+            this.userService.enableOrDisableAcc(userAcc.getUuid(),"random");
+        });
+
+    }
+
 
     private boolean containsAuthority(UserDetails userDetails, String expectedAuthority) {
         return userDetails
@@ -180,8 +219,10 @@ class UserServiceImplTest {
         roles.add(role2);
         return  User.builder()
                 .firstName("firstName")
+                .isDisabled(false)
                 .lastName("lastName")
                 .username("shittyName")
+                .uuid(UUID.randomUUID())
                 .email("pesho@softuni.bg")
                 .isActive(false)
                 .password("topsecret")
