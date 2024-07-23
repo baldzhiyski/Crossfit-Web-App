@@ -5,9 +5,12 @@ import com.softuni.crossfitapp.domain.dto.users.UserProfileUpdateDto;
 import com.softuni.crossfitapp.domain.dto.users.UserRegisterDto;
 import com.softuni.crossfitapp.domain.entity.User;
 import com.softuni.crossfitapp.domain.entity.enums.MembershipType;
+import com.softuni.crossfitapp.domain.user_details.CrossfitUserDetails;
+import com.softuni.crossfitapp.service.impl.CrossfitUserDetailsService;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public interface UserService {
@@ -28,4 +31,6 @@ public interface UserService {
     Set<User> findAllUsersWithExpiredMembership();
 
     void removeExpiredMembership(User user);
+
+    Optional<CrossfitUserDetails> getCurrentUser();
 }
