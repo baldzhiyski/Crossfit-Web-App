@@ -1,0 +1,69 @@
+services:
+  db:
+    image: mysql
+    ports:
+      - "3306:3306"
+    command: [ '--character-set-server=utf8mb4', '--collation-server=utf8mb4_bin' ]
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD="yes"
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+  mailhog:
+    image: mailhog/mailhog
+    logging:
+      driver: 'none'  # disable saving logs
+    ports:
+      - "1025:1025" # smtp server
+      - "8025:8025" # web ui
+
+  crossfit-trainings:
+    depends_on:
+      db:
+        condition: service_healthy
+    image: baldzhiyski/cross-trainings:v2
+    ports:
+      - "8081:8081"
+
+    environment:
+      - my_pass=
+      - my_username=
+      - MYSQL_HOST=db
+      - MYSQL_PORT=3306
+
+
+  crossfit-community-events:
+    depends_on:
+      db:
+        condition: service_healthy
+    image: baldzhiyski/cross-events:v2
+    ports:
+      - "8082:8082"
+
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_PORT=3306
+      - my_pass=
+      - my_username=
+
+  crossfit-client:
+    depends_on:
+      db:
+        condition: service_healthy
+    image: baldzhiyski/cross-client:v2
+    ports:
+      - "8080:8080"
+
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_PORT=3306
+      - CLOUDINARY_API_KEY=
+      - CLOUDINARY_API_SECRET=
+      - CLOUDINARY_NAME=
+      - FOREX_API_KEY=
+      - JWT_EXPIRATION=6000
+      - JWT_KEY=
+      - MAIL_PASSWORD=
+      - MAIL_USER=
+      - my_pass=
+      - my_username=
+      - remembermekey=

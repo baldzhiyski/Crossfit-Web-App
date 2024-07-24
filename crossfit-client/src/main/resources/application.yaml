@@ -13,13 +13,13 @@ spring:
       enabled: true
 
   jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    defer-datasource-initialization: true
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
-        format_sql: 'TRUE'
+          format_sql: true
     hibernate:
-      ddl-auto: update
-    open-in-view: 'false'
+        ddl-auto: update
   mvc:
     hiddenmethod:
       filter:
@@ -28,7 +28,7 @@ spring:
     driverClassName: com.mysql.cj.jdbc.Driver
     password: ${my_pass}
     username: ${my_username}
-    url: jdbc:mysql://localhost:3306/crossfit_app?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/crossfit_app?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
 remember_me_key: ${remembermekey}
 logging:
   level:

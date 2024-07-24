@@ -7,7 +7,6 @@ spring:
   jpa:
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
         format_sql: 'TRUE'
     hibernate:
       ddl-auto: update
@@ -20,7 +19,7 @@ spring:
     driverClassName: com.mysql.cj.jdbc.Driver
     password: ${my_pass}
     username: ${my_username}
-    url: jdbc:mysql://localhost:3306/eventsDB?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/eventsDB?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
   sql:
     init:
       mode: never
