@@ -9,12 +9,11 @@ public enum Constants {
     public static final String DOT = ".";
 
     // Paths
-    public static final String PATH_TO_COACHES = "C:\\Users\\user\\IdeaProjects\\Crossfit-Web-App-Project\\crossfit-client\\src\\main\\resources\\inputs\\coaches.json";
-    public static final String PATH_TO_MEMBERSHIPS = "C:\\Users\\user\\IdeaProjects\\Crossfit-Web-App-Project\\crossfit-client\\src\\main\\resources\\inputs\\memberships.json";
-    public static final String PATH_TO_ROLES = "C:\\Users\\user\\IdeaProjects\\Crossfit-Web-App-Project\\crossfit-client\\src\\main\\resources\\inputs\\roles.json";
-    public static final String PATH_TO_COACHES_USERS = "C:\\Users\\user\\IdeaProjects\\Crossfit-Web-App-Project\\crossfit-client\\src\\main\\resources\\inputs\\coaches_user-profiles.json";
-    public static final String PATH_TO_ADMINS = "C:\\Users\\user\\IdeaProjects\\Crossfit-Web-App-Project\\crossfit-client\\src\\main\\resources\\inputs\\admins.json";
-
+    public static final String PATH_TO_COACHES = "inputs/coaches.json";
+    public static final String PATH_TO_MEMBERSHIPS = "inputs/memberships.json";
+    public static final String PATH_TO_ROLES = "inputs/roles.json";
+    public static final String PATH_TO_COACHES_USERS = "inputs/coaches_user-profiles.json";
+    public static final String PATH_TO_ADMINS = "inputs/admins.json";
     // File validation constants
     public static final long MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB in bytes
 

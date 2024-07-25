@@ -15,8 +15,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -27,18 +28,14 @@ import static com.softuni.crossfitapp.util.Constants.*;
 
 @Component
 public class SeedServiceImpl implements SeedService {
-    private RoleRepository roleRepository;
-    private CertificateRepository certificateRepository;
-
-    private CoachRepository coachRepository;
-
-    private UserRepository userRepository;
-
-    private MembershipRepository membershipRepository;
-    private Gson converter;
-    private ModelMapper mapper;
-
-    private CountryRepository countryRepository;
+    private final RoleRepository roleRepository;
+    private final CertificateRepository certificateRepository;
+    private final CoachRepository coachRepository;
+    private final UserRepository userRepository;
+    private final MembershipRepository membershipRepository;
+    private final Gson converter;
+    private final ModelMapper mapper;
+    private final CountryRepository countryRepository;
 
     public SeedServiceImpl(RoleRepository roleRepository, CertificateRepository certificateRepository, CoachRepository coachRepository, UserRepository userRepository, MembershipRepository membershipRepository, Gson converter, ModelMapper mapper, CountryRepository countryRepository) {
         this.roleRepository = roleRepository;
@@ -52,11 +49,15 @@ public class SeedServiceImpl implements SeedService {
     }
 
     @Override
-    public void seedRoles() throws FileNotFoundException {
-        if(this.roleRepository.count()==0){
-            FileReader fileReader = new FileReader(PATH_TO_ROLES);
+    public void seedRoles() {
+        if (this.roleRepository.count() == 0) {
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(PATH_TO_ROLES);
+            if (inputStream == null) {
+                throw new RuntimeException("File not found: " + PATH_TO_ROLES);
+            }
+            InputStreamReader reader = new InputStreamReader(inputStream);
 
-            Set<Role> roles = Arrays.stream(this.converter.fromJson(fileReader, SeedRoleDto[].class))
+            Set<Role> roles = Arrays.stream(this.converter.fromJson(reader, SeedRoleDto[].class))
                     .map(rolesDto -> {
                         Role role = new Role();
                         role.setRoleType(rolesDto.getRoleType());
@@ -65,16 +66,19 @@ public class SeedServiceImpl implements SeedService {
                     .collect(Collectors.toSet());
 
             this.roleRepository.saveAllAndFlush(roles);
-
         }
     }
 
     @Override
-    public void seedCoaches() throws FileNotFoundException {
-        if(this.coachRepository.count()==0){
-            FileReader fileReader = new FileReader(PATH_TO_COACHES);
+    public void seedCoaches() {
+        if (this.coachRepository.count() == 0) {
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(PATH_TO_COACHES);
+            if (inputStream == null) {
+                throw new RuntimeException("File not found: " + PATH_TO_COACHES);
+            }
+            InputStreamReader reader = new InputStreamReader(inputStream);
 
-            List<Coach> coaches = Arrays.stream(this.converter.fromJson(fileReader, SeedCoachDto[].class))
+            List<Coach> coaches = Arrays.stream(this.converter.fromJson(reader, SeedCoachDto[].class))
                     .map(seedCoachDto -> {
                         Coach coach = new Coach();
                         coach.setFirstName(seedCoachDto.getFirstName());
@@ -84,9 +88,8 @@ public class SeedServiceImpl implements SeedService {
                         List<Certificate> certificates = seedCoachDto.getCertificates().stream().map(certificateDto -> {
                             Certificate certificate = new Certificate();
                             certificate.setName(certificateDto.getName());
-                            certificate.setObtainedOn(certificate.getObtainedOn());
-                            certificate.setOwner(coach);
                             certificate.setObtainedOn(certificateDto.getObtainedOn());
+                            certificate.setOwner(coach);
                             return certificate;
                         }).collect(Collectors.toList());
                         coach.setCertificates(certificates);
@@ -95,15 +98,19 @@ public class SeedServiceImpl implements SeedService {
 
             this.coachRepository.saveAllAndFlush(coaches);
             coaches.forEach(coach -> this.certificateRepository.saveAllAndFlush(coach.getCertificates()));
-
         }
     }
 
     @Override
-    public void seedMemberships() throws FileNotFoundException {
-        if(this.membershipRepository.count()==0){
-            FileReader fileReader = new FileReader(PATH_TO_MEMBERSHIPS);
-            List<Membership> memberships = Arrays.stream(this.converter.fromJson(fileReader, SeedMembershipDto[].class))
+    public void seedMemberships() {
+        if (this.membershipRepository.count() == 0) {
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(PATH_TO_MEMBERSHIPS);
+            if (inputStream == null) {
+                throw new RuntimeException("File not found: " + PATH_TO_MEMBERSHIPS);
+            }
+            InputStreamReader reader = new InputStreamReader(inputStream);
+
+            List<Membership> memberships = Arrays.stream(this.converter.fromJson(reader, SeedMembershipDto[].class))
                     .map(seedMembershipDto -> {
                         Membership membership = new Membership();
                         membership.setDuration(Long.valueOf(seedMembershipDto.getDuration()));
@@ -118,15 +125,19 @@ public class SeedServiceImpl implements SeedService {
 
     @Override
     @Transactional
-    public void seedCoachesUserAccount() throws FileNotFoundException {
-        if(this.userRepository.count()==0){
-            FileReader fileReader = new FileReader(PATH_TO_COACHES_USERS);
+    public void seedCoachesUserAccount() {
+        if (this.userRepository.count() == 0) {
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(PATH_TO_COACHES_USERS);
+            if (inputStream == null) {
+                throw new RuntimeException("File not found: " + PATH_TO_COACHES_USERS);
+            }
+            InputStreamReader reader = new InputStreamReader(inputStream);
 
-            List<User> coachesProfiles = Arrays.stream(this.converter.fromJson(fileReader, SeedCoachesUserProfileDto[].class))
+            List<User> coachesProfiles = Arrays.stream(this.converter.fromJson(reader, SeedCoachesUserProfileDto[].class))
                     .map(seedCoachesUserProfileDto -> {
                         User user = this.mapper.map(seedCoachesUserProfileDto, User.class);
                         Set<Role> roles = getRoles(seedCoachesUserProfileDto.getRoles());
-                        user.setCountry(countryRepository.findByCode(seedCoachesUserProfileDto.getNationality()).orElseThrow(()-> new ObjectNotFoundException("No such country in the db !")));
+                        user.setCountry(countryRepository.findByCode(seedCoachesUserProfileDto.getNationality()).orElseThrow(() -> new ObjectNotFoundException("No such country in the db!")));
                         user.setRoles(roles);
                         Membership byMembershipType = this.membershipRepository.findByMembershipType(seedCoachesUserProfileDto.getMembership().getMembershipType()).orElseThrow();
                         user.setMembership(byMembershipType);
@@ -138,26 +149,29 @@ public class SeedServiceImpl implements SeedService {
         }
     }
 
-
     @Override
     @Transactional
-    public void seedAdmins() throws FileNotFoundException {
+    public void seedAdmins() {
         if (this.userRepository.findAll().stream()
                 .anyMatch(user -> user.getRoles().stream()
                         .anyMatch(role -> role.getRoleType().equals(RoleType.ADMIN)))) {
             return;
         }
-        FileReader fileReader = new FileReader(PATH_TO_ADMINS);
-        List<User> admins = Arrays.stream(this.converter.fromJson(fileReader, SeedAdminDto[].class))
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(PATH_TO_ADMINS);
+        if (inputStream == null) {
+            throw new RuntimeException("File not found: " + PATH_TO_ADMINS);
+        }
+        InputStreamReader reader = new InputStreamReader(inputStream);
+
+        List<User> admins = Arrays.stream(this.converter.fromJson(reader, SeedAdminDto[].class))
                 .map(seedAdminDto -> {
                     User user = this.mapper.map(seedAdminDto, User.class);
                     Set<Role> roles = getRoles(seedAdminDto.getRoles());
-                    user.setCountry(countryRepository.findByCode(seedAdminDto.getNationality()).orElseThrow(()-> new ObjectNotFoundException("No such country in the db !")));
+                    user.setCountry(countryRepository.findByCode(seedAdminDto.getNationality()).orElseThrow(() -> new ObjectNotFoundException("No such country in the db!")));
                     user.setRoles(roles);
                     return user;
                 }).collect(Collectors.toList());
         this.userRepository.saveAllAndFlush(admins);
-
     }
 
     private Set<Role> getRoles(Set<SeedRoleDto> roleTypeSet) {
@@ -168,5 +182,4 @@ public class SeedServiceImpl implements SeedService {
         });
         return roles;
     }
-
 }

@@ -1,8 +1,8 @@
 spring:
   messages:
-   basename: messages
-   resources:
-     static-locations: classpath:/static/
+    basename: messages
+    resources:
+      static-locations: classpath:/static/
   servlet:
     multipart:
       max-file-size: 5MB
@@ -17,17 +17,17 @@ spring:
     defer-datasource-initialization: true
     properties:
       hibernate:
-          format_sql: true
+        format_sql: true
     hibernate:
-        ddl-auto: update
+      ddl-auto: update
   mvc:
     hiddenmethod:
       filter:
         enabled: 'true'
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    password: ${my_pass}
-    username: ${my_username}
+    password: ${my_pass:}
+    username: ${my_username:root}
     url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/crossfit_app?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
 remember_me_key: ${remembermekey}
 logging:
@@ -64,16 +64,17 @@ mail:
 
 workouts :
   api:
-    allTrainingsUrl: "http://localhost:8081/crossfit-api/get-all-trainings"
-    baseUrl: "http://localhost:8081/crossfit-api"
+    allTrainingsUrl: http://${TRAININGS_HOST:localhost}:8081/crossfit-api/get-all-trainings
+    baseUrl: http://${TRAININGS_HOST:localhost}:8081/crossfit-api
 
 crossfit :
   api :
-    mostRecentEvents : "http://localhost:8082/crossfit-community/events/most-recent"
-    publishUrl : "http://localhost:8082/crossfit-community/events/publish"
-    byIdUrl : "http://localhost:8082/crossfit-community/events/find/{id}"
-    allEvents: "http://localhost:8082/crossfit-community/events/all"
+    mostRecentEvents : http://${EVENT_HOST:localhost}:8082/crossfit-community/events/most-recent
+    publishUrl : http://${EVENT_HOST:localhost}:8082/crossfit-community/events/publish
+    byIdUrl : http://${EVENT_HOST:localhost}:8082/crossfit-community/events/find/{id}
+    allEvents: http://${EVENT_HOST:localhost}:8082/crossfit-community/events/all
     init-crossfit-events: true
+
 
 cloudinary :
   cloud_name : ${CLOUDINARY_NAME}
@@ -81,5 +82,5 @@ cloudinary :
   apiSecret : ${CLOUDINARY_API_SECRET}
 
 jwt:
-   secret: ${JWT_KEY}
-   expiration: ${JWT_EXPIRATION}
+  secret: ${JWT_KEY}
+  expiration: ${JWT_EXPIRATION}

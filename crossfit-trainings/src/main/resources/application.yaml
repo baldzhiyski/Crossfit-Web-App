@@ -18,8 +18,8 @@ spring:
         enabled: 'true'
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    password: ${my_pass}
-    username: ${my_username}
+    password: ${my_pass:}
+    username: ${my_username:root}
     url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/trainingsDB?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
   sql:
     init:

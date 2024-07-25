@@ -20,13 +20,11 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    image: baldzhiyski/cross-trainings:v2
+    image: baldzhiyski/crossfit-trainings-final:v10
     ports:
       - "8081:8081"
 
     environment:
-      - my_pass=
-      - my_username=
       - MYSQL_HOST=db
       - MYSQL_PORT=3306
 
@@ -35,35 +33,38 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    image: baldzhiyski/cross-events:v2
+    image: baldzhiyski/crossfit-events-final:v10
     ports:
       - "8082:8082"
 
     environment:
       - MYSQL_HOST=db
       - MYSQL_PORT=3306
-      - my_pass=
-      - my_username=
 
   crossfit-client:
     depends_on:
+      crossfit-trainings:
+        condition: service_completed_successfully
       db:
         condition: service_healthy
-    image: baldzhiyski/cross-client:v2
+      crossfit-community-events:
+        condition: service_completed_successfully
+
+    image: baldzhiyski/crossfit-client-final:v10
     ports:
       - "8080:8080"
 
     environment:
       - MYSQL_HOST=db
       - MYSQL_PORT=3306
-      - CLOUDINARY_API_KEY=
-      - CLOUDINARY_API_SECRET=
-      - CLOUDINARY_NAME=
-      - FOREX_API_KEY=
+      - CLOUDINARY_API_KEY=398775662192647
+      - CLOUDINARY_API_SECRET=GTGSdR1CAdyGEBvOf-sJ0O9USuc
+      - CLOUDINARY_NAME=dcazwzpwt
+      - FOREX_API_KEY=b90b7b54825a40a180b361f6910a0232
       - JWT_EXPIRATION=6000
-      - JWT_KEY=
-      - MAIL_PASSWORD=
-      - MAIL_USER=
-      - my_pass=
-      - my_username=
-      - remembermekey=
+      - JWT_KEY=ZycIWQvEWr7m1cwfOP1ATFmfC9KgHdz30FXP80iSzSDo3GyIbB
+      - MAIL_PASSWORD=somerandompassword
+      - MAIL_USER=somerandomusername
+      - EVENT_HOST=crossfit-community-events
+      - TRAININGS_HOST=crossfit-trainings
+      - remembermekey=topsecret
