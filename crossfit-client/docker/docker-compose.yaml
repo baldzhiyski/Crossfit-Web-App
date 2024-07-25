@@ -50,7 +50,7 @@ services:
       crossfit-community-events:
         condition: service_completed_successfully
 
-    image: baldzhiyski/crossfit-client-final:v11
+    image: baldzhiyski/crossfit-client-final:v12
     ports:
       - "8080:8080"
 
@@ -68,3 +68,4 @@ services:
       - EVENT_HOST=${EVENT_HOST}
       - TRAININGS_HOST=${TRAININGS_HOST}
       - remembermekey=${remembermekey}
+      - MAILHOG_HOST=${MAILHOG_HOST}

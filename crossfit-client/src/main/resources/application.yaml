@@ -57,8 +57,8 @@ countries:
 
 mail:
   crossfit: "crossfit-stuttgart@gmail.com"
-  host: localhost
-  port: 1025
+  host: ${MAILHOG_HOST:localhost}
+  port: ${MAILHOG_PORT:1025}
   username: ${MAIL_USER}
   password: ${MAIL_PASSWORD}
 
