@@ -81,6 +81,6 @@ cloudinary :
   apiKey: ${CLOUDINARY_API_KEY}
   apiSecret : ${CLOUDINARY_API_SECRET}
 
-jwt:
-  secret: ${JWT_KEY}
-  expiration: ${JWT_EXPIRATION}
+#jwt:
+#  secret: ${JWT_KEY}
+#  expiration: ${JWT_EXPIRATION}
