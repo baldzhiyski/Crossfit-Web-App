@@ -17,7 +17,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         authorize ->
-                                authorize.requestMatchers(HttpMethod.GET, "/crossfit-community/**").permitAll()
+                                authorize.requestMatchers(HttpMethod.GET, "/crossfit-community/**","/swagger-ui/**", "swagger-ui.html", "/v3/api-docs/**").permitAll()
                                         .requestMatchers(HttpMethod.PUT,"/crossfit-community/events/publish").permitAll()
                                         .anyRequest().authenticated()
                 )

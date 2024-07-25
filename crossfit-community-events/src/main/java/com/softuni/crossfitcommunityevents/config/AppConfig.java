@@ -1,6 +1,11 @@
 package com.softuni.crossfitcommunityevents.config;
 
 import com.softuni.crossfitcommunityevents.repository.EventRepository;
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ResourceLoader;
@@ -29,4 +34,24 @@ public class AppConfig {
 
         return initializer;
     }
+
+    @Bean
+    public OpenAPI customOpenAPI() {
+        OpenAPI openAPI = new OpenAPI();
+
+        openAPI.setInfo(
+                new Info()
+                        .description("This is a crossfit events  micro service for helping the crossfit community.")
+                        .title("Open Crossfit Events API")
+                        .version("0.0.1")
+                        .contact(
+                                new Contact()
+                                        .name("Baldzhiyski")
+                                        .email("crossfit-stuttgart@gamil.com")
+                        )
+        );
+
+        return openAPI;
+    }
+
 }

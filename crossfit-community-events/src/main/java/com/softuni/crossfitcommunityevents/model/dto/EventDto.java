@@ -10,7 +10,6 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EventDto {
-
     private String address;
     private String eventName;
     private String description;
