@@ -1,6 +1,8 @@
 let currentPage = 0; // Keep track of the current page
 const size = 3;
 
+const isAdmin =document.querySelector('meta[name="is-admin"]').getAttribute('content');
+
 function loadPage(page) {
     if (page < 0) return; // Prevent going to a negative page
 
@@ -22,6 +24,7 @@ function loadPage(page) {
 
 function updateEvents(data) {
     const container = document.getElementById('events-container');
+    console.log('isAdmin:', isAdmin); // Debugging line
 
     if (!container) {
         console.error('Element with ID "events-container" not found.');
@@ -55,6 +58,7 @@ function updateEvents(data) {
                     </div>
                     <p>${event.eventName}</p>
                     <p>${event.description}</p>
+                    ${isAdmin ? `<button class="btn btn-danger btn-sm mt-2" onclick="deleteEvent(${event.id})">Delete</button>` : ''}
                 </div>
             </div>
         </div>
@@ -65,6 +69,28 @@ function updateEvents(data) {
             ${eventsHtml}
         </div>
     `;
+}
+// Function to handle event deletion
+function deleteEvent(eventId) {
+    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
+    fetch(`http://localhost:8082/crossfit-community/events/delete/${eventId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            [csrfHeader]: csrfToken
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                alert('Event deleted successfully');
+                loadPage(currentPage); // Reload the page after deletion
+            } else {
+                alert('Failed to delete event');
+            }
+        })
+        .catch(error => console.error('Error deleting event:', error));
 }
 
 

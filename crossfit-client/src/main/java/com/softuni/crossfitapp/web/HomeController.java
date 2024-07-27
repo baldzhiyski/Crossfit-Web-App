@@ -7,7 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +36,13 @@ public class HomeController {
 
 
     @GetMapping("/about-us")
-    public String about(Model model){
+    public String about(Model model,@AuthenticationPrincipal CrossfitUserDetails crossfitUserDetails){
+        // Create a GrantedAuthority object for the role "ADMIN"
+        GrantedAuthority adminAuthority = new SimpleGrantedAuthority("ROLE_ADMIN");
+        // Check if the user has the "ADMIN" role
+        boolean isAdmin = crossfitUserDetails.getAuthorities().contains(adminAuthority);
+
+        model.addAttribute("isAdmin", isAdmin);
         return "about";
     }
 

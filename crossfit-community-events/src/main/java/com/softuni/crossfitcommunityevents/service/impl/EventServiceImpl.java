@@ -60,6 +60,7 @@ public class EventServiceImpl implements EventService {
 
     private EventDto mapToDto(Event event) {
         return EventDto.builder()
+                .id(event.getId())
                 .eventName(event.getEventName())
                 .address(event.getAddress())
                 .date(event.getDate())

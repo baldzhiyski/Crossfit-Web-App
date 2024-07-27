@@ -3,6 +3,9 @@
   <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="_csrf" th:content="${_csrf.token}"/> <!-- CSRF token -->
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta name="is-admin" th:content="${isAdmin}"/>
     <title>About us</title>
     <!-- Thymeleaf expressions to dynamically generate URLs -->
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
