@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -45,6 +46,16 @@ public class EventServiceImpl implements EventService {
     public Page<EventDto> findAllEvents(Pageable pageable) {
         Page<Event> events = eventRepository.findAll(pageable);
         return events.map(this::mapToDto);
+    }
+
+    @Override
+    public boolean deleteEvent(Long id) {
+        Optional<Event> byId = this.eventRepository.findById(id);
+        if(byId.isPresent()) {
+            this.eventRepository.delete(byId.get());
+            return true;
+        }
+       throw new ObjectNotFoundException("No such upcomming event !");
     }
 
     private EventDto mapToDto(Event event) {

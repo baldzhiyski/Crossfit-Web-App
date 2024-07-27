@@ -24,7 +24,7 @@ public class Event extends BaseEntity {
     private String eventName;
 
     @NotBlank
-    @Column(columnDefinition = "TEXT")
+    @Lob
     private String description;
 
     @NotBlank

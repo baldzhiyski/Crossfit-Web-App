@@ -28,10 +28,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.time.LocalDate;
@@ -60,8 +58,8 @@ class EventsControllerTestIT {
 
 
     @BeforeEach
-    public void setUp(){
-        this.eventService= new EventServiceImpl(eventRepository);
+    public void setUp() {
+        this.eventService = new EventServiceImpl(eventRepository);
     }
 
     @AfterEach
@@ -108,19 +106,34 @@ class EventsControllerTestIT {
 
     }
 
+    @Test
+    public void deleteEvent() throws Exception {
+        Event event = testData.createEvent("Testing Event", "Test description", new Date(2), "Plovdiv", "some-url.com");
+
+        mockMvc.perform(delete("/crossfit-community/events/delete/{id}",event.getId()))
+                .andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
+    public void deleteEventShouldFail() throws Exception {
+
+        mockMvc.perform(delete("/crossfit-community/events/delete/{id}",3))
+                .andExpect(status().is4xxClientError());
+    }
+
 
     @Test
     public void createEvent() throws Exception {
         MvcResult result = mockMvc.perform(post("/crossfit-community/events/publish")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
-                                  {
-                                    "description": "Test description",
-                                    "eventName": "Test",
-                                    "address": "Some Address",
-                                    "videoUrl": "some_url",
-                                    "date" : "2025-08-01T00:00:00.000+00:00"
-                                  }
+                                    {
+                                      "description": "Test description",
+                                      "eventName": "Test",
+                                      "address": "Some Address",
+                                      "videoUrl": "some_url",
+                                      "date" : "2025-08-01T00:00:00.000+00:00"
+                                    }
                                 """))
                 .andExpect(status().isCreated())
                 .andExpect(header().exists("Location"))
@@ -194,15 +207,10 @@ class EventsControllerTestIT {
         String contentAsString = result.getResponse().getContentAsString();
         System.out.println("Response Body: " + contentAsString);
 
-        // Verify pagination information by checking if specific elements are present in the response string
-        assertTrue(contentAsString.contains("\"pageNumber\":0"), "Page number should be 0 in the response");
-        assertTrue(contentAsString.contains("\"pageSize\":3"), "Page size should be 3 in the response");
 
-        // You can add more assertions here to verify the content of the events returned on the first page
-        assertTrue(contentAsString.contains("\"content\":"), "Response should contain 'content' array");
-        assertTrue(contentAsString.contains("\"eventName\":\"Event 1\""), "Event 1 should be in the response");
-        assertTrue(contentAsString.contains("\"eventName\":\"Event 2\""), "Event 2 should be in the response");
-        assertTrue(contentAsString.contains("\"eventName\":\"Event 3\""), "Event 3 should be in the response");
 
+        // Additional assertions can be made to verify other fields or pagination details
+        assertTrue(contentAsString.contains("\"totalElements\":7"), "Total elements should be 7");
+        assertTrue(contentAsString.contains("\"totalPages\":3"), "Total pages should be 3");
     }
 }

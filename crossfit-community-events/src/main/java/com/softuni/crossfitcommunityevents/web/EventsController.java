@@ -39,6 +39,38 @@ public class EventsController {
     }
 
     @Operation(
+            summary = "Delete an event by ID",
+            description = "Delete a specific event using its unique identifier.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "204",
+                            description = "Event deleted successfully."
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Event not found.",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Error Response",
+                                            summary = "Error response for event not found",
+                                            description = "This error occurs when the event ID does not exist.",
+                                            value = "{\"message\":\"Event not found\"}"
+                                    )
+                            )
+                    )
+            }
+    )
+    @DeleteMapping("/events/delete/{id}")
+    public ResponseEntity<Void> deleteEvent(@PathVariable Long id) {
+        LOGGER.info("Deleting event with id {}", id);
+        eventService.deleteEvent(id);
+
+        return ResponseEntity.noContent().build();
+    }
+
+
+    @Operation(
             summary = "Retrieve event details by ID",
             description = "Fetch the details of a specific event using its unique identifier.",
             responses = {
@@ -127,13 +159,12 @@ public class EventsController {
     )
     @PostMapping("/events/publish")
     public ResponseEntity<EventDto> createEvent(
-            @RequestBody EventDto addEventDto) {
+            @org.springframework.web.bind.annotation.RequestBody EventDto addEventDto) {
         LOGGER.info("Creating event {}", addEventDto);
         eventService.createEvent(addEventDto);
         return ResponseEntity.created(
                 ServletUriComponentsBuilder
                         .fromCurrentContextPath()
-                        .path("/crossfit-community/events/find/{id}")
                         .buildAndExpand(addEventDto.getEventName())
                         .toUri()
         ).body(addEventDto);

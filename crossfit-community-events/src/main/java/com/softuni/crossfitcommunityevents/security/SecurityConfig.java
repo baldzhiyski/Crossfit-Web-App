@@ -18,7 +18,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         authorize ->
                                 authorize.requestMatchers(HttpMethod.GET, "/crossfit-community/**","/swagger-ui/**", "swagger-ui.html", "/v3/api-docs/**").permitAll()
-                                        .requestMatchers(HttpMethod.PUT,"/crossfit-community/events/publish").permitAll()
+                                        .requestMatchers(HttpMethod.POST,"/crossfit-community/events/publish").permitAll()
+                                        .requestMatchers(HttpMethod.DELETE,"/crossfit-community/events/delete/{id}").permitAll()
                                         .anyRequest().authenticated()
                 )
                 .build();

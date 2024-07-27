@@ -16,4 +16,6 @@ public interface EventService {
 
     List<EventDto> findSomeRandomEvents();
     Page<EventDto> findAllEvents(Pageable pageable);
+
+    boolean deleteEvent(Long id);
 }

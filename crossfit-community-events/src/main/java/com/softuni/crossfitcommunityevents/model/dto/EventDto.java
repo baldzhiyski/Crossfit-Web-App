@@ -14,7 +14,5 @@ public class EventDto {
     private String eventName;
     private String description;
     private Date date;
-
     private String videoUrl;
-
 }
