@@ -16,56 +16,69 @@ services:
       - "1025:1025" # smtp server
       - "8025:8025" # web ui
 
-  crossfit-trainings:
-    depends_on:
-      db:
-        condition: service_healthy
-    image: baldzhiyski/crossfit-trainings-final:v11
+  promtool:
+    image: prom/prometheus:v2.43.0
     ports:
-      - "8081:8081"
-
-    environment:
-      - MYSQL_HOST=db
-      - MYSQL_PORT=3306
-
-
-  crossfit-community-events:
-    depends_on:
-      db:
-        condition: service_healthy
-    image: baldzhiyski/crossfit-events-final:v11
+      - 9090:9090
+    volumes:
+      - type: bind
+        source: ./prometheus.yaml
+        target: /etc/prometheus/prometheus.yml
+  grafana:
+    image: grafana/grafana:8.5.22
     ports:
-      - "8082:8082"
+      - 3000:3000
 
-    environment:
-      - MYSQL_HOST=db
-      - MYSQL_PORT=3306
-
-  crossfit-client:
-    depends_on:
-      crossfit-trainings:
-        condition: service_completed_successfully
-      db:
-        condition: service_healthy
-      crossfit-community-events:
-        condition: service_completed_successfully
-
-    image: baldzhiyski/crossfit-client-final:v12
-    ports:
-      - "8080:8080"
-
-    environment:
-      - MYSQL_HOST=${MYSQL_HOST}
-      - MYSQL_PORT=${MYSQL_PORT}
-      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
-      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
-      - CLOUDINARY_NAME=${CLOUDINARY_NAME}
-      - FOREX_API_KEY=${FOREX_API_KEY}
-      - JWT_EXPIRATION=${JWT_EXPIRATION}
-      - JWT_KEY=${JWT_KEY}
-      - MAIL_PASSWORD=${MAIL_PASSWORD}
-      - MAIL_USER=${MAIL_USER}
-      - EVENT_HOST=${EVENT_HOST}
-      - TRAININGS_HOST=${TRAININGS_HOST}
-      - remembermekey=${remembermekey}
-      - MAILHOG_HOST=${MAILHOG_HOST}
+#  crossfit-trainings:
+#    depends_on:
+#      db:
+#        condition: service_healthy
+#    image: baldzhiyski/crossfit-trainings-final:v11
+#    ports:
+#      - "8081:8081"
+#
+#    environment:
+#      - MYSQL_HOST=db
+#      - MYSQL_PORT=3306
+#
+#
+#  crossfit-community-events:
+#    depends_on:
+#      db:
+#        condition: service_healthy
+#    image: baldzhiyski/crossfit-events-final:v11
+#    ports:
+#      - "8082:8082"
+#
+#    environment:
+#      - MYSQL_HOST=db
+#      - MYSQL_PORT=3306
+#
+#  crossfit-client:
+#    depends_on:
+#      crossfit-trainings:
+#        condition: service_completed_successfully
+#      db:
+#        condition: service_healthy
+#      crossfit-community-events:
+#        condition: service_completed_successfully
+#
+#    image: baldzhiyski/crossfit-client-final:v12
+#    ports:
+#      - "8080:8080"
+#
+#    environment:
+#      - MYSQL_HOST=${MYSQL_HOST}
+#      - MYSQL_PORT=${MYSQL_PORT}
+#      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
+#      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
+#      - CLOUDINARY_NAME=${CLOUDINARY_NAME}
+#      - FOREX_API_KEY=${FOREX_API_KEY}
+#      - JWT_EXPIRATION=${JWT_EXPIRATION}
+#      - JWT_KEY=${JWT_KEY}
+#      - MAIL_PASSWORD=${MAIL_PASSWORD}
+#      - MAIL_USER=${MAIL_USER}
+#      - EVENT_HOST=${EVENT_HOST}
+#      - TRAININGS_HOST=${TRAININGS_HOST}
+#      - remembermekey=${remembermekey}
+#      - MAILHOG_HOST=${MAILHOG_HOST}

@@ -1,5 +1,6 @@
 package com.softuni.crossfitcommunityevents.security;
 
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -20,6 +21,7 @@ public class SecurityConfig {
                                 authorize.requestMatchers(HttpMethod.GET, "/crossfit-community/**","/swagger-ui/**", "swagger-ui.html", "/v3/api-docs/**").permitAll()
                                         .requestMatchers(HttpMethod.POST,"/crossfit-community/events/publish").permitAll()
                                         .requestMatchers(HttpMethod.DELETE,"/crossfit-community/events/delete/{id}").permitAll()
+                                        .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
                                         .anyRequest().authenticated()
                 )
                 .build();

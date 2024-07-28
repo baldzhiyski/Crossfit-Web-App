@@ -3,6 +3,7 @@ package com.softuni.crossfitcommunityevents.web;
 import com.softuni.crossfitcommunityevents.exception.ObjectNotFoundException;
 import com.softuni.crossfitcommunityevents.model.dto.EventDto;
 import com.softuni.crossfitcommunityevents.service.EventService;
+import com.softuni.crossfitcommunityevents.service.MonitoringService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -35,8 +36,11 @@ public class EventsController {
 
     private final EventService eventService;
 
-    public EventsController(EventService eventService) {
+    private MonitoringService monitoringService;
+
+    public EventsController(EventService eventService, MonitoringService monitoringService) {
         this.eventService = eventService;
+        this.monitoringService = monitoringService;
     }
 
     @Operation(
@@ -224,6 +228,7 @@ public class EventsController {
     @GetMapping("/events/all")
     public ResponseEntity<PagedModel<EventDto>> findAllEvents(
             @PageableDefault(size = 3, sort = "date", direction = Sort.Direction.ASC) Pageable pageable) {
+        monitoringService.increaseEventsSearch();
         return ResponseEntity.ok(eventService.findAllEvents(pageable));
     }
 
