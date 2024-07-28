@@ -3,6 +3,7 @@ package com.softuni.crossfitapp.config;
 import com.softuni.crossfitapp.repository.UserRepository;
 import com.softuni.crossfitapp.service.impl.CrossfitUserDetailsService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -60,6 +61,7 @@ public class SecurityConfig {
                         .requestMatchers("/crossfit/api/convert").permitAll()
                         .requestMatchers("/workouts/explore-current/{trainingsType}").hasRole("USER")
                         .requestMatchers("/workouts/details/comment/{trainingsType}").hasRole("USER")
+                        .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
                         // Catch-all for any other requests, must be authenticated
                         .anyRequest().authenticated()
                 )

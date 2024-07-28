@@ -224,6 +224,11 @@ public class WorkoutServiceImpl implements WorkoutsService {
 
     }
 
+    @Override
+    public TrainingType getTrainingTypeById(UUID trainingId) {
+        return this.weeklyTrainingRepository.findByUuid(trainingId).orElseThrow(()->new ObjectNotFoundException("No such training!")).getTrainingType();
+    }
+
 
     private LocalTime getRandomTime() {
         int randomHour = ThreadLocalRandom.current().nextInt(8, 21);

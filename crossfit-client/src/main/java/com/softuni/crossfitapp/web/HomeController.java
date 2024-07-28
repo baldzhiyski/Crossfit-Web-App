@@ -3,6 +3,7 @@ package com.softuni.crossfitapp.web;
 import com.softuni.crossfitapp.domain.dto.events.EventDetailsDto;
 import com.softuni.crossfitapp.domain.user_details.CrossfitUserDetails;
 import com.softuni.crossfitapp.service.EventService;
+import com.softuni.crossfitapp.service.MonitoringService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -22,8 +23,11 @@ public class HomeController {
 
     private EventService eventService;
 
-    public HomeController(EventService eventService) {
+    private MonitoringService monitoringService;
+
+    public HomeController(EventService eventService, MonitoringService monitoringService) {
         this.eventService = eventService;
+        this.monitoringService = monitoringService;
     }
 
     @GetMapping("/")
@@ -54,6 +58,7 @@ public class HomeController {
 
     @GetMapping("/nutrition-blog")
     public String getTips(){
+        monitoringService.increaseBlogReaders();
         return "nutrition-tips";
     }
 }

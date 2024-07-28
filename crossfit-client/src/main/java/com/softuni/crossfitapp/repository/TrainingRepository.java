@@ -13,6 +13,7 @@ import java.util.UUID;
 @Repository
 public interface TrainingRepository extends JpaRepository<com.softuni.crossfitapp.domain.entity.Training, Long> {
     Optional<Training> findByTrainingType(TrainingType trainingType);
+    Optional<Training> findByUuid(UUID trainingUUid);
 
     @Query("SELECT t FROM Training t WHERE t.trainingType = :trainingType ORDER BY RAND()")
     Training findRandomTrainingByTrainingType(@Param("trainingType") TrainingType trainingType);

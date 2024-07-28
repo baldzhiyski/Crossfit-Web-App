@@ -5,6 +5,7 @@ import com.softuni.crossfitapp.domain.dto.trainings.WeeklyTrainingDto;
 import com.softuni.crossfitapp.domain.entity.Training;
 import com.softuni.crossfitapp.domain.entity.enums.TrainingType;
 import com.softuni.crossfitapp.service.CommentService;
+import com.softuni.crossfitapp.service.MonitoringService;
 import com.softuni.crossfitapp.service.UserService;
 import com.softuni.crossfitapp.service.WorkoutsService;
 import com.softuni.crossfitapp.service.schedulers.CreationWeeklyTrainings;
@@ -33,14 +34,16 @@ public class WorkoutController {
     private WorkoutsService workoutsService;
     private CommentService commentService;
 
+    private MonitoringService monitoringService;
 
     private CreationWeeklyTrainings creationWeeklyTrainings;
 
     private UserService userService;
 
-    public WorkoutController(WorkoutsService workoutsService, CommentService commentService, CreationWeeklyTrainings creationWeeklyTrainings, UserService userService) {
+    public WorkoutController(WorkoutsService workoutsService, CommentService commentService, MonitoringService monitoringService, CreationWeeklyTrainings creationWeeklyTrainings, UserService userService) {
         this.workoutsService = workoutsService;
         this.commentService = commentService;
+        this.monitoringService = monitoringService;
         this.creationWeeklyTrainings = creationWeeklyTrainings;
         this.userService = userService;
     }
@@ -86,6 +89,8 @@ public class WorkoutController {
     public String joinForCurrentTraining(@PathVariable UUID trainingId,@AuthenticationPrincipal UserDetails userDetails){
         this.workoutsService.joinCurrentTraining(trainingId,userDetails.getUsername());
 
+        String trainingType = workoutsService.getTrainingTypeById(trainingId).toString();
+        monitoringService.enrollUserInTraining(trainingType);
         return "redirect:/schedule-for-the-week";
     }
 

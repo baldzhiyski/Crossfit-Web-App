@@ -32,4 +32,6 @@ public interface WorkoutsService {
     List<WeeklyTraining> getTrainingsWithDateBefore(LocalDate currentDate);
 
     void doDeletion(List<WeeklyTraining> pastTrainings);
+
+    TrainingType getTrainingTypeById(UUID trainingId);
 }
