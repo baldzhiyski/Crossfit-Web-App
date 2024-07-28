@@ -7,6 +7,7 @@ import com.softuni.crossfitcommunityevents.repository.EventRepository;
 import com.softuni.crossfitcommunityevents.service.EventService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedModel;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,9 +44,8 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Page<EventDto> findAllEvents(Pageable pageable) {
-        Page<Event> events = eventRepository.findAll(pageable);
-        return events.map(this::mapToDto);
+    public PagedModel<EventDto> findAllEvents(Pageable pageable) {
+         return new PagedModel<>(eventRepository.findAll(pageable).map(this::mapToDto));
     }
 
     @Override
