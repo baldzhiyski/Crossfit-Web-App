@@ -15,6 +15,21 @@ body::before {
     background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity to make it darker or lighter */
     z-index: -1; /* Ensure the pseudo-element is behind other content */
 }
+
+#downloadPDF {
+    background-color: #408D8E; /* Background color */
+    border: none; /* Remove border */
+    color: white; /* Text color */
+    font-size: 16px; /* Font size */
+    padding: 10px 20px; /* Padding */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+#downloadPDF:hover {
+    background-color: #357C7C; /* Hover background color */
+}
 .container {
     margin-top: 40px;
     color: white;

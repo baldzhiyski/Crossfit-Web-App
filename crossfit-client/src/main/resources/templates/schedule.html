@@ -8,11 +8,13 @@
     <link th:href="@{/css/schedule.css}" rel="stylesheet"/>
     <link th:href="@{/css/navbar.css}" rel="stylesheet"/>
     <link th:href="@{/css/footer.css}" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
 <nav th:replace="~{fragments/navbar::nav}"></nav>
 <div class="container">
     <h1 class="my-4 text-center">Weekly Training Schedule</h1>
+    <button id="downloadPDF">Download Trainings PDF</button>
     <div class="row" th:object="${timeForNewTrainigns}">
         <!-- Monday -->
         <div class="col-md-4">
@@ -113,8 +115,8 @@
                     <span class="card-title" th:text="${training.trainingType}">CARDIO</span>
                     <span class="card-date" th:text="${training.getFormattedDate()}">Some date</span>
                     <div class="details">
-                        <span class="coach" th:text="${'Coach: ' + training.coachFirstName + ' ' + training.coachLastName}">Coach: Sophia Adams </span>
-                        <span class="time" th:text="'Starting time: ' + ${training.time}">Starting time: 9:00 AM</span>
+                        <span class="coach" th:text="${'Coach: ' + training.coachFirstName + ' ' + training.coachLastName+' '}">Coach: Sophia Adams </span>
+                        <span class="time"  th:text="'Starting time: ' + ${training.time}">Starting time: 9:00 AM</span>
                         <span class="free-spots" th:text="'Free Spots: ' + ${training.participants.size()} + '/5'">Free Spots: 9/5</span>
                     </div>
                     <!-- Check if current user is a participant -->
@@ -199,6 +201,80 @@
 </div>
 <!-- JavaScript to mark past trainings as unavailable -->
 <script th:inline="javascript">
+    document.getElementById('downloadPDF').addEventListener('click', function() {
+        const {jsPDF} = window.jspdf;
+
+        const doc = new jsPDF();
+
+        doc.setFontSize(16); // Reduced font size for title
+        doc.text('Weekly Training Schedule', 14, 20);
+
+        let y = 30;
+        const marginRight = 190; // Adjust this value to set right margin
+
+        function addTable(day, trainings) {
+            doc.setFontSize(14);
+            doc.text(day, 14, y);
+            y += 10;
+
+            doc.setFontSize(10); // Reduced font size for table content
+            doc.text('Training Type', 14, y);
+            doc.text('Date', 50, y);
+            doc.text('Coach', 85, y);
+            doc.text('Starts at', 120, y);
+            doc.text('Free Spots', 155, y);
+            doc.text('Joined', marginRight, y);
+
+            y += 12;
+
+            trainings.forEach(training => {
+                doc.text(training.trainingType, 14, y);
+                doc.text(training.date, 50, y);
+                doc.text(training.coach, 85, y);
+                doc.text(training.time, 120, y);
+                doc.text(training.freeSpots, 155, y);
+                doc.text(training.joined, marginRight, y);
+                y += 12;
+
+                if (y > 270) { // Check if the current position exceeds page height
+                    doc.addPage();
+                    y = 20; // Reset vertical position for the new page
+                    doc.setFontSize(10); // Ensure font size is consistent
+                }
+            });
+
+            y += 7; // Add extra space between days
+        }
+
+        function getTrainingDataForDay(day) {
+            const dayCards = Array.from(document.querySelectorAll('.day-heading')).find(e => e.innerText.includes(day)).parentElement;
+            const trainingData = [];
+
+            dayCards.querySelectorAll('.card').forEach(card => {
+                trainingData.push({
+                    trainingType: card.querySelector('.card-title').innerText,
+                    date: card.querySelector('.card-date').innerText,
+                    coach: card.querySelector('.coach').innerText,
+                    time: card.querySelector('.time').innerText,
+                    freeSpots: card.querySelector('.free-spots').innerText,
+                    joined: card.querySelector('.text-dark') ? 'Yes' : 'No'
+                });
+            });
+
+            return trainingData;
+        }
+
+        const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+        days.forEach(day => {
+            const trainings = getTrainingDataForDay(day);
+            addTable(day, trainings);
+        });
+
+        doc.save('trainings_schedule.pdf');
+
+    });
+
     /*<![CDATA[*/
     document.addEventListener('DOMContentLoaded', function() {
         var now = new Date();
