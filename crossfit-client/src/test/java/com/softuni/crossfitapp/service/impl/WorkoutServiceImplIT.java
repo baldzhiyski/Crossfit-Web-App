@@ -5,7 +5,6 @@ import com.softuni.crossfitapp.domain.entity.*;
 import com.softuni.crossfitapp.domain.entity.enums.Level;
 import com.softuni.crossfitapp.domain.entity.enums.TrainingType;
 import com.softuni.crossfitapp.exceptions.CannotDeleteTrainingException;
-import com.softuni.crossfitapp.exceptions.ObjectNotFoundException;
 import com.softuni.crossfitapp.exceptions.WeeklyTrainingsExhaustedException;
 import com.softuni.crossfitapp.repository.CoachRepository;
 import com.softuni.crossfitapp.repository.TrainingRepository;
@@ -23,12 +22,9 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
-import static com.github.tomakehurst.wiremock.extension.responsetemplating.helpers.WireMockHelpers.date;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -168,10 +164,10 @@ public class WorkoutServiceImplIT {
         todayTraining.setCoach(coachWithUserAcc);
 
         // Perform action
-        List<WeeklyTraining> result = workoutService.getTrainingsWithDateBefore(LocalDate.now());
+        List<WeeklyTraining> result = workoutService.getTrainingsWithDateBefore(LocalDate.now(), LocalTime.now());
 
         // Verify
-        assertEquals(1, result.size(), "There should be only one training with date before today");
+        assertEquals(2, result.size(), "There should be two trainings with date before today");
         assertEquals(pastTraining.getDate(), result.get(0).getDate(), "The training date should match the past training date");
     }
 
@@ -223,6 +219,7 @@ public class WorkoutServiceImplIT {
     private WeeklyTraining createTestWeeklyTraining(LocalDate localDate) {
         WeeklyTraining training = new WeeklyTraining();
         training.setUuid(UUID.randomUUID());
+        training.setTime(LocalTime.MIDNIGHT);
         training.setLevel(Level.BEGINNER);
         training.setTrainingType(TrainingType.WEIGHTLIFTING);
         training.setImageUrl("/images/weightlifting.jpg");

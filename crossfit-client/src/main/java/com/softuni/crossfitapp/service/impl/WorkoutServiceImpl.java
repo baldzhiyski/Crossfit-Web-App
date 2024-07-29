@@ -5,7 +5,6 @@ import com.softuni.crossfitapp.domain.dto.trainings.SeedTrainingFromApiDto;
 import com.softuni.crossfitapp.domain.dto.trainings.TrainingDetailsDto;
 import com.softuni.crossfitapp.domain.dto.trainings.WeeklyTrainingDto;
 import com.softuni.crossfitapp.domain.entity.*;
-import com.softuni.crossfitapp.domain.entity.enums.RoleType;
 import com.softuni.crossfitapp.domain.entity.enums.TrainingType;
 import com.softuni.crossfitapp.exceptions.*;
 import com.softuni.crossfitapp.repository.*;
@@ -21,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClient;
 
 import java.time.*;
-import java.time.temporal.TemporalAdjusters;
+import java.time.chrono.ChronoLocalDate;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
@@ -196,9 +195,9 @@ public class WorkoutServiceImpl implements WorkoutsService {
     }
 
     @Override
-    public List<WeeklyTraining> getTrainingsWithDateBefore(LocalDate currentDate) {
+    public List<WeeklyTraining> getTrainingsWithDateBefore(LocalDate currentDate, LocalTime localTime) {
         return weeklyTrainingRepository.findAll().stream()
-                .filter(training -> training.getDate().isBefore(currentDate))
+                .filter(training -> training.getDate().isBefore(currentDate) || (training.getDate().equals(currentDate) && training.getTime().isBefore(localTime)))
                 .collect(Collectors.toList());
     }
 
@@ -215,8 +214,8 @@ public class WorkoutServiceImpl implements WorkoutsService {
 
 
             participants.forEach(participant -> participant.getTrainingsPerWeekList().remove(training));
-            userRepository.saveAll(participants);
-            coachRepository.save(coach);
+            userRepository.saveAllAndFlush(participants);
+            coachRepository.saveAndFlush(coach);
 
 
             // We do not delete the training itself , it will be checked as already in the past through the js

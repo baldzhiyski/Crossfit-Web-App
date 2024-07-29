@@ -8,6 +8,7 @@ import com.softuni.crossfitapp.domain.entity.enums.TrainingType;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -29,7 +30,7 @@ public interface WorkoutsService {
     void deleteFromCurrentTrainings(UUID trainingId, String loggedUserUsername);
 
 
-    List<WeeklyTraining> getTrainingsWithDateBefore(LocalDate currentDate);
+    List<WeeklyTraining> getTrainingsWithDateBefore(LocalDate currentDate, LocalTime localTime);
 
     void doDeletion(List<WeeklyTraining> pastTrainings);
 

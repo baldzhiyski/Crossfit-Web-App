@@ -45,7 +45,7 @@
             <div class="card text-white bg-success mb-3">
                 <div class="card-header">Revenue</div>
                 <div class="card-body">
-                    <h5 class="card-title">$<span id="revenue">10000</span></h5>
+                    <h5 class="card-title">$<span id="revenue" th:text="${totalBoughtMemberships}">10000</span></h5>
                 </div>
             </div>
         </div>
@@ -53,7 +53,7 @@
             <div class="card text-white bg-info mb-3">
                 <div class="card-header">Active Users</div>
                 <div class="card-body">
-                    <h5 class="card-title"><span id="active-users">150</span></h5>
+                    <h5 class="card-title"><span id="active-users" th:text="${totalUserAccounts}">150</span></h5>
                 </div>
             </div>
         </div>
@@ -76,7 +76,6 @@
                     <td th:text="*{user.uuid}">john_doe</td>
                     <td th:text="*{user.username}">john_doe</td>
                     <td th:text="*{user.email}">john_doe</td>
-                    <td>john@example.com</td>
                     <td>
                         <form th:unless="*{user.disabled}" th:method="PATCH" th:action="@{/disableAcc/{accountUUID}(accountUUID = *{user.uuid})}">
                             <button class="btn btn-dark" data-id="1" type="submit">Disable Account</button>

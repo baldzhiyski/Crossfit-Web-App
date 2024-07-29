@@ -21,6 +21,16 @@ public class AdminController {
         this.commentService = commentService;
     }
 
+    @ModelAttribute("totalBoughtMemberships")
+    public Long totalBoughMemberships(){
+        return this.userService.getTotalMoney();
+    }
+
+    @ModelAttribute("totalUserAccounts")
+    public Long getTotalNumAcc(){
+        return this.userService.numberAllActiveUsers();
+    }
+
 
     @ModelAttribute("users")
     public List<UserAdminPageDto> displayUsers(){

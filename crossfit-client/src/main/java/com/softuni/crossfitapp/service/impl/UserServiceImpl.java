@@ -289,6 +289,24 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public Long getTotalMoney() {
+        return this.userRepository.findAll()
+                .stream()
+                .filter(user -> !user.getRoles().contains(this.roleRepository.findByRoleType(RoleType.ADMIN)))
+                .map(User::getMembership)
+                .map(Membership::getPrice)// Extract the price
+                .reduce(0L, Long::sum); // Sum up all prices
+    }
+
+    @Override
+    public Long numberAllActiveUsers() {
+        return this.userRepository.findAll()
+                .stream()
+                .filter(User::isActive)
+                .count();
+    }
+
     private static int getMaxTrainingSessionsPerWeekDependinOnMembershipType(Membership byMembershipType) {
         int maxTrainingSessionsPerWeek;
         switch (byMembershipType.getMembershipType()) {

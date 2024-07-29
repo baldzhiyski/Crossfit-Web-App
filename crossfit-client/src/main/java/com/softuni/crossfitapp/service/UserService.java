@@ -7,7 +7,6 @@ import com.softuni.crossfitapp.domain.dto.users.UserRegisterDto;
 import com.softuni.crossfitapp.domain.entity.User;
 import com.softuni.crossfitapp.domain.entity.enums.MembershipType;
 import com.softuni.crossfitapp.domain.user_details.CrossfitUserDetails;
-import com.softuni.crossfitapp.service.impl.CrossfitUserDetailsService;
 
 import java.io.IOException;
 import java.util.List;
@@ -42,4 +41,8 @@ public interface UserService {
     void enableOrDisableAcc(UUID accountUUID,String action);
 
     void resetAllowedTrainingsPerWeek();
+
+    Long getTotalMoney();
+
+    Long numberAllActiveUsers();
 }
