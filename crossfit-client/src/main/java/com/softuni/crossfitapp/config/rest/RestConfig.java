@@ -1,5 +1,6 @@
 package com.softuni.crossfitapp.config.rest;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -21,6 +22,7 @@ public class RestConfig {
                 .build();
     }
 
+    @ConditionalOnProperty(value="rest.configuration", havingValue="prod")
     @Bean("eventsRestClient")
     public RestClient eventsRestClient(EventsAPIConfig eventsAPIConfig) {
         return RestClient

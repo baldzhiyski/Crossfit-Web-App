@@ -30,7 +30,7 @@
     <h1>THE GYM FOR HIGH IMPACT ATHLETES</h1>
     <div sec:authorize="isAuthenticated()">
         <h2 th:text="#{index_welcome_authenticated} + ' ' + ${fullName}  + ' !'">Welcome, <span th:text="${fullName}"></span>!</h2>
-        <h3>Explore our high-intensity workouts and community-driven fitness programs.</h3>
+        <h3 th:text="#{index_text}">Explore our high-intensity workouts and community-driven fitness programs.</h3>
     </div>
     <div sec:authorize="isAnonymous()">
         <h2 th:text="#{index_welcome_anonymous}">Welcome to our CrossFit community, where we push boundaries and achieve greatness. Our state-of-the-art facilities and expert trainers are dedicated to helping you reach your fitness goals.</h2>
@@ -44,7 +44,7 @@
 <!-- Find amazing friends Section -->
 <section class="top-container">
     <div class="showcase text-white">
-        <button class="btn btn-secondary btn-lg" th:text="#{index_explore_community}">Explore our community</button>
+        <h4 class="display-5" th:text="#{index_explore_community}">Be Fit !</h4>
     </div>
 </section>
 

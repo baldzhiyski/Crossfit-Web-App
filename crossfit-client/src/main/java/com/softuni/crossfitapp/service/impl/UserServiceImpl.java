@@ -293,7 +293,7 @@ public class UserServiceImpl implements UserService {
     public Long getTotalMoney() {
         return this.userRepository.findAll()
                 .stream()
-                .filter(user -> !user.getRoles().contains(this.roleRepository.findByRoleType(RoleType.ADMIN)))
+                .filter(user -> !user.getRoles().contains(this.roleRepository.findByRoleType(RoleType.ADMIN)) && user.getMembership()!=null)
                 .map(User::getMembership)
                 .map(Membership::getPrice)// Extract the price
                 .reduce(0L, Long::sum); // Sum up all prices

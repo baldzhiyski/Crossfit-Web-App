@@ -87,6 +87,9 @@ management:
       exposure:
         include: "*"
 
+rest:
+  configuration: prod
+
 #jwt:
 #  secret: ${JWT_KEY}
 #  expiration: ${JWT_EXPIRATION}

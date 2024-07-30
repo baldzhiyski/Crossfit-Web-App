@@ -57,3 +57,6 @@ cloudinary :
   cloud_name : "somename"
   apiKey: "testkey"
   apiSecret : "testsecret"
+
+rest:
+  configuration: test
