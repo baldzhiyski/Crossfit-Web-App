@@ -52,12 +52,12 @@ public class CoachServiceImpl implements CoachService {
     public List<CoachDisplayDto> getCoachesInfoForMeetTheTeamPage() {
         Role coachRole = this.roleRepository.findByRoleType(RoleType.COACH);
         Set<User> coachesAccounts = this.userRepository.findByRolesContaining(coachRole);
-
          return coachesAccounts.stream().map(coach->{
             List<String> certificatesNames = this.coachRepository
                     .findByFirstName(coach.getFirstName()).getCertificates().stream().map(Certificate::getName).toList();
             return new CoachDisplayDto(coach.getFirstName(),coach.getLastName(),certificatesNames,coach.getImageUrl(),coach.getEmail());
-        }).toList();
+        }).collect(Collectors.toList());
+
     }
 
     @Override

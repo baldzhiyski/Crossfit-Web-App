@@ -24,6 +24,10 @@ spring:
     hiddenmethod:
       filter:
         enabled: 'true'
+  data:
+    redis:
+      host: localhost
+      port: 6379
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     password: ${my_pass:}
@@ -89,7 +93,3 @@ management:
 
 rest:
   configuration: prod
-
-#jwt:
-#  secret: ${JWT_KEY}
-#  expiration: ${JWT_EXPIRATION}

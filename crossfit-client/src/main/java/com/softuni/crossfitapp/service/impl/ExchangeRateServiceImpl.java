@@ -9,6 +9,7 @@ import com.softuni.crossfitapp.service.ExchangeRateService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -39,6 +40,7 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
                 .stream()
                 .map(ExRateEntity::getCurrency)
                 .toList();
+
     }
 
 
@@ -48,6 +50,7 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
 
 
     @Override
+    @Cacheable("ex_rates")
     public ExRatesDTO fetchExRates() {
         return restClient
                 .get()

@@ -1,9 +1,6 @@
 package com.softuni.crossfitapp.init;
 
-import com.softuni.crossfitapp.service.CountryService;
-import com.softuni.crossfitapp.service.ExchangeRateService;
-import com.softuni.crossfitapp.service.SeedService;
-import com.softuni.crossfitapp.service.WorkoutsService;
+import com.softuni.crossfitapp.service.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
@@ -18,7 +15,6 @@ public class DBInitializer  implements CommandLineRunner {
     private CountryService countryService;
 
     private WorkoutsService workoutsService;
-
     public DBInitializer(SeedService seedService, ExchangeRateService exchangeRateService, CountryService countryService, WorkoutsService workoutsService) {
         this.seedService = seedService;
         this.exchangeRateService = exchangeRateService;
@@ -31,9 +27,5 @@ public class DBInitializer  implements CommandLineRunner {
         countryService.seedCountries();
         workoutsService.seedTrainings();
         seedService.seedAll();
-        exchangeRateService.seedRates();
-
-//        this.workoutsService.populateWeeklyTrainings();
-
     }
 }

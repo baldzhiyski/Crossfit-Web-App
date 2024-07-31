@@ -36,7 +36,6 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
-    @Cacheable("countriesCodes")
     public List<String> allCountryCodes() {
         return this.countryRepository.findAll()
                 .stream()

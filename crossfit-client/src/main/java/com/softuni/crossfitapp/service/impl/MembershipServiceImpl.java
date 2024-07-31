@@ -9,9 +9,11 @@ import com.softuni.crossfitapp.repository.MembershipRepository;
 import com.softuni.crossfitapp.service.ExchangeRateService;
 import com.softuni.crossfitapp.service.MembershipService;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MembershipServiceImpl implements MembershipService {
@@ -21,12 +23,13 @@ public class MembershipServiceImpl implements MembershipService {
         this.membershipRepository = membershipRepository;
     }
 
+    @Cacheable("memberships")
     @Override
     public List<MembershipDto> getMemberships() {
         return membershipRepository.findAll()
                 .stream()
                 .map(MembershipDto::fromEntity)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Override

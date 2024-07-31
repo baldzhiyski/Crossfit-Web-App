@@ -67,4 +67,6 @@ public class AdminController {
 
         return "redirect:/profiles-dashboard";
     }
+
+    // TODO : Check with preauthorize if the logged user has role admin
 }
