@@ -44,10 +44,10 @@ Welcome to the CrossFit Web App repository! This project is designed to provide 
 
 To set up the project locally using Docker, follow these steps:
 
-### Pull the Docker Image
+### Pull the Docker Images
 
-You can pull the pre-built Docker image from the Docker Hub:
-
+Navigate to the crossfit-client modul -> docker -> docker-compose and run this file .
+Each module is an existing image in my docker repository
 ```bash
 docker pull baldzhiyski/crossfit-client:latest
 docker pull baldzhiyski/crossfit-community-events:latest
