@@ -1,9 +1,11 @@
 package com.softuni.crossfitapp.web;
 
+import com.softuni.crossfitapp.domain.dto.ReCaptchaResponseDTO;
 import com.softuni.crossfitapp.domain.dto.users.UserProfileUpdateDto;
 import com.softuni.crossfitapp.domain.dto.users.UserRegisterDto;
 import com.softuni.crossfitapp.domain.user_details.CrossfitUserDetails;
 import com.softuni.crossfitapp.service.CountryService;
+import com.softuni.crossfitapp.service.ReCaptchaService;
 import com.softuni.crossfitapp.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,9 +30,11 @@ public class UserController {
     private UserService userService;
     private CountryService countryService;
 
-    public UserController(UserService userService, CountryService countryService) {
+    private ReCaptchaService reCaptchaService;
+    public UserController(UserService userService, CountryService countryService, ReCaptchaService reCaptchaService) {
         this.userService = userService;
         this.countryService = countryService;
+        this.reCaptchaService = reCaptchaService;
     }
 
 
@@ -59,8 +63,11 @@ public class UserController {
 
 
     @PostMapping("/register")
-    public ModelAndView doRegister(@Valid UserRegisterDto userRegisterDto, BindingResult bindingResult , RedirectAttributes redirectAttributes) throws IOException {
+    public ModelAndView doRegister(@Valid UserRegisterDto userRegisterDto, BindingResult bindingResult , RedirectAttributes redirectAttributes,
+                                   @RequestParam("g-recaptcha-response") String reCaptchaResponse           ) throws IOException {
         ModelAndView modelAndView = new ModelAndView();
+
+
 
         if (bindingResult.hasErrors()) {
             final String attributeName = "registerDto";
@@ -69,6 +76,15 @@ public class UserController {
                     .addFlashAttribute(BINDING_RESULT_PATH + DOT + attributeName, bindingResult);
             modelAndView.setViewName("redirect:/users/register");
             return modelAndView;
+        }
+        boolean isBot = !reCaptchaService
+                .verify(reCaptchaResponse)
+                .map(ReCaptchaResponseDTO::isSuccess)
+                .orElse(false);
+
+
+        if (isBot) {
+            modelAndView.setViewName("redirect:/");
         }
 
         userService.registerNewUser(userRegisterDto);

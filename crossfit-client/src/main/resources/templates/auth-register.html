@@ -10,7 +10,7 @@
 <body>
 <div class="wrapper" style="background-image: url('/images/inner-register.jpg');">
     <div class="inner" style="background: url('/images/register.jpg') no-repeat; background-size: cover;">
-        <form th:action="@{/users/register}" th:method="POST" th:object="${registerDto}" enctype="multipart/form-data">
+        <form id="registration-form" th:action="@{/users/register}" th:method="POST" th:object="${registerDto}" enctype="multipart/form-data">
             <h3 style="color: white" th:text="#{register.heading}">Register Now !</h3>
             <div class="row">
                 <div class="form-group col-md-5 mr-1 mb-2" th:classappend="${#fields.hasErrors('firstName')} ? 'has-error'">
@@ -80,8 +80,7 @@
                 <div class="form-group col-md-5 mr-1 mb-2" th:classappend="${#fields.hasErrors('nationality')} ? 'has-error'">
                     <label for="nationality" th:text="#{register.nationality}">Nationality</label>
                     <select id="nationality" class="form-control"  name="nationality" style="color: white;">
-                        <option value="">Choose...</option>
-                        <option th:each="code : ${countryCodes}" th:value="${code}" th:text="${code}"></option>
+                        <option th:each="code : ${countryCodes}" th:value="${code}" th:text="${code}"   th:selected="${code == 'DE'}"></option>
                     </select>
                     <div class="invalid-feedback" th:if="${#fields.hasErrors('nationality')}" th:errors="*{nationality}"></div>
                 </div>
@@ -105,7 +104,10 @@
             </div>
 
             <div class="button-container">
-                <button type="submit" th:text="#{register.submit}">Sign in</button>
+                <button class="g-recaptcha btn btn-info btn-lg"
+                        th:attr="data-sitekey=${@reCaptchaConfig.getSite()}"
+                        data-callback='onSubmit'
+                        data-action='submit'>Sign In</button>
                 <a class="btn btn-dark" id="homeButton" th:href="@{/}" th:text="#{register.home.link}">
                     Go to home page
                 </a>
@@ -113,5 +115,12 @@
         </form>
     </div>
 </div>
+<script src="https://www.google.com/recaptcha/api.js"></script>
+<script>
+    function onSubmit(token) {
+        document.getElementById("registration-form").submit();
+    }
+
+</script>
 </body>
 </html>

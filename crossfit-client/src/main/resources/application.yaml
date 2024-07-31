@@ -85,6 +85,10 @@ cloudinary :
   apiKey: ${CLOUDINARY_API_KEY}
   apiSecret : ${CLOUDINARY_API_SECRET}
 
+google.recaptcha:
+    site: ${RECAPTCHA_SITE_KEY:test}
+    secret: ${RECAPTCHA_SITE_SECRET:test}
+
 management:
   endpoints:
     web:
