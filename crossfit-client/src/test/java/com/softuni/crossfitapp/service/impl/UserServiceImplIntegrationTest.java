@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.annotation.Transactional;
@@ -71,11 +72,14 @@ public class UserServiceImplIntegrationTest {
     @Autowired
     private TestData testData;
 
+    @Autowired
+    private UserDetailsService userDetailsService;
+
 
 
     @BeforeEach
     public void setUp(){
-        this.userService = new UserServiceImpl( applicationEventPublisher,  userRepository,  roleRepository,  membershipRepository,  countryRepository,  activationCodeRepository,
+        this.userService = new UserServiceImpl( applicationEventPublisher,  userRepository, userDetailsService, roleRepository,  membershipRepository,  countryRepository,  activationCodeRepository,
                  passwordEncoder,  cloudinaryService,  mapper);
 
     }

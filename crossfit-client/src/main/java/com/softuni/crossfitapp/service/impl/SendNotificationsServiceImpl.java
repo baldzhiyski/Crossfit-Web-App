@@ -3,10 +3,7 @@ package com.softuni.crossfitapp.service.impl;
 import com.softuni.crossfitapp.domain.entity.User;
 import com.softuni.crossfitapp.domain.entity.UserActivationLinkEntity;
 import com.softuni.crossfitapp.domain.entity.WeeklyTraining;
-import com.softuni.crossfitapp.domain.events.CancelledTrainingEvent;
-import com.softuni.crossfitapp.domain.events.DisabledAccountEvent;
-import com.softuni.crossfitapp.domain.events.EnabledAccountEvent;
-import com.softuni.crossfitapp.domain.events.UserRegisteredEvent;
+import com.softuni.crossfitapp.domain.events.*;
 import com.softuni.crossfitapp.exceptions.ObjectNotFoundException;
 import com.softuni.crossfitapp.repository.UserActivationCodeRepository;
 import com.softuni.crossfitapp.repository.UserRepository;
@@ -70,6 +67,19 @@ public class SendNotificationsServiceImpl implements SendNotificationsService {
                 event.getUserNames(),
                 activationCode,savedUser);
     }
+
+    @Override
+    @EventListener(LoggedViaGitHubEvent.class)
+    public void notifyUserLoggedWithGitHubWithoutRegistration(LoggedViaGitHubEvent loggedViaGitHubEvent) {
+        emailService.sendUserLoggedViaGitHubEmailWithRawRandomPass(loggedViaGitHubEvent.getUuid(),
+                loggedViaGitHubEvent.getUsername(),
+                loggedViaGitHubEvent.getFullName(),
+                loggedViaGitHubEvent.getEmail(),
+                loggedViaGitHubEvent.getCurrentPassword(),
+                loggedViaGitHubEvent.getAddress(),
+                loggedViaGitHubEvent.getDateOfBirth());
+    }
+
 
     public String activationCode(String email) {
         String activationCode = generateActivationCode();

@@ -3,6 +3,7 @@ package com.softuni.crossfitapp.service;
 import com.softuni.crossfitapp.domain.entity.User;
 import com.softuni.crossfitapp.domain.entity.WeeklyTraining;
 
+import java.util.Date;
 import java.util.UUID;
 
 public interface EmailService {
@@ -21,4 +22,6 @@ public interface EmailService {
     void sendDisabledAccountEmail(UUID authorUUID, String username, String fullName, String email);
 
     void sendEnabledAccount(UUID authorUUID, String username, String fullName, String email);
+
+    void sendUserLoggedViaGitHubEmailWithRawRandomPass(UUID uuid, String username, String fullName, String email, String currentPassword, String address, Date dateOfBirth);
 }

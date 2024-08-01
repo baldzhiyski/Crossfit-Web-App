@@ -8,6 +8,14 @@ spring:
     hibernate:
       ddl-auto: create-drop
     defer-datasource-initialization: true
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: test
+            client-secret: test
+
 remember_me_key: topseccc
 
 
@@ -58,5 +66,8 @@ cloudinary :
   apiKey: "testkey"
   apiSecret : "testsecret"
 
+google.recaptcha:
+  site: test
+  secret: test
 rest:
   configuration: test

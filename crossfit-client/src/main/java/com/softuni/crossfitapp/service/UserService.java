@@ -7,6 +7,7 @@ import com.softuni.crossfitapp.domain.dto.users.UserRegisterDto;
 import com.softuni.crossfitapp.domain.entity.User;
 import com.softuni.crossfitapp.domain.entity.enums.MembershipType;
 import com.softuni.crossfitapp.domain.user_details.CrossfitUserDetails;
+import org.springframework.security.core.Authentication;
 
 import java.io.IOException;
 import java.util.List;
@@ -45,4 +46,10 @@ public interface UserService {
     Long getTotalMoney();
 
     Long numberAllActiveUsers();
+
+
+
+    void createUserIfNotExist(String username, String email, String fullName, String address);
+
+    Authentication login(String username);
 }

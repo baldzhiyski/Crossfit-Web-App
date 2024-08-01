@@ -2,6 +2,7 @@ package com.softuni.crossfitapp.config;
 
 import com.softuni.crossfitapp.repository.UserRepository;
 import com.softuni.crossfitapp.service.impl.CrossfitUserDetailsService;
+import com.softuni.crossfitapp.service.oath.OAuthSuccessHandler;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -35,7 +36,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity,
+                                           OAuthSuccessHandler oAuthSuccessHandler) throws Exception {
         httpSecurity
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         // Allow static resources
@@ -81,6 +83,9 @@ public class SecurityConfig {
                         .key(rememberMeKey)
                         .rememberMeParameter("rememberme")
                         .rememberMeCookieName("rememberme")
+                )
+                .oauth2Login(
+                        oauth -> oauth.successHandler(oAuthSuccessHandler)
                 )
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                         .accessDeniedHandler(customHandler())

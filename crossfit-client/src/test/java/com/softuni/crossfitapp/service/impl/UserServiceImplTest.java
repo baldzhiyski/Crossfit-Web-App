@@ -21,6 +21,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.multipart.MultipartFile;
@@ -65,13 +66,16 @@ class UserServiceImplTest {
     @Mock
     private ModelMapper mapper;
 
+    @Mock
+    private UserDetailsService userDetailsService;
+
 
     @BeforeEach
     void setUp() {
         serviceToTest = new CrossfitUserDetailsService(
                 userRepository
         );
-        userService = new UserServiceImpl(  applicationEventPublisher,  userRepository,  roleRepository,  membershipRepository,  countryRepository,  activationCodeRepository,
+        userService = new UserServiceImpl(  applicationEventPublisher,  userRepository, userDetailsService, roleRepository,  membershipRepository,  countryRepository,  activationCodeRepository,
                 passwordEncoder,  cloudinaryService,  mapper);
     }
 

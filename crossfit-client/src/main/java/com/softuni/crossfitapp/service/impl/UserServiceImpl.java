@@ -1,6 +1,5 @@
 package com.softuni.crossfitapp.service.impl;
 
-import com.softuni.crossfitapp.domain.dto.events.EventDto;
 import com.softuni.crossfitapp.domain.dto.memberships.MembershipProfilePageDto;
 import com.softuni.crossfitapp.domain.dto.trainings.TrainingDto;
 import com.softuni.crossfitapp.domain.dto.users.UserAdminPageDto;
@@ -12,6 +11,7 @@ import com.softuni.crossfitapp.domain.entity.enums.MembershipType;
 import com.softuni.crossfitapp.domain.entity.enums.RoleType;
 import com.softuni.crossfitapp.domain.events.DisabledAccountEvent;
 import com.softuni.crossfitapp.domain.events.EnabledAccountEvent;
+import com.softuni.crossfitapp.domain.events.LoggedViaGitHubEvent;
 import com.softuni.crossfitapp.domain.events.UserRegisteredEvent;
 import com.softuni.crossfitapp.domain.user_details.CrossfitUserDetails;
 import com.softuni.crossfitapp.exceptions.ObjectNotFoundException;
@@ -20,14 +20,18 @@ import com.softuni.crossfitapp.service.CloudinaryService;
 import com.softuni.crossfitapp.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -42,6 +46,8 @@ public class UserServiceImpl implements UserService {
     private ApplicationEventPublisher applicationEventPublisher;
     private UserRepository userRepository;
 
+    private UserDetailsService userDetailsService;
+
     private RoleRepository roleRepository;
 
     private MembershipRepository membershipRepository;
@@ -55,9 +61,10 @@ public class UserServiceImpl implements UserService {
     private CloudinaryService cloudinaryService;
     private ModelMapper mapper;
 
-    public UserServiceImpl(ApplicationEventPublisher applicationEventPublisher, UserRepository userRepository, RoleRepository roleRepository, MembershipRepository membershipRepository, CountryRepository countryRepository, UserActivationCodeRepository activationCodeRepository, PasswordEncoder passwordEncoder, CloudinaryService cloudinaryService, ModelMapper mapper) {
+    public UserServiceImpl(ApplicationEventPublisher applicationEventPublisher, UserRepository userRepository, UserDetailsService userDetailsService, RoleRepository roleRepository, MembershipRepository membershipRepository, CountryRepository countryRepository, UserActivationCodeRepository activationCodeRepository, PasswordEncoder passwordEncoder, CloudinaryService cloudinaryService, ModelMapper mapper) {
         this.applicationEventPublisher = applicationEventPublisher;
         this.userRepository = userRepository;
+        this.userDetailsService = userDetailsService;
         this.roleRepository = roleRepository;
         this.membershipRepository = membershipRepository;
         this.countryRepository = countryRepository;
@@ -307,6 +314,74 @@ public class UserServiceImpl implements UserService {
                 .count();
     }
 
+    @Override
+    public void createUserIfNotExist(String username, String email, String fullName, String address) {
+        Optional<User> existingUser = userRepository.findByUsernameOrEmail(username, email);
+        if (existingUser.isEmpty()) {
+            // Split full name into first and last name
+            String[] nameParts = fullName.split(" ");
+            String firstName = nameParts[0];
+            String lastName = nameParts.length > 1 ? nameParts[1] : "";
+
+            // Set a random password or handle it as needed
+            String tempPassword = UUID.randomUUID().toString();
+
+            // Create a SimpleDateFormat instance with the desired date format
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+           // Parse the date string into a Date object
+            Date dateOfBirth = null;
+            try {
+                dateOfBirth = sdf.parse("01-01-2001");
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            // Create a new user
+            User newUser = User.builder()
+                    .username(username)
+                    .email(email)
+                    .firstName(firstName)
+                    .lastName(lastName)
+                    .password(tempPassword)
+                    .address(address)
+                    .bornOn(dateOfBirth)
+                    .roles(Set.of(roleRepository.findByRoleType(RoleType.USER))) // Assign default role
+                    .imageUrl("/images/logoPic.jpg") // Set a default image
+                    .country(this.countryRepository.findByCode("DE").orElseThrow())
+                    .isActive(true)
+                    .build();
+
+            User saved = userRepository.saveAndFlush(newUser);
+
+            applicationEventPublisher.publishEvent(new LoggedViaGitHubEvent(
+                    "UserService",
+                    saved.getUuid(),
+                    saved.getUsername(),
+                    saved.getFullName(),
+                    saved.getEmail(),
+                    tempPassword,
+                    saved.getAddress(),
+                    dateOfBirth
+            ));
+
+        }
+    }
+
+    @Override
+    public Authentication login(String username) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+
+        Authentication auth = new UsernamePasswordAuthenticationToken(
+                userDetails,
+                userDetails.getPassword(),
+                userDetails.getAuthorities()
+        );
+
+        SecurityContextHolder.getContext().setAuthentication(auth);
+
+        return auth;
+    }
     private static int getMaxTrainingSessionsPerWeekDependinOnMembershipType(Membership byMembershipType) {
         int maxTrainingSessionsPerWeek;
         switch (byMembershipType.getMembershipType()) {

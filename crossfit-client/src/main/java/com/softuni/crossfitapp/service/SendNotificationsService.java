@@ -1,9 +1,6 @@
 package com.softuni.crossfitapp.service;
 
-import com.softuni.crossfitapp.domain.events.CancelledTrainingEvent;
-import com.softuni.crossfitapp.domain.events.DisabledAccountEvent;
-import com.softuni.crossfitapp.domain.events.EnabledAccountEvent;
-import com.softuni.crossfitapp.domain.events.UserRegisteredEvent;
+import com.softuni.crossfitapp.domain.events.*;
 
 public interface SendNotificationsService {
 
@@ -15,4 +12,5 @@ public interface SendNotificationsService {
 
     void userRegistered(UserRegisteredEvent event);
 
+    void notifyUserLoggedWithGitHubWithoutRegistration(LoggedViaGitHubEvent loggedViaGitHubEvent);
 }

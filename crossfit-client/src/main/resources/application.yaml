@@ -24,6 +24,15 @@ spring:
     hiddenmethod:
       filter:
         enabled: 'true'
+
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: Ov23liXBWUMH9Yxp7F7P
+            client-secret: ${GITHUB_SECRET:}
+            scope: user:email
   data:
     redis:
       host: localhost

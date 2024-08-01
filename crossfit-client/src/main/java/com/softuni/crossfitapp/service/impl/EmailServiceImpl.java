@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Service
@@ -109,6 +110,39 @@ public class EmailServiceImpl implements EmailService {
             throw new RuntimeException(e);
         }
 
+    }
+
+    @Override
+    public void sendUserLoggedViaGitHubEmailWithRawRandomPass(UUID uuid, String username, String fullName, String email, String currentPassword, String address, Date dateOfBirth) {
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
+
+        try {
+
+            mimeMessageHelper.setTo(email);
+            mimeMessageHelper.setFrom(crossfitEmail);
+            mimeMessageHelper.setReplyTo(crossfitEmail);
+            mimeMessageHelper.setSubject("Warning for log in without account via GitHub !");
+            mimeMessageHelper.setText(generateLoggedViaGitHub(uuid,username,fullName,email,currentPassword,address,dateOfBirth ), true);
+
+            javaMailSender.send(mimeMessageHelper.getMimeMessage());
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private String generateLoggedViaGitHub(UUID uuid, String username, String fullName, String email, String currentPassword, String address, Date dateOfBirth) {
+        Context context = new Context();
+        context.setVariable("uuid",uuid);
+        context.setVariable("username",username);
+        context.setVariable("fullName",fullName);
+        context.setVariable("email",email);
+        context.setVariable("currentPassword",currentPassword);
+        context.setVariable("address",address);
+        context.setVariable("dateOfBirth",dateOfBirth);
+        return templateEngine.process("email/github-account-registration", context);
     }
 
     private String generateEnableAccount(UUID authorUUID, String username, String fullName) {

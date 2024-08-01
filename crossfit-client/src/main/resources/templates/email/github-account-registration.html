@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to Stuttgart CrossFit Community</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet"/>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #e9ecef;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 30px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header h2 {
+            margin: 0;
+            color: #007bff;
+        }
+        .header img {
+            max-width: 120px;
+        }
+        .content {
+            margin-bottom: 20px;
+        }
+        .content p {
+            margin: 0 0 15px;
+            font-size: 16px;
+        }
+        .content strong {
+            color: #333;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .footer a {
+            display: inline-block;
+            padding: 12px 25px;
+            color: #ffffff;
+            background-color: #007bff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .footer a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h2>Welcome to Stuttgart CrossFit Community</h2>
+    </div>
+    <div class="content">
+        <p>Hello, <strong th:text="${fullName}">User</strong>!</p>
+        <p>Thank you for joining our community via GitHub. We are excited to have you onboard!</p>
+        <p><strong>Username:</strong> <span th:text="${username}">username</span></p>
+        <p><strong>Email:</strong> <span th:text="${email}">email@example.com</span></p>
+        <p><strong>Your unique identifier (UUID):</strong> <span th:text="${uuid}">UUID</span></p>
+        <p><strong>Temporary Password:</strong> <span th:text="${currentPassword}">temporaryPassword</span></p>
+        <p><strong>Temporary Address:</strong> <span th:text="${address}">Temp</span></p>
+        <p><strong>Temporary Born Date:</strong> <span th:text="${dateOfBirth}">Temp</span></p>
+        <p>For your security, please change your password immediately after logging in. You can also update any other information as needed. Visit your profile page to make these changes.</p>
+    </div>
+    <div class="footer">
+        <a th:href="@{http://localhost:8080/users/profile/{username}/edit(username=${username})}" target="_blank">Change Password Now</a>
+    </div>
+</div>
+</body>
+</html>

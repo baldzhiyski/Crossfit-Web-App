@@ -25,6 +25,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findAllByRolesContaining(Role byRoleType);
 
+    Optional<User> findByUsernameOrEmail(String username,String email);
     @Query("SELECT DISTINCT u FROM User u  WHERE u.membershipEndDate <= :today")
     Set<User> findAllUsersWithExpiredMembership(LocalDate today);
 }

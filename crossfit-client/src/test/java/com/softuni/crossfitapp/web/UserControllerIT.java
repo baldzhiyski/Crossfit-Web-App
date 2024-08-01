@@ -16,6 +16,7 @@ import com.softuni.crossfitapp.domain.user_details.CrossfitUserDetails;
 import com.softuni.crossfitapp.repository.*;
 import com.softuni.crossfitapp.service.CloudinaryService;
 import com.softuni.crossfitapp.service.CommentService;
+import com.softuni.crossfitapp.service.ReCaptchaService;
 import com.softuni.crossfitapp.service.UserService;
 import com.softuni.crossfitapp.service.impl.CommentServiceImpl;
 import com.softuni.crossfitapp.service.impl.UserServiceImpl;
@@ -25,6 +26,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -47,8 +50,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -73,6 +75,10 @@ public class UserControllerIT {
 
     @Autowired
     private MockMvc mockMvc;
+
+
+    @Mock
+    private ReCaptchaService reCaptchaService; // Mock your reCAPTCHA service
 
 
     @Autowired
@@ -111,6 +117,9 @@ public class UserControllerIT {
 
     @Autowired
     private TrainingRepository trainingRepository;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
     private UserService userService;
     private CommentService commentService;
 
@@ -118,12 +127,12 @@ public class UserControllerIT {
     @BeforeEach
     public void setUp(){
         commentService = new CommentServiceImpl(commentRepository,trainingRepository,userRepository,mapper);
-        userService = new UserServiceImpl( applicationEventPublisher,  userRepository,  roleRepository,  membershipRepository,  countryRepository,
+        userService = new UserServiceImpl( applicationEventPublisher,  userRepository, userDetailsService, roleRepository,  membershipRepository,  countryRepository,
                  activationCodeRepository,  passwordEncoder,  cloudinaryService,  mapper);
         greenMail = new GreenMail(new ServerSetup(port, host,"smtp"));
         greenMail.start();
         greenMail.setUser(username, password);
-        Mockito.when(cloudinaryService.uploadPhoto(any(org.springframework.web.multipart.MultipartFile.class), anyString())).thenReturn("http://mockurl.com/mockimage.jpg");
+        when(cloudinaryService.uploadPhoto(any(org.springframework.web.multipart.MultipartFile.class), anyString())).thenReturn("http://mockurl.com/mockimage.jpg");
         data.createUser("testuser", "Ivo", "Ivov", "email@gmail.com", "08991612383", "DE", "Deutschland");
     }
     @AfterEach
@@ -277,6 +286,7 @@ public class UserControllerIT {
                         .param("nationality", "BG")
                         .param("bornOn", "2005-01-01")
                         .param("telephoneNumber", "0897653123")
+                        .param("g-recaptcha-response", "validToken")
                         .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/users/last-register-step"));

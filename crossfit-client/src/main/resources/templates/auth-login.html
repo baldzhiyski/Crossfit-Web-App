@@ -43,6 +43,13 @@
         <button class="btn" type="submit" th:text="#{login.submit}">Log In</button>
         <p class="text" >Don't have an account?
             <a th:href="@{/users/register}" th:text="#{login.register.link}">Register</a></p>
+
+        <!-- GitHub Login Button -->
+        <div class="github-login">
+            <a th:href="@{/oauth2/authorization/github}" class="btn-github">
+                <i class="fa fa-github"></i> Log in with GitHub
+            </a>
+        </div>
     </form>
 </div>
 <script th:src="@{/js/login.js}"></script>

@@ -3,6 +3,26 @@
 * {
     box-sizing: border-box;
 }
+.btn-github {
+    display: inline-block;
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.btn-github:hover {
+    background-color: #444;
+    color: #fff;
+}
+
+.btn-github i {
+    margin-right: 8px;
+}
 body{
     color: white;
     font-family: 'Muli', sans-serif;
