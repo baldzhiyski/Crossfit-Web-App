@@ -1,4 +1,6 @@
 spring:
+  cache:
+    type: simple  # Use a simple cache implementation for tests
   datasource:
     url: jdbc:hsqldb:mem:crossfit_app;sql.syntax_mys=true
     driver-class-name: org.hsqldb.jdbcDriver
@@ -15,7 +17,6 @@ spring:
           github:
             client-id: test
             client-secret: test
-
 remember_me_key: topseccc
 
 

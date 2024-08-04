@@ -144,8 +144,6 @@ public class CommentServiceImpl implements CommentService {
                 .collect(Collectors.toList());
     }
 
-
-    // TODO : Add also an email here
     @Override
     public void deleteCommentAdmin(UUID commentUUID, String authorUsername) {
         Comment comment = this.commentRepository.findByUuid(commentUUID).orElseThrow(() -> new ObjectNotFoundException("Invalid comment id !"));

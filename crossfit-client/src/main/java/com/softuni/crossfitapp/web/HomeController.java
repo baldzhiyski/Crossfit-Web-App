@@ -40,7 +40,7 @@ public class HomeController {
 
 
     @GetMapping("/about-us")
-    public String about(Model model,@AuthenticationPrincipal CrossfitUserDetails crossfitUserDetails){
+    public String about(Model model,@AuthenticationPrincipal UserDetails crossfitUserDetails){
         // Create a GrantedAuthority object for the role "ADMIN"
         GrantedAuthority adminAuthority = new SimpleGrantedAuthority("ROLE_ADMIN");
         // Check if the user has the "ADMIN" role

@@ -1,8 +1,8 @@
 let currentPage = 0; // Keep track of the current page
 const size = 3;
 
-const isAdmin =document.querySelector('meta[name="is-admin"]').getAttribute('content');
-
+const isAdmin = document.querySelector('meta[name="is-admin"]').getAttribute('content') === 'true';
+console.log(isAdmin);
 function loadPage(page) {
     if (page < 0) return; // Prevent going to a negative page
 

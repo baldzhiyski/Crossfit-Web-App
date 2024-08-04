@@ -27,5 +27,7 @@ public class DBInitializer  implements CommandLineRunner {
         countryService.seedCountries();
         workoutsService.seedTrainings();
         seedService.seedAll();
+
+//        this.workoutsService.populateWeeklyTrainings();;
     }
 }

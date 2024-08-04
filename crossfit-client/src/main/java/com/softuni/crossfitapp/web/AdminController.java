@@ -4,6 +4,7 @@ import com.softuni.crossfitapp.domain.dto.comments.CommentAdminPageDto;
 import com.softuni.crossfitapp.domain.dto.users.UserAdminPageDto;
 import com.softuni.crossfitapp.service.CommentService;
 import com.softuni.crossfitapp.service.UserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,11 +44,13 @@ public class AdminController {
     }
 
     @GetMapping("/profiles-dashboard")
+    @PreAuthorize("hasRole('ADMIN')")
     public String dashboard(){
         return "dashboard";
     }
 
     @PatchMapping("/disableAcc/{accountUUID}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String disableAcc(@PathVariable UUID accountUUID){
         this.userService.enableOrDisableAcc(accountUUID,"disable");
 
@@ -55,6 +58,7 @@ public class AdminController {
     }
 
     @PatchMapping("/enableAcc/{accountUUID}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String enableAcc(@PathVariable UUID accountUUID){
         this.userService.enableOrDisableAcc(accountUUID,"enable");
 
@@ -62,11 +66,10 @@ public class AdminController {
     }
 
     @DeleteMapping("/deleteComment/{commentUUID}/{authorUsername}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String deleteComment(@PathVariable UUID commentUUID, @PathVariable String authorUsername){
         this.commentService.deleteCommentAdmin(commentUUID,authorUsername);
 
         return "redirect:/profiles-dashboard";
     }
-
-    // TODO : Check with preauthorize if the logged user has role admin
 }

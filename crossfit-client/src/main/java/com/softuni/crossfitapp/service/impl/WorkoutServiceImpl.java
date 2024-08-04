@@ -135,7 +135,6 @@ public class WorkoutServiceImpl implements WorkoutsService {
     @Override
     public List<WeeklyTrainingDto> getWeeklyTrainingsSpecificDay(DayOfWeek dayOfWeek) {
 
-        // TODO : WHEN THE TRAINING DATE IS PAST , THE TRAINING SHOULD GO GRAY . Also add training date when creating the training !
         return this.weeklyTrainingRepository.findAllByDayOfWeek(dayOfWeek)
                 .stream()
                 .map(weeklyTraining -> this.mapper.map(weeklyTraining,WeeklyTrainingDto.class))

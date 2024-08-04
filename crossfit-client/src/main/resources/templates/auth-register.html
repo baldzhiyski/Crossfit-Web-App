@@ -96,6 +96,7 @@
             <div class="row">
                 <div class="form-group col-md-5 mb-2" th:classappend="${#fields.hasErrors('telephoneNumber')} ? 'has-error'">
                     <label for="telephoneNumber" th:text="#{register.telephoneNumber}">Telephone Number</label>
+                    <span class="text-muted">(not required)</span> <!-- Indicate that the field is optional -->
                     <input type="tel" id="telephoneNumber" name="telephoneNumber" class="form-control"
                            th:classappend="${#fields.hasErrors('telephoneNumber')} ? 'is-invalid'"
                            placeholder="Enter telephone number" th:field="*{telephoneNumber}">
