@@ -288,6 +288,9 @@ public class UserServiceImpl implements UserService {
         List<User> allUsers = this.userRepository.findAll().stream().toList();
         for (User user : allUsers) {
             Membership membership = user.getMembership();
+            if(membership==null){
+                return;
+            }
             int maxTrainingSessionsPerWeekDependinOnMembershipType = getMaxTrainingSessionsPerWeekDependinOnMembershipType(membership);
             if (user.getWeeklyTrainingsCount() != maxTrainingSessionsPerWeekDependinOnMembershipType) {
                 user.setWeeklyTrainingsCount(maxTrainingSessionsPerWeekDependinOnMembershipType);

@@ -28,6 +28,7 @@ public class DBInitializer  implements CommandLineRunner {
         workoutsService.seedTrainings();
         seedService.seedAll();
 
-//        this.workoutsService.populateWeeklyTrainings();;
+        // For Test purposes ! On real App the scheduler must add them on mondays each week
+        workoutsService.populateWeeklyTrainings();;
     }
 }

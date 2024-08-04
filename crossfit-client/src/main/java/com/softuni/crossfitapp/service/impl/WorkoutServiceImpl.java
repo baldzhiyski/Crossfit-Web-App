@@ -92,17 +92,26 @@ public class WorkoutServiceImpl implements WorkoutsService {
         return mapper.map(training, TrainingDetailsDto.class);
     }
     @Override
-    @Transactional
     public void populateWeeklyTrainings() {
-        if(this.weeklyTrainingRepository.count()>0) this.weeklyTrainingRepository.deleteAll();
+        if(this.weeklyTrainingRepository.count()>0) {
+         this.weeklyTrainingRepository.deleteAllWeeklyTrainings();
 
-        LocalDate today = LocalDate.now();
+        }
+        LocalDate nextMonday = LocalDate.now();
 
+        // Check if today is not Monday
+        if (nextMonday.getDayOfWeek() != DayOfWeek.MONDAY) {
+            // Calculate days until next Monday
+            int daysUntilNextMonday = DayOfWeek.MONDAY.getValue() - nextMonday.getDayOfWeek().getValue();
+            if (daysUntilNextMonday < 0) {
+                daysUntilNextMonday += 7;
+            }
+            nextMonday = nextMonday.plusDays(daysUntilNextMonday);
+        }
 
-        // Iterate over each day of the week starting from today
+        // Iterate over each day of the week starting from monday ( every week )
         for (int i = 0; i < 6; i++) {
-//            LocalDate currentTrainingDate = nextMonday.plusDays(i);
-            LocalDate currentTrainingDate = today.plusDays(i);
+            LocalDate currentTrainingDate = nextMonday.plusDays(i);
             DayOfWeek dayOfWeek = currentTrainingDate.getDayOfWeek();
 
             // Create four trainings for each day
@@ -226,7 +235,6 @@ public class WorkoutServiceImpl implements WorkoutsService {
     public TrainingType getTrainingTypeById(UUID trainingId) {
         return this.weeklyTrainingRepository.findByUuid(trainingId).orElseThrow(()->new ObjectNotFoundException("No such training!")).getTrainingType();
     }
-
 
     private LocalTime getRandomTime() {
         int randomHour = ThreadLocalRandom.current().nextInt(8, 21);
