@@ -37,11 +37,11 @@ Welcome to the CrossFit Web App repository! This project is designed to provide 
 - **Frontend**: HTML, CSS, JavaScript, Bootstrap
 - **Database**: MySQL
 - **API Integration**: REST  for the crossfit-events , crossfit-trainings , countries and exchange rates
-- **Tools**: Git, GitHub, IntelliJ IDEA, Maven (for dependency management), Docker, Cloudinary , MailHog, Grafana, Prometheus, Thymeleaf with Pagination
+- **Tools**: Git, GitHub, IntelliJ IDEA, Maven (for dependency management), Docker, Cloudinary , MailHog, Grafana, Prometheus, Thymeleaf with Pagination, Redis , ReCaptcha 
 
 
 ## Installation
-
+You can run the docker-compose file in the crossfit-client directory
 To set up the project locally using Docker, follow these steps:
 
 ### Pull the Docker Images
@@ -49,6 +49,6 @@ To set up the project locally using Docker, follow these steps:
 Navigate to the crossfit-client modul -> docker -> docker-compose and run this file .
 Each module is an existing image in my docker repository
 ```bash
-docker pull baldzhiyski/crossfit-client:latest
-docker pull baldzhiyski/crossfit-community-events:latest
-docker pull baldzhiyski/crossfit-trainings:latest
+docker pull baldzhiyski/crossfit-web-app-client:latest
+docker pull baldzhiyski/crossfit-web-app-events:latest
+docker pull baldzhiyski/crossfit-web-apptrainings:latest
