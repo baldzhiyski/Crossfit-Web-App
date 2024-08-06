@@ -51,4 +51,4 @@ Each module is an existing image in my docker repository
 ```bash
 docker pull baldzhiyski/crossfit-web-app-client:latest
 docker pull baldzhiyski/crossfit-web-app-events:latest
-docker pull baldzhiyski/crossfit-web-apptrainings:latest
+docker pull baldzhiyski/crossfit-web-app-trainings:latest
