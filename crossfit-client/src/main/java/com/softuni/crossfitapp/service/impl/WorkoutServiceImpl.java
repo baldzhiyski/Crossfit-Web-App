@@ -25,6 +25,8 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
+import static com.softuni.crossfitapp.util.Constants.*;
+
 @Service
 public class WorkoutServiceImpl implements WorkoutsService {
     private final Logger LOGGER = LoggerFactory.getLogger(ExchangeRateServiceImpl.class);
@@ -255,14 +257,14 @@ public class WorkoutServiceImpl implements WorkoutsService {
 
     private void setSpecificPictureUrl(Training mapped) {
         switch (mapped.getTrainingType()){
-            case WEIGHTLIFTING -> mapped.setImageUrl("/images/weightlifting.jpg");
-            case WOD ->  mapped.setImageUrl("/images/wod.jpg");
-            case HYROX ->  mapped.setImageUrl("/images/hyrox.webp");
-            case CARDIO -> mapped.setImageUrl("/images/cardio.webp");
-            case MUMFIT -> mapped.setImageUrl("/images/mumfit.jpg");
-            case OPENGYM -> mapped.setImageUrl("/images/crossfit.jpg");
-            case GYMNASTICS -> mapped.setImageUrl("/images/gymnastics.webp");
-            default -> mapped.setImageUrl("/images/weights.jpg");
+            case WEIGHTLIFTING -> mapped.setImageUrl(WEIGHTLIFTING_IMAGE_URL);
+            case WOD ->  mapped.setImageUrl(WOD_IMAGE_URL);
+            case HYROX ->  mapped.setImageUrl(HYROX_IMAGE_URL);
+            case CARDIO -> mapped.setImageUrl(CARDIO_IMAGE_URL);
+            case MUMFIT -> mapped.setImageUrl(MUMFIT_IMAGE_URL);
+            case OPENGYM -> mapped.setImageUrl(OPENGYM_IMAGE_URL);
+            case GYMNASTICS -> mapped.setImageUrl(GYMNASTICS_IMAGE_URL);
+            default -> mapped.setImageUrl(DEFAULT_IMAGE_URL);
         }
     }
 

@@ -28,4 +28,21 @@ public enum Constants {
     public static final Pattern PATTERN_DIGIT = Pattern.compile("[0-9]");
     public static final Pattern PATTERN_SYMBOL = Pattern.compile("[!@#$%^&*()_+<>?]");
     public static final String EVENT_CACHE = "Cache eviction initiated.";
+
+    public static final String ACCESS_DENIED_NOT_COACH = "This functionality is only for coaches available !";
+
+    public static final String USER_NOT_FOUND = "No such user in the database!";
+
+    public static final String INVALID_COMMENT = "Comment with uuID %s not existing !";
+
+
+    //Training  Images Url
+    public static final String WEIGHTLIFTING_IMAGE_URL = "/images/weightlifting.jpg";
+    public static final String WOD_IMAGE_URL = "/images/wod.jpg";
+    public static final String HYROX_IMAGE_URL = "/images/hyrox.webp";
+    public static final String CARDIO_IMAGE_URL = "/images/cardio.webp";
+    public static final String MUMFIT_IMAGE_URL = "/images/mumfit.jpg";
+    public static final String OPENGYM_IMAGE_URL = "/images/crossfit.jpg";
+    public static final String GYMNASTICS_IMAGE_URL = "/images/gymnastics.webp";
+    public static final String DEFAULT_IMAGE_URL = "/images/weights.jpg";
 }

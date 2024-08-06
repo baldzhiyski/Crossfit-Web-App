@@ -13,6 +13,7 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.*;
+import org.springframework.data.web.PagedModel;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -118,11 +119,11 @@ class EventServiceImplTest {
         Pageable pageable = PageRequest.of(0, 3, Sort.by("date").ascending());
 
         when(eventRepository.findAll(pageable)).thenReturn(eventPage);
-        Page<EventDto> events = eventService.findAllEvents(pageable);
+        PagedModel<EventDto> events = eventService.findAllEvents(pageable);
 
         // Assertions
         assertNotNull(events);
-        assertEquals(2, events.getTotalElements());
+        assertEquals(2, events.getContent().size());
         assertEquals("Event 1", events.getContent().get(0).getEventName());
         assertEquals("Event 2", events.getContent().get(1).getEventName());
     }

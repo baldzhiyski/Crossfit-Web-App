@@ -24,6 +24,8 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static com.softuni.crossfitapp.util.Constants.ACCESS_DENIED_NOT_COACH;
+
 @Service
 public class CoachServiceImpl implements CoachService {
 
@@ -69,7 +71,7 @@ public class CoachServiceImpl implements CoachService {
 
 
         if(byUsername.isEmpty()){
-            throw  new AccessOnlyForCoaches("This functionality is only for coaches available !");
+            throw  new AccessOnlyForCoaches(ACCESS_DENIED_NOT_COACH);
         }
         List<User> participants = weeklyTraining.getParticipants();
         for (User participant : participants) {
@@ -98,7 +100,7 @@ public class CoachServiceImpl implements CoachService {
         Optional<Coach> byUsername = this.coachRepository.findByUsername(usernameOfCoach);
 
         if(byUsername.isEmpty()){
-            throw  new AccessOnlyForCoaches("This functionality is only for coaches available !");
+            throw  new AccessOnlyForCoaches(ACCESS_DENIED_NOT_COACH);
         }
 
         return byUsername.get().getTrainingsPerWeek()

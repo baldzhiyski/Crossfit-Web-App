@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static com.softuni.crossfitapp.util.Constants.*;
+
 @Service
 public class CommentServiceImpl implements CommentService {
     private CommentRepository commentRepository;
@@ -73,8 +75,8 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     public void likeComment(UUID commentId, String username) {
-        Comment comment = this.commentRepository.findByUuid(commentId).orElseThrow(() -> new ObjectNotFoundException("Invalid comment id !"));
-        User user = this.userRepository.findByUsername(username).orElseThrow(() -> new ObjectNotFoundException("No such user in the db!"));
+        Comment comment = this.commentRepository.findByUuid(commentId).orElseThrow(() -> new ObjectNotFoundException(String.format(INVALID_COMMENT,commentId)));
+        User user = this.userRepository.findByUsername(username).orElseThrow(() -> new ObjectNotFoundException(USER_NOT_FOUND));
 
 
         if(comment.getAuthor().equals(user)) return;
@@ -95,9 +97,9 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     public void dislike(UUID commentId, String username) {
         Comment comment = this.commentRepository.findByUuid(commentId)
-                .orElseThrow(() -> new ObjectNotFoundException("Invalid comment id !"));
+                .orElseThrow(() -> new ObjectNotFoundException(String.format(INVALID_COMMENT,commentId)));
         User user = this.userRepository.findByUsername(username)
-                .orElseThrow(() -> new ObjectNotFoundException("No such user in the db!"));
+                .orElseThrow(() -> new ObjectNotFoundException(USER_NOT_FOUND));
 
         if(comment.getAuthor().equals(user)) return;
 
@@ -116,14 +118,14 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comment getById(UUID commentId) {
-        return this.commentRepository.findByUuid(commentId).orElseThrow(()->new ObjectNotFoundException("Invalid commend id"));
+        return this.commentRepository.findByUuid(commentId).orElseThrow(()->new ObjectNotFoundException(String.format(INVALID_COMMENT,commentId)));
     }
 
     @Override
     @Transactional
     public void deleteComment(UUID commentId, String username) {
-        Comment comment = this.commentRepository.findByUuid(commentId).orElseThrow(() -> new ObjectNotFoundException("Invalid comment id !"));
-        User user = this.userRepository.findByUsername(username).orElseThrow(() -> new ObjectNotFoundException("No such user in the db!"));
+        Comment comment = this.commentRepository.findByUuid(commentId).orElseThrow(() -> new ObjectNotFoundException(String.format(INVALID_COMMENT,commentId)));
+        User user = this.userRepository.findByUsername(username).orElseThrow(() -> new ObjectNotFoundException(USER_NOT_FOUND));
         if(comment.getAuthor().equals(user)){
             comment.getLikedBy().clear();
             comment.getDislikedBy().clear();
@@ -132,7 +134,7 @@ public class CommentServiceImpl implements CommentService {
            this.commentRepository.saveAndFlush(comment);
            this.commentRepository.delete(comment);
         }else{
-            throw new AccessOnlyForCoaches("Not acceptable move !");
+            throw new AccessOnlyForCoaches(ACCESS_DENIED_NOT_COACH);
         }
     }
 
@@ -146,8 +148,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void deleteCommentAdmin(UUID commentUUID, String authorUsername) {
-        Comment comment = this.commentRepository.findByUuid(commentUUID).orElseThrow(() -> new ObjectNotFoundException("Invalid comment id !"));
-        User user = this.userRepository.findByUsername(authorUsername).orElseThrow(() -> new ObjectNotFoundException("No such user in the db!"));
+        Comment comment = this.commentRepository.findByUuid(commentUUID).orElseThrow(() -> new ObjectNotFoundException(String.format(INVALID_COMMENT,commentUUID)));
+        User user = this.userRepository.findByUsername(authorUsername).orElseThrow(() -> new ObjectNotFoundException(USER_NOT_FOUND));
 
         comment.getLikedBy().clear();
         comment.getDislikedBy().clear();
