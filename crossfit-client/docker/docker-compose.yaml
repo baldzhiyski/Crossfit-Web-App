@@ -38,7 +38,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    image: baldzhiyski/crossfit-web-app-trainings:v1
+    image: baldzhiyski/crossfit-web-app-trainings:v2
     ports:
       - "8081:8081"
 
@@ -51,7 +51,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    image: baldzhiyski/crossfit-web-app-events:v1
+    image: baldzhiyski/crossfit-web-app-events:v2
     ports:
       - "8082:8082"
 
@@ -68,7 +68,7 @@ services:
       crossfit-community-events:
         condition: service_completed_successfully
 
-    image: baldzhiyski/crossfit-web-app-client:v1
+    image: baldzhiyski/crossfit-web-app-client:v2
     ports:
       - "8080:8080"
 
