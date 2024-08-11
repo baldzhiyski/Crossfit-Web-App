@@ -9,6 +9,7 @@ import com.softuni.crossfitapp.domain.entity.enums.TrainingType;
 import com.softuni.crossfitapp.exceptions.*;
 import com.softuni.crossfitapp.repository.*;
 import com.softuni.crossfitapp.service.WorkoutsService;
+import com.softuni.crossfitapp.util.Constants;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,6 +73,7 @@ public class WorkoutServiceImpl implements WorkoutsService {
     }
 
     @Override
+    @Transactional
     public void seedTrainings() {
         LOGGER.info("Seeding is beginning....");
 
@@ -247,8 +249,8 @@ public class WorkoutServiceImpl implements WorkoutsService {
     private Training getRandomTraining() {
         TrainingType[] types = TrainingType.values();
         Random random = new Random();
-        int index = random.nextInt(types.length);
-       return this.trainingRepository.findRandomTrainingByTrainingType(types[index]);
+        int index = random.nextInt(types.length-1);
+       return this.trainingRepository.findByTrainingType(types[index]).orElseThrow(()->new ObjectNotFoundException("No such training type !"));
     }
 
     private Coach getRandomCoach() {

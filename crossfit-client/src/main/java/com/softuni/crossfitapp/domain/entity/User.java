@@ -90,8 +90,17 @@ public class User extends BaseEntity{
     @Column
     private LocalDate membershipEndDate;
 
+    @OneToMany(mappedBy = "userEntity",cascade = CascadeType.REMOVE)
+    private List<UserActivationLinkEntity> userActivationLinkEntity;
+
     @Column
     private boolean isActive;
+
+    @ManyToMany(mappedBy = "likedBy",cascade = CascadeType.REMOVE)
+    private List<Comment> likedComments;
+
+    @ManyToMany(mappedBy = "dislikedBy",cascade = CascadeType.REMOVE )
+    private List<Comment> dislikedComments;
 
     @PrePersist
     public void encodePassword() {

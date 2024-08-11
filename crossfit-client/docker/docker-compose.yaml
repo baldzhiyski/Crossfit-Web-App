@@ -68,7 +68,7 @@ services:
       crossfit-community-events:
         condition: service_completed_successfully
 
-    image: baldzhiyski/crossfit-web-app-client:v2
+    image: baldzhiyski/crossfit-web-app-client:v3
     ports:
       - "8080:8080"
 

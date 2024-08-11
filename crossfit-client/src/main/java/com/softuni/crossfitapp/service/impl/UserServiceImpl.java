@@ -201,9 +201,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void deleteAcc(String username) {
         User user = this.userRepository.findByUsername(username).orElseThrow(() -> new ObjectNotFoundException("User not found"));
         this.activationCodeRepository.deleteAll(this.activationCodeRepository.findAllByUserEntity_Id(user.getId()));
+
         // Delete the user
         this.userRepository.delete(user);
         // Logout the current user

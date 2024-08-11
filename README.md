@@ -49,6 +49,6 @@ To set up the project locally using Docker, follow these steps:
 Navigate to the crossfit-client modul -> docker -> docker-compose and run this file .
 Each module is an existing image in my docker repository
 ```bash
-docker pull baldzhiyski/crossfit-web-app-client:v2
+docker pull baldzhiyski/crossfit-web-app-client:v3
 docker pull baldzhiyski/crossfit-web-app-events:v2
 docker pull baldzhiyski/crossfit-web-app-trainings:v2
